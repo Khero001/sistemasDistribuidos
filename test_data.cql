@@ -5,376 +5,394 @@ USE inventario_logistica;
 
 ---
 
--- 1. Insertar datos en 'articulos_por_sucursal'
--- Vamos a simular 4 sucursales y algunos artículos en cada una.
-
--- Sucursal S001 (Nodo Maestro)
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S001', 'LAPTOP_X1', 'Portatil Gamer X1', 'Portátil de alto rendimiento para juegos', 50, 2, 1000, toTimestamp(now()));
-
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S001', 'MONITOR_27', 'Monitor Curvo 27"', 'Monitor con gran inmersión visual', 120, 1, 1000, toTimestamp(now()));
-
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S001', 'TECLADO_MEC', 'Teclado Mecánico RGB', 'Teclado con switches mecánicos y retroiluminación RGB', 80, 0, 1000, toTimestamp(now()));
-
--- Sucursal S002
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S002', 'IMPRESORA_LASER', 'Impresora Laser Multifunción', 'Impresora para uso de oficina con múltiples funciones', 30, 3, 800, toTimestamp(now()));
-
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S002', 'PROYECTOR_HD', 'Proyector HD', 'Proyector de alta definición para presentaciones o cine en casa', 15, 5, 800, toTimestamp(now()));
-
--- Sucursal S003
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S003', 'DISCO_SSD_1TB', 'Unidad de estado sólido de alta velocidad', 'Almacenamiento rápido y eficiente', 200, 0, 1200, toTimestamp(now()));
-
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S003', 'ROUTER_WIFI6', 'Router Wi-Fi 6', 'Router de última generación para conexión rápida y estable', 40, 1, 1200, toTimestamp(now()));
-
--- Sucursal S004
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S004', 'CAMARA_IP_EXT', 'Cámara IP Exterior', 'Cámara de seguridad para exteriores con visión nocturna', 75, 1, 900, toTimestamp(now()));
-
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion)
-VALUES ('S004', 'DRON_BEGINNER', 'Dron para principiantes', 'Dron fácil de volar con cámara HD', 25, 4, 900, toTimestamp(now()));
-
--- 40 Artículos adicionales distribuidos entre sucursales
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'HEADSET_GAMER', 'Auriculares Gamer Pro', 'Auriculares con sonido envolvente y micrófono cancelador de ruido', 150, 1, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'MOUSE_ERGONOMICO', 'Mouse Ergonómico', 'Mouse diseñado para la comodidad durante largas horas de uso', 200, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'TARJETA_VIDEO_RTX', 'Tarjeta de Video RTX 4070', 'Tarjeta gráfica de alto rendimiento para gaming y diseño', 30, 2, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'WEBCAM_4K', 'Webcam 4K Ultra HD', 'Cámara web con resolución Ultra HD para videollamadas claras', 90, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'MICROFONO_COND', 'Micrófono Condensador USB', 'Micrófono de estudio para grabación de voz y streaming', 70, 1, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'TABLET_ANDROID', 'Tablet Android 10"', 'Tableta con sistema operativo Android y pantalla de 10 pulgadas', 45, 2, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'DISCO_EXTERNO_4TB', 'Disco Duro Externo 4TB', 'Almacenamiento portátil de gran capacidad', 100, 1, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'SMARTWATCH_GPS', 'Smartwatch con GPS', 'Reloj inteligente con funciones de seguimiento de actividad y GPS', 110, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'ALTAVOZ_BLUETOOTH', 'Altavoz Bluetooth Portátil', 'Altavoz compacto con conectividad Bluetooth para llevar a todas partes', 180, 1, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'POWERBANK_20K', 'Power Bank 20000mAh', 'Batería portátil de alta capacidad para cargar dispositivos móviles', 250, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'SSD_EXTERNO_500GB', 'SSD Externo 500GB', 'Unidad de estado sólido externa para transferencias rápidas', 130, 0, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'AURICULARES_BT_ANC', 'Auriculares BT Cancelación Ruido', 'Auriculares Bluetooth con cancelación activa de ruido', 85, 1, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'USB_32GB_C', 'Memoria USB 3.0 32GB Tipo C', 'Unidad flash USB de 32GB con conector Tipo C', 300, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'ADAPTADOR_HDMI_USB', 'Adaptador HDMI a USB-C', 'Adaptador para conectar dispositivos HDMI a puertos USB-C', 170, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'TARJETA_RED_GIGABIT', 'Tarjeta de Red Gigabit Ethernet', 'Tarjeta de red para conexión a internet de alta velocidad', 60, 0, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'FILAMENTO_PLA_1KG', 'Filamento PLA 1KG Impresión 3D', 'Filamento para impresoras 3D, 1kg de peso', 40, 1, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'IMPRESORA_3D_MINI', 'Impresora 3D Mini', 'Impresora 3D compacta para uso doméstico o educativo', 10, 8, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'ESCANER_PORTATIL', 'Escáner Portátil de Documentos', 'Escáner de documentos ligero y fácil de transportar', 25, 1, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'DRON_PRO_4K', 'Dron Profesional 4K', 'Dron con cámara 4K para fotografía y video aéreo', 5, 10, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'GAFAS_VR', 'Gafas de Realidad Virtual', 'Gafas para experiencias inmersivas de realidad virtual', 12, 4, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'TECLADO_GAMER_MINI', 'Teclado Gamer Mini 60%', 'Teclado compacto para gaming, formato 60%', 95, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'LAPTOP_OFICINA', 'Laptop Oficina Básica', 'Portátil para tareas de oficina y uso diario', 70, 2, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'MONITOR_144HZ', 'Monitor 24" 144Hz', 'Monitor de 24 pulgadas con alta frecuencia de refresco', 60, 1, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'TABLET_GRAFICA', 'Tableta Gráfica Digital', 'Tableta para dibujo digital y diseño gráfico', 35, 1, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'CAMARA_SEGURIDAD_CASA', 'Cámara de Seguridad Interior', 'Cámara de seguridad para el hogar con monitoreo remoto', 150, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'SILLA_OFICINA_ERG', 'Silla de Oficina Ergonómica', 'Silla cómoda y ajustable para largas jornadas de trabajo', 20, 15, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'ESCRITORIO_AJUSTABLE', 'Escritorio Ajustable en Altura', 'Escritorio con altura regulable para mayor ergonomía', 10, 20, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'TECLADO_BT_MULTI', 'Teclado Bluetooth Multi-dispositivo', 'Teclado inalámbrico compatible con múltiples dispositivos', 100, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'MOUSE_GAMER_RGB', 'Mouse Gamer RGB Ligero', 'Mouse para juegos con diseño ligero y luces RGB', 110, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'SSD_M2_NVME_1TB', 'SSD M.2 NVMe 1TB', 'Unidad de estado sólido ultra rápida formato M.2', 80, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'MEMORIA_RAM_16GB', 'Memoria RAM DDR4 16GB', 'Módulo de memoria RAM para mejorar el rendimiento del PC', 90, 0, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'FUENTE_PODER_750W', 'Fuente de Poder 750W Certificada', 'Fuente de alimentación de 750W con certificación de eficiencia', 40, 2, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'GABINETE_ATX', 'Gabinete PC ATX con Cristal Templado', 'Caja de PC con diseño moderno y panel de cristal templado', 25, 5, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'VENTILADOR_CPU', 'Ventilador CPU RGB', 'Ventilador para CPU con iluminación RGB', 120, 1, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'PASTA_TERMICA', 'Pasta Térmica Alta Conductividad', 'Pasta térmica para CPUs y GPUs, mejora la disipación de calor', 300, 0, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'CABLES_MODULARES_PC', 'Cables Modulares para Fuente PC', 'Juego de cables modulares para fuentes de alimentación de PC', 150, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'ADAPTADOR_WIFI_USB', 'Adaptador Wi-Fi USB Doble Banda', 'Adaptador USB para conexión Wi-Fi de doble banda', 180, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'EXTENSOR_RED_MESH', 'Extensor de Red Mesh Wi-Fi', 'Extensor de red para sistemas Wi-Fi Mesh', 30, 1, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'SWITCH_ETHERNET_8P', 'Switch Ethernet Gigabit 8 Puertos', 'Switch de red con 8 puertos Gigabit Ethernet', 50, 1, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'CABLE_RECARGA_USB_C', 'Cable Recarga USB-C a USB-C', 'Cable de recarga USB-C a USB-C de alta velocidad', 400, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'CONVERTIDOR_DP_HDMI', 'Convertidor DisplayPort a HDMI', 'Adaptador para convertir señal DisplayPort a HDMI', 120, 0, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'ADAPTADOR_VGA_HDMI', 'Adaptador VGA a HDMI con Audio', 'Adaptador para convertir señal VGA a HDMI con audio', 90, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'TARJETA_SONIDO_USB', 'Tarjeta de Sonido Externa USB', 'Tarjeta de sonido externa para mejorar la calidad de audio', 70, 0, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'CAMARA_WEB_FULLHD', 'Cámara Web Full HD con Micrófono', 'Cámara web con resolución Full HD y micrófono incorporado', 130, 0, 900, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S001', 'MINI_PC_INTEL', 'Mini PC Intel NUC', 'Computadora compacta Intel NUC', 20, 3, 1000, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S002', 'CEREBRO_RASPBERRY', 'Raspberry Pi 4 Model B', 'Placa de desarrollo Raspberry Pi 4', 50, 0, 800, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S003', 'KIT_ARDUINO_INI', 'Kit Arduino Inicio', 'Kit de inicio para proyectos con Arduino', 80, 1, 1200, toTimestamp(now()));
-INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, capacidad_espacio, capacidad_max_sucursal, timestamp_ultima_actualizacion) VALUES ('S004', 'KIT_SENSORES_RASP', 'Kit de Sensores Raspberry Pi', 'Kit de sensores compatible con Raspberry Pi', 60, 0, 900, toTimestamp(now()));
+-- Definición de UUIDs para las sucursales para asegurar consistencia
+-- Estos UUIDs se usarán a lo largo del archivo.
+-- S001 (Alpha): d1a1b1c1-1001-4111-8111-000000000001
+-- S002 (Beta): d1a1b1c1-1001-4111-8111-000000000002
+-- S003 (Gamma): d1a1b1c1-1001-4111-8111-000000000003
+-- S004 (Delta): d1a1b1c1-1001-4111-8111-000000000004
 
 ---
 
--- 2. Insertar datos en 'clientes'
+-- 1. Insertar datos en 'sucursales'
+-- 4 sucursales con nombres, direcciones IP y ciudades específicas, usando UUIDs para sucursal_id
 
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'Juan', 'Perez', 'Calle Falsa 123, Ciudad de México', '5512345678', 'juan.perez@example.com', '2024-01-15 10:30:00');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, 'Alpha', '192.168.1.101', 'Ciudad de México');
 
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, 'Maria', 'Gomez', 'Av. Siempre Viva 742, Monterrey', '8198765432', 'maria.gomez@example.com', '2024-02-20 14:00:00');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, 'Beta', '192.168.1.102', 'Guadalajara');
 
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, 'Carlos', 'Ruiz', 'Blvd. de los Sueños 45, Guadalajara', '3367890123', 'carlos.ruiz@example.com', '2024-03-01 09:15:00');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, 'Gamma', '192.168.1.96', 'Monterrey');
 
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, 'Ana', 'Lopez', 'Paseo de la Reforma 100, CDMX', '5523456789', 'ana.lopez@example.com', '2024-03-10 11:00:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, 'Luis', 'Hernandez', 'Avenida Insurgentes 500, CDMX', '5534567890', 'luis.hernandez@example.com', '2024-03-12 13:45:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, 'Sofia', 'Martinez', 'Calle del Sol 25, Guadalajara', '3378901234', 'sofia.martinez@example.com', '2024-03-15 16:20:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, 'Ricardo', 'Garcia', 'Morelos 300, Monterrey', '8145678901', 'ricardo.garcia@example.com', '2024-03-18 09:50:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, 'Laura', 'Rodriguez', 'Juárez 10, Puebla', '2221234567', 'laura.rodriguez@example.com', '2024-03-20 10:10:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, 'Fernando', 'Sanchez', 'Constitución 50, Querétaro', '4421234567', 'fernando.sanchez@example.com', '2024-03-22 14:00:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, 'Gabriela', 'Diaz', '5 de Mayo 20, Tijuana', '6641234567', 'gabriela.diaz@example.com', '2024-03-25 11:30:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, 'Manuel', 'Torres', 'Benito Juarez 15, León', '4771234567', 'manuel.torres@example.com', '2024-03-28 17:00:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, 'Valentina', 'Flores', 'Miguel Hidalgo 88, Cancún', '9981234567', 'valentina.flores@example.com', '2024-03-30 08:00:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, 'Diego', 'Ramirez', 'Niños Heroes 11, Mérida', '9991234567', 'diego.ramirez@example.com', '2024-04-01 10:45:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, 'Isabel', 'Vargas', 'Ignacio Zaragoza 99, Chihuahua', '6141234567', 'isabel.vargas@example.com', '2024-04-03 14:10:00');
-
-INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email, fecha_registro)
-VALUES ((UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, 'Jorge', 'Morales', 'Francisco I. Madero 77, Tijuana', '6649876543', 'jorge.morales@example.com', '2024-04-05 16:55:00');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, 'Delta', '192.168.1.97', 'Puebla');
 
 ---
 
--- 3. Insertar datos en 'guias_envio_por_id' y 'guias_envio_por_sucursal_fecha'
+-- 2. Insertar datos en 'articulos_por_sucursal'
+-- 40 registros de artículos distribuidos aleatoriamente entre las 4 sucursales.
+-- Se incluyen 'unidad_medida' y 'capacidad_almacenamiento' por artículo, y todos los IDs son UUIDs.
 
--- Venta 1: Sucursal S001, Cliente Juan Perez, Laptop Gamer X1
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio)
-VALUES ((UUID)1c4e7f8b-9d0c-4e1a-b2c3-d4e5f67890ab, 'LAPTOP_X1', 'Portatil Gamer X1', 1, 'S001', (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, '2025-05-20 11:00:00', 'ENTREGADO');
+-- Artículos para Sucursal Alpha (S001)
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000001, 'Laptop Gamer Pro', 'Portátil de alta gama para juegos', 25, 'unidades', 2.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000002, 'Monitor UltraWide 34"', 'Monitor curvo de 34 pulgadas', 15, 'unidades', 1.8);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000003, 'Teclado Mecánico RGB', 'Teclado con switches Cherry MX', 40, 'unidades', 0.6);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000004, 'Mouse Inalámbrico Pro', 'Mouse ergonómico de alta precisión', 50, 'unidades', 0.3);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000005, 'Auriculares Noise Cancelling', 'Auriculares con cancelación activa de ruido', 30, 'unidades', 0.9);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000006, 'Disco SSD 2TB NVMe', 'Unidad de estado sólido ultra rápida', 20, 'unidades', 0.1);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000007, 'Webcam Full HD', 'Cámara web para streaming y videollamadas', 35, 'unidades', 0.2);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000008, 'Impresora Multifuncional', 'Impresora láser con escáner y copiadora', 10, 'unidades', 3.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000009, 'Router Wi-Fi 6', 'Enrutador de alta velocidad', 20, 'unidades', 0.7);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)1a1a1a1a-1111-4111-8111-000000000010, 'Tableta Gráfica Profesional', 'Tableta para diseño gráfico', 12, 'unidades', 1.0);
 
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio)
-VALUES ('S001', '2025-05-20', (UUID)1c4e7f8b-9d0c-4e1a-b2c3-d4e5f67890ab, 'LAPTOP_X1', 'Portatil Gamer X1', 1, (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'ENTREGADO');
+-- Artículos para Sucursal Beta (S002)
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000011, 'Smartphone Premium', 'Teléfono inteligente de última generación', 45, 'unidades', 0.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000012, 'Smartwatch Deportivo', 'Reloj inteligente con funciones deportivas', 30, 'unidades', 0.2);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000013, 'Altavoz Bluetooth Potente', 'Altavoz portátil con gran calidad de sonido', 28, 'unidades', 0.8);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000014, 'Cámara de Seguridad IP', 'Cámara de vigilancia para interiores', 22, 'unidades', 0.4);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000015, 'Drone con Cámara 4K', 'Drone para fotografía y video aéreo', 8, 'unidades', 2.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000016, 'Consola de Videojuegos', 'Consola de última generación', 18, 'unidades', 1.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000017, 'Juego de Realidad Virtual', 'Kit completo de VR', 7, 'unidades', 2.2);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000018, 'Proyector Portátil', 'Proyector compacto para cine en casa', 10, 'unidades', 1.3);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000019, 'Estabilizador de Smartphone', 'Gimbal para videos con teléfono', 20, 'unidades', 0.7);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)1a1a1a1a-1111-4111-8111-000000000020, 'Tarjeta Gráfica RTX 4090', 'Tarjeta de video de gama alta', 5, 'unidades', 1.2);
+
+-- Artículos para Sucursal Gamma (S003)
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000021, 'Microondas Digital', 'Horno microondas con funciones inteligentes', 15, 'unidades', 2.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000022, 'Cafetera Programable', 'Cafetera con temporizador y molinillo', 20, 'unidades', 1.2);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000023, 'Aspiradora Robot Inteligente', 'Aspiradora autónoma con mapeo láser', 10, 'unidades', 1.8);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000024, 'Refrigerador Inverter', 'Refrigerador de bajo consumo energético', 5, 'unidades', 15.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000025, 'Lavadora Carga Frontal', 'Lavadora de alta eficiencia', 7, 'unidades', 10.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000026, 'Secadora de Ropa Eléctrica', 'Secadora con sensor de humedad', 6, 'unidades', 9.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000027, 'Estufa de Inducción', 'Estufa moderna y eficiente', 8, 'unidades', 4.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000028, 'Licuadora de Alta Potencia', 'Licuadora para smoothies y jugos', 25, 'unidades', 0.8);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000029, 'Horno Eléctrico de Convección', 'Horno para cocinar y hornear', 12, 'unidades', 3.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)1a1a1a1a-1111-4111-8111-000000000030, 'Purificador de Aire Inteligente', 'Sistema de purificación de aire', 18, 'unidades', 1.0);
+
+-- Artículos para Sucursal Delta (S004)
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000031, 'Set de Herramientas Completo', 'Kit de herramientas para el hogar', 30, 'unidades', 2.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000032, 'Taladro Inalámbrico', 'Taladro percutor a batería', 20, 'unidades', 1.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000033, 'Sierra Eléctrica Circular', 'Sierra para cortes precisos en madera', 10, 'unidades', 3.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000034, 'Compresor de Aire Portátil', 'Compresor para inflar neumáticos y más', 8, 'unidades', 4.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000035, 'Lámpara LED de Escritorio', 'Lámpara con diferentes modos de luz', 40, 'unidades', 0.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000036, 'Sistema de Alarma Inteligente', 'Kit de seguridad para el hogar', 15, 'unidades', 1.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000037, 'Cargador Portátil Power Bank', 'Batería externa para dispositivos móviles', 50, 'unidades', 0.3);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000038, 'Kit de Jardinería Completo', 'Herramientas para el cuidado del jardín', 25, 'unidades', 2.5);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000039, 'Asador de Carbón Premium', 'Asador para exteriores', 7, 'unidades', 7.0);
+INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)1a1a1a1a-1111-4111-8111-000000000040, 'Silla de Oficina Ergonómica', 'Silla cómoda para largas jornadas', 12, 'unidades', 5.0);
 
 ---
 
--- Venta 2: Sucursal S001, Cliente Maria Gomez, Monitor Curvo 27"
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio)
-VALUES ((UUID)2f3b4c5d-6e7a-4891-b2c3-d4e5f67890ab, 'MONITOR_27', 'Monitor Curvo 27"', 2, 'S001', (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, '2025-05-22 15:30:00', 'EN_TRANSITO');
+-- 3. Insertar datos en 'clientes'
+-- 15 clientes con información de contacto
 
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio)
-VALUES ('S001', '2025-05-22', (UUID)2f3b4c5d-6e7a-4891-b2c3-d4e5f67890ab, 'MONITOR_27', 'Monitor Curvo 27"', 2, (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, 'EN_TRANSITO');
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd01, 'Ana', 'Torres', 'Av. Reforma 100, Col. Juárez, CDMX', '5511223344', 'ana.torres@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd02, 'Carlos', 'Ruiz', 'Calle del Sol 20, Col. Centro, Guadalajara', '5522334455', 'carlos.ruiz@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd03, 'Elena', 'Gómez', 'Paseo de la Luna 50, Col. San Pedro, Monterrey', '5533445566', 'elena.gomez@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd04, 'Fernando', 'Díaz', 'Blvd. Las Palmas 75, Col. Floresta, Puebla', '5544556677', 'fernando.diaz@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd05, 'Gabriela', 'Vargas', 'Plaza Mayor 15, Col. Independencia, Querétaro', '5555667788', 'gabriela.vargas@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd06, 'Héctor', 'Soto', 'Av. Juárez 30, Col. Roma, CDMX', '5566778899', 'hector.soto@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd07, 'Isabel', 'Ramos', 'Guerrero Negro 45, Col. Condesa, CDMX', '5577889900', 'isabel.ramos@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd08, 'Jorge', 'Mendoza', 'Callejon del Beso 1, Col. Jardines, Guanajuato', '5588990011', 'jorge.mendoza@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd09, 'Karen', 'Navarro', 'Boulevard del Parque 80, Col. Del Valle, San Luis Potosí', '5599001122', 'karen.navarro@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd10, 'Luis', 'Castro', 'Via Láctea 5, Col. Estrella, Mérida', '5500112233', 'luis.castro@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd11, 'Marta', 'Flores', 'Calle Tulipanes 12, Col. Florida, Cancún', '5510203040', 'marta.flores@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd12, 'Pedro', 'Salazar', 'Av. Principal 250, Col. Centro, Tijuana', '5521436587', 'pedro.salazar@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd13, 'Sofía', 'Reyes', 'Calle Río Bravo 30, Col. Americana, Guadalajara', '5532547698', 'sofia.reyes@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd14, 'Daniel', 'Campos', 'Sendero del Bosque 15, Col. Sierra, Monterrey', '5543769810', 'daniel.campos@email.com');
+
+INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
+VALUES ((UUID)c1b2c3d4-e5f6-7890-1234-567890abcd15, 'Valeria', 'Cruz', 'Circuito Interior 60, Col. Del Valle, CDMX', '5554981023', 'valeria.cruz@email.com');
 
 ---
 
--- Venta 3: Sucursal S002, Cliente Carlos Ruiz, Impresora Laser Multifunción
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio)
-VALUES ((UUID)3a4b5c6d-7e8f-4902-c3d4-e5f6789012ab, 'IMPRESORA_LASER', 'Impresora Laser Multifunción', 1, 'S002', (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, '2025-05-24 09:00:00', 'PENDIENTE');
+-- 4. Insertar datos en 'guias_envio_por_id' y 'guias_envio_por_sucursal_fecha'
+-- Simular 20 ventas y 10 movimientos entre sucursales.
+-- Cada venta/movimiento debe tener su registro en ambas tablas, con todos los IDs como UUIDs.
+-- Las fechas y horas se ajustan a los tipos 'date' y 'time' de Cassandra.
+-- 'articulos_enviados' se usa como mapa<text, int>.
 
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio)
-VALUES ('S002', '2025-05-24', (UUID)3a4b5c6d-7e8f-4902-c3d4-e5f6789012ab, 'IMPRESORA_LASER', 'Impresora Laser Multifunción', 1, (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, 'PENDIENTE');
+-- Ventas (total 20)
+-- Venta 1 (Alpha - Laptop Gamer Pro)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)11111111-1111-4111-8111-111111111111, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd01, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-20', '10:00:00', 'EN_PREPARACION', 3.0, 0.015, 1500.00, 'Av. Reforma 100, Col. Juárez, CDMX', '19.4326,-99.1332', {'Laptop Gamer Pro': 1});
 
----
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-20', (UUID)11111111-1111-4111-8111-111111111111, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd01, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '10:00:00', 'EN_PREPARACION', 3.0, 0.015, 1500.00, 'Av. Reforma 100, Col. Juárez, CDMX', '19.4326,-99.1332', {'Laptop Gamer Pro': 1});
 
--- Venta 4: Sucursal S003, Cliente Juan Perez, Disco SSD 1TB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio)
-VALUES ((UUID)4b5c6d7e-8f9a-4013-d4e5-f678901234cd, 'DISCO_SSD_1TB', 'Disco SSD 1TB', 3, 'S003', (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, '2025-05-23 16:45:00', 'ENTREGADO');
+-- Venta 2 (Beta - Smartphone Premium)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)22222222-2222-4222-8222-222222222222, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd02, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-20', '11:00:00', 'EN_TRANSITO', 0.5, 0.001, 800.00, 'Calle del Sol 20, Col. Centro, Guadalajara', '20.6736,-103.3406', {'Smartphone Premium': 1});
 
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio)
-VALUES ('S003', '2025-05-23', (UUID)4b5c6d7e-8f9a-4013-d4e5-f678901234cd, 'DISCO_SSD_1TB', 'Disco SSD 1TB', 3, (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-20', (UUID)22222222-2222-4222-8222-222222222222, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd02, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '11:00:00', 'EN_TRANSITO', 0.5, 0.001, 800.00, 'Calle del Sol 20, Col. Centro, Guadalajara', '20.6736,-103.3406', {'Smartphone Premium': 1});
 
----
+-- Venta 3 (Gamma - Aspiradora Robot Inteligente)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)33333333-3333-4333-8333-333333333333, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd03, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-21', '09:30:00', 'ENTREGADO', 4.0, 0.02, 350.00, 'Paseo de la Luna 50, Col. San Pedro, Monterrey', '25.6866,-100.3161', {'Aspiradora Robot Inteligente': 1});
 
--- 20 Ventas adicionales
--- Venta 5: S001, Cliente Ana, Teclado Mecánico RGB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)5c6d7e8f-9a0b-4124-e5f6-7890123456ef, 'TECLADO_MEC', 'Teclado Mecánico RGB', 1, 'S001', (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, '2025-05-24 10:15:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-24', (UUID)5c6d7e8f-9a0b-4124-e5f6-7890123456ef, 'TECLADO_MEC', 'Teclado Mecánico RGB', 1, (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-21', (UUID)33333333-3333-4333-8333-333333333333, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd03, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '09:30:00', 'ENTREGADO', 4.0, 0.02, 350.00, 'Paseo de la Luna 50, Col. San Pedro, Monterrey', '25.6866,-100.3161', {'Aspiradora Robot Inteligente': 1});
 
--- Venta 6: S002, Cliente Luis, Impresora Laser Multifunción
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)6d7e8f9a-0b1c-4235-f678-9012345678ab, 'IMPRESORA_LASER', 'Impresora Laser Multifunción', 1, 'S002', (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, '2025-05-24 11:30:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-24', (UUID)6d7e8f9a-0b1c-4235-f678-9012345678ab, 'IMPRESORA_LASER', 'Impresora Laser Multifunción', 1, (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, 'EN_TRANSITO');
+-- Venta 4 (Delta - Taladro Inalámbrico)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)44444444-4444-4444-8444-444444444444, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd04, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-21', '13:45:00', 'PENDIENTE', 2.5, 0.01, 120.00, 'Blvd. Las Palmas 75, Col. Floresta, Puebla', '19.0414,-98.2063', {'Taladro Inalámbrico': 1});
 
--- Venta 7: S003, Cliente Sofia, Router Wi-Fi 6
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)7e8f9a0b-1c2d-4346-a789-0123456789bc, 'ROUTER_WIFI6', 'Router Wi-Fi 6', 1, 'S003', (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, '2025-05-23 09:45:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-23', (UUID)7e8f9a0b-1c2d-4346-a789-0123456789bc, 'ROUTER_WIFI6', 'Router Wi-Fi 6', 1, (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-21', (UUID)44444444-4444-4444-8444-444444444444, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd04, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '13:45:00', 'PENDIENTE', 2.5, 0.01, 120.00, 'Blvd. Las Palmas 75, Col. Floresta, Puebla', '19.0414,-98.2063', {'Taladro Inalámbrico': 1});
 
--- Venta 8: S004, Cliente Ricardo, Cámara IP Exterior
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)8f9a0b1c-2d3e-4457-b890-1234567890cd, 'CAMARA_IP_EXT', 'Cámara IP Exterior', 1, 'S004', (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, '2025-05-22 14:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-22', (UUID)8f9a0b1c-2d3e-4457-b890-1234567890cd, 'CAMARA_IP_EXT', 'Cámara IP Exterior', 1, (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, 'ENTREGADO');
+-- Venta 5 (Alpha - Teclado Mecánico RGB)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)55555555-5555-4555-8555-555555555555, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd05, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-22', '10:15:00', 'EN_PREPARACION', 1.0, 0.003, 80.00, 'Plaza Mayor 15, Col. Independencia, Querétaro', '20.5912,-100.3878', {'Teclado Mecánico RGB': 2});
 
--- Venta 9: S001, Cliente Laura, Headset Gamer Pro
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)9a0b1c2d-3e4f-4568-c901-2345678901de, 'HEADSET_GAMER', 'Auriculares Gamer Pro', 1, 'S001', (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, '2025-05-25 10:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-25', (UUID)9a0b1c2d-3e4f-4568-c901-2345678901de, 'HEADSET_GAMER', 'Auriculares Gamer Pro', 1, (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-22', (UUID)55555555-5555-4555-8555-555555555555, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd05, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '10:15:00', 'EN_PREPARACION', 1.0, 0.003, 80.00, 'Plaza Mayor 15, Col. Independencia, Querétaro', '20.5912,-100.3878', {'Teclado Mecánico RGB': 2});
 
--- Venta 10: S002, Cliente Fernando, Mouse Ergonómico
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)0b1c2d3e-4f5a-4679-d012-3456789012ef, 'MOUSE_ERGONOMICO', 'Mouse Ergonómico', 1, 'S002', (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, '2025-05-25 11:45:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-25', (UUID)0b1c2d3e-4f5a-4679-d012-3456789012ef, 'MOUSE_ERGONOMICO', 'Mouse Ergonómico', 1, (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, 'EN_TRANSITO');
+-- Venta 6 (Beta - Consola de Videojuegos)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)66666666-6666-4666-8666-666666666666, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd06, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-22', '15:00:00', 'EN_TRANSITO', 4.5, 0.03, 500.00, 'Av. Juárez 30, Col. Roma, CDMX', '19.4223,-99.1678', {'Consola de Videojuegos': 1});
 
--- Venta 11: S003, Cliente Gabriela, Tarjeta de Video RTX 4070
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)1c2d3e4f-5a6b-4780-e123-4567890123fa, 'TARJETA_VIDEO_RTX', 'Tarjeta de Video RTX 4070', 1, 'S003', (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, '2025-05-25 13:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-25', (UUID)1c2d3e4f-5a6b-4780-e123-4567890123fa, 'TARJETA_VIDEO_RTX', 'Tarjeta de Video RTX 4070', 1, (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-22', (UUID)66666666-6666-4666-8666-666666666666, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd06, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '15:00:00', 'EN_TRANSITO', 4.5, 0.03, 500.00, 'Av. Juárez 30, Col. Roma, CDMX', '19.4223,-99.1678', {'Consola de Videojuegos': 1});
 
--- Venta 12: S004, Cliente Manuel, Webcam 4K Ultra HD
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)2d3e4f5a-6b7c-4891-f234-5678901234bc, 'WEBCAM_4K', 'Webcam 4K Ultra HD', 1, 'S004', (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, '2025-05-25 15:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-25', (UUID)2d3e4f5a-6b7c-4891-f234-5678901234bc, 'WEBCAM_4K', 'Webcam 4K Ultra HD', 1, (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, 'ENTREGADO');
+-- Venta 7 (Gamma - Refrigerador Inverter)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)77777777-7777-4777-8777-777777777777, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd07, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-23', '09:00:00', 'ENTREGADO', 70.0, 0.7, 1200.00, 'Guerrero Negro 45, Col. Condesa, CDMX', '19.4167,-99.1727', {'Refrigerador Inverter': 1});
 
--- Venta 13: S001, Cliente Valentina, Micrófono Condensador USB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)3e4f5a6b-7c8d-4902-a345-6789012345cd, 'MICROFONO_COND', 'Micrófono Condensador USB', 1, 'S001', (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, '2025-05-26 09:30:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-26', (UUID)3e4f5a6b-7c8d-4902-a345-6789012345cd, 'MICROFONO_COND', 'Micrófono Condensador USB', 1, (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-23', (UUID)77777777-7777-4777-8777-777777777777, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd07, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '09:00:00', 'ENTREGADO', 70.0, 0.7, 1200.00, 'Guerrero Negro 45, Col. Condesa, CDMX', '19.4167,-99.1727', {'Refrigerador Inverter': 1});
 
--- Venta 14: S002, Cliente Diego, Tablet Android 10"
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)4f5a6b7c-8d9e-4013-b456-7890123456de, 'TABLET_ANDROID', 'Tablet Android 10"', 1, 'S002', (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, '2025-05-26 12:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-26', (UUID)4f5a6b7c-8d9e-4013-b456-7890123456de, 'TABLET_ANDROID', 'Tablet Android 10"', 1, (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, 'EN_TRANSITO');
+-- Venta 8 (Delta - Silla de Oficina Ergonómica)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)88888888-8888-4888-8888-888888888888, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd08, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-23', '11:30:00', 'PENDIENTE', 15.0, 0.15, 250.00, 'Callejon del Beso 1, Col. Jardines, Guanajuato', '21.0186,-101.2588', {'Silla de Oficina Ergonómica': 1});
 
--- Venta 15: S003, Cliente Isabel, Disco Duro Externo 4TB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)5a6b7c8d-9e0f-4124-c567-8901234567ef, 'DISCO_EXTERNO_4TB', 'Disco Duro Externo 4TB', 1, 'S003', (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, '2025-05-26 14:30:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-26', (UUID)5a6b7c8d-9e0f-4124-c567-8901234567ef, 'DISCO_EXTERNO_4TB', 'Disco Duro Externo 4TB', 1, (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-23', (UUID)88888888-8888-4888-8888-888888888888, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd08, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '11:30:00', 'PENDIENTE', 15.0, 0.15, 250.00, 'Callejon del Beso 1, Col. Jardines, Guanajuato', '21.0186,-101.2588', {'Silla de Oficina Ergonómica': 1});
 
--- Venta 16: S004, Cliente Jorge, Smartwatch con GPS
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)6b7c8d9e-0f1a-4235-d678-9012345678fa, 'SMARTWATCH_GPS', 'Smartwatch con GPS', 1, 'S004', (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, '2025-05-26 16:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-26', (UUID)6b7c8d9e-0f1a-4235-d678-9012345678fa, 'SMARTWATCH_GPS', 'Smartwatch con GPS', 1, (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, 'PENDIENTE');
+-- Venta 9 (Alpha - Monitor UltraWide 34")
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)99999999-9999-4999-8999-999999999999, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd09, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-24', '14:00:00', 'EN_PREPARACION', 5.0, 0.03, 400.00, 'Boulevard del Parque 80, Col. Del Valle, San Luis Potosí', '22.1581,-100.9996', {'Monitor UltraWide 34"': 1});
 
--- Venta 17: S001, Cliente Juan Perez, Altavoz Bluetooth Portátil
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)7c8d9e0f-1a2b-4346-e789-0123456789ab, 'ALTAVOZ_BLUETOOTH', 'Altavoz Bluetooth Portátil', 1, 'S001', (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, '2025-05-27 10:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-27', (UUID)7c8d9e0f-1a2b-4346-e789-0123456789ab, 'ALTAVOZ_BLUETOOTH', 'Altavoz Bluetooth Portátil', 1, (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-24', (UUID)99999999-9999-4999-8999-999999999999, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd09, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '14:00:00', 'EN_PREPARACION', 5.0, 0.03, 400.00, 'Boulevard del Parque 80, Col. Del Valle, San Luis Potosí', '22.1581,-100.9996', {'Monitor UltraWide 34"': 1});
 
--- Venta 18: S002, Cliente Maria Gomez, Power Bank 20000mAh
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)8d9e0f1a-2b3c-4457-f890-1234567890bc, 'POWERBANK_20K', 'Power Bank 20000mAh', 2, 'S002', (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, '2025-05-27 12:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-27', (UUID)8d9e0f1a-2b3c-4457-f890-1234567890bc, 'POWERBANK_20K', 'Power Bank 20000mAh', 2, (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, 'EN_TRANSITO');
+-- Venta 10 (Beta - Altavoz Bluetooth Potente)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0a0a0a0a-0a0a-4a0a-8a0a-0a0a0a0a0a0a, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd10, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-24', '16:30:00', 'EN_TRANSITO', 1.5, 0.005, 150.00, 'Via Láctea 5, Col. Estrella, Mérida', '20.9674,-89.6242', {'Altavoz Bluetooth Potente': 1});
 
--- Venta 19: S003, Cliente Carlos Ruiz, SSD Externo 500GB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)9e0f1a2b-3c4d-4568-a901-2345678901cd, 'SSD_EXTERNO_500GB', 'SSD Externo 500GB', 1, 'S003', (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, '2025-05-27 14:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-27', (UUID)9e0f1a2b-3c4d-4568-a901-2345678901cd, 'SSD_EXTERNO_500GB', 'SSD Externo 500GB', 1, (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-24', (UUID)0a0a0a0a-0a0a-4a0a-8a0a-0a0a0a0a0a0a, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd10, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '16:30:00', 'EN_TRANSITO', 1.5, 0.005, 150.00, 'Via Láctea 5, Col. Estrella, Mérida', '20.9674,-89.6242', {'Altavoz Bluetooth Potente': 1});
 
--- Venta 20: S004, Cliente Ana Lopez, Auriculares BT Cancelación Ruido
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)0f1a2b3c-4d5e-4679-b012-3456789012de, 'AURICULARES_BT_ANC', 'Auriculares BT Cancelación Ruido', 1, 'S004', (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, '2025-05-27 16:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-27', (UUID)0f1a2b3c-4d5e-4679-b012-3456789012de, 'AURICULARES_BT_ANC', 'Auriculares BT Cancelación Ruido', 1, (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, 'ENTREGADO');
+-- Venta 11 (Gamma - Licuadora de Alta Potencia)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0b0b0b0b-0b0b-4b0b-8b0b-0b0b0b0b0b0b, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd11, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-25', '10:00:00', 'ENTREGADO', 2.0, 0.008, 100.00, 'Calle Tulipanes 12, Col. Florida, Cancún', '21.1619,-86.8527', {'Licuadora de Alta Potencia': 1});
 
--- Venta 21: S001, Cliente Luis Hernandez, Memoria USB 3.0 32GB Tipo C
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)1a2b3c4d-5e6f-4780-c123-4567890123ef, 'USB_32GB_C', 'Memoria USB 3.0 32GB Tipo C', 2, 'S001', (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, '2025-05-28 09:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-28', (UUID)1a2b3c4d-5e6f-4780-c123-4567890123ef, 'USB_32GB_C', 'Memoria USB 3.0 32GB Tipo C', 2, (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-25', (UUID)0b0b0b0b-0b0b-4b0b-8b0b-0b0b0b0b0b0b, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd11, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '10:00:00', 'ENTREGADO', 2.0, 0.008, 100.00, 'Calle Tulipanes 12, Col. Florida, Cancún', '21.1619,-86.8527', {'Licuadora de Alta Potencia': 1});
 
--- Venta 22: S002, Cliente Sofia Martinez, Adaptador HDMI a USB-C
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)2b3c4d5e-6f7a-4891-d234-5678901234fa, 'ADAPTADOR_HDMI_USB', 'Adaptador HDMI a USB-C', 1, 'S002', (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, '2025-05-28 11:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-28', (UUID)2b3c4d5e-6f7a-4891-d234-5678901234fa, 'ADAPTADOR_HDMI_USB', 'Adaptador HDMI a USB-C', 1, (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, 'EN_TRANSITO');
+-- Venta 12 (Delta - Cargador Portátil Power Bank)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0c0c0c0c-0c0c-4c0c-8c0c-0c0c0c0c0c0c, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd12, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-25', '12:00:00', 'PENDIENTE', 0.2, 0.0005, 30.00, 'Av. Principal 250, Col. Centro, Tijuana', '32.5149,-117.0382', {'Cargador Portátil Power Bank': 2});
 
--- Venta 23: S003, Cliente Ricardo Garcia, Tarjeta de Red Gigabit Ethernet
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)3c4d5e6f-7a8b-4902-e345-6789012345ab, 'TARJETA_RED_GIGABIT', 'Tarjeta de Red Gigabit Ethernet', 1, 'S003', (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, '2025-05-28 13:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-28', (UUID)3c4d5e6f-7a8b-4902-e345-6789012345ab, 'TARJETA_RED_GIGABIT', 'Tarjeta de Red Gigabit Ethernet', 1, (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-25', (UUID)0c0c0c0c-0c0c-4c0c-8c0c-0c0c0c0c0c0c, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd12, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '12:00:00', 'PENDIENTE', 0.2, 0.0005, 30.00, 'Av. Principal 250, Col. Centro, Tijuana', '32.5149,-117.0382', {'Cargador Portátil Power Bank': 2});
 
--- Venta 24: S004, Cliente Laura Rodriguez, Filamento PLA 1KG Impresión 3D
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)4d5e6f7a-8b9c-4013-f456-7890123456bc, 'FILAMENTO_PLA_1KG', 'Filamento PLA 1KG Impresión 3D', 2, 'S004', (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, '2025-05-28 15:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-28', (UUID)4d5e6f7a-8b9c-4013-f456-7890123456bc, 'FILAMENTO_PLA_1KG', 'Filamento PLA 1KG Impresión 3D', 2, (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, 'PENDIENTE');
+-- Venta 13 (Alpha - Auriculares Noise Cancelling)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0d0d0d0d-0d0d-4d0d-8d0d-0d0d0d0d0d0d, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd13, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-26', '09:00:00', 'EN_PREPARACION', 0.8, 0.002, 180.00, 'Calle Río Bravo 30, Col. Americana, Guadalajara', '20.6736,-103.3406', {'Auriculares Noise Cancelling': 1});
 
--- Venta 25: S001, Cliente Fernando Sanchez, Impresora 3D Mini
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)5e6f7a8b-9c0d-4124-a567-8901234567cd, 'IMPRESORA_3D_MINI', 'Impresora 3D Mini', 1, 'S001', (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, '2025-05-29 10:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-29', (UUID)5e6f7a8b-9c0d-4124-a567-8901234567cd, 'IMPRESORA_3D_MINI', 'Impresora 3D Mini', 1, (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-26', (UUID)0d0d0d0d-0d0d-4d0d-8d0d-0d0d0d0d0d0d, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd13, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '09:00:00', 'EN_PREPARACION', 0.8, 0.002, 180.00, 'Calle Río Bravo 30, Col. Americana, Guadalajara', '20.6736,-103.3406', {'Auriculares Noise Cancelling': 1});
 
--- Venta 26: S002, Cliente Gabriela Diaz, Escáner Portátil de Documentos
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)6f7a8b9c-0d1e-4235-b678-9012345678de, 'ESCANER_PORTATIL', 'Escáner Portátil de Documentos', 1, 'S002', (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, '2025-05-29 12:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-29', (UUID)6f7a8b9c-0d1e-4235-b678-9012345678de, 'ESCANER_PORTATIL', 'Escáner Portátil de Documentos', 1, (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, 'EN_TRANSITO');
+-- Venta 14 (Beta - Smartwatch Deportivo)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0e0e0e0e-0e0e-4e0e-8e0e-0e0e0e0e0e0e, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd14, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-26', '11:00:00', 'EN_TRANSITO', 0.3, 0.0008, 220.00, 'Sendero del Bosque 15, Col. Sierra, Monterrey', '25.6866,-100.3161', {'Smartwatch Deportivo': 1});
 
--- Venta 27: S003, Cliente Manuel Torres, Dron Profesional 4K
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)7a8b9c0d-1e2f-4346-c789-0123456789ef, 'DRON_PRO_4K', 'Dron Profesional 4K', 1, 'S003', (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, '2025-05-29 14:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-29', (UUID)7a8b9c0d-1e2f-4346-c789-0123456789ef, 'DRON_PRO_4K', 'Dron Profesional 4K', 1, (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-26', (UUID)0e0e0e0e-0e0e-4e0e-8e0e-0e0e0e0e0e0e, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd14, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '11:00:00', 'EN_TRANSITO', 0.3, 0.0008, 220.00, 'Sendero del Bosque 15, Col. Sierra, Monterrey', '25.6866,-100.3161', {'Smartwatch Deportivo': 1});
 
--- Venta 28: S004, Cliente Valentina Flores, Gafas de Realidad Virtual
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)8b9c0d1e-2f3a-4457-d890-1234567890fa, 'GAFAS_VR', 'Gafas de Realidad Virtual', 1, 'S004', (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, '2025-05-29 16:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-29', (UUID)8b9c0d1e-2f3a-4457-d890-1234567890fa, 'GAFAS_VR', 'Gafas de Realidad Virtual', 1, (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, 'ENTREGADO');
+-- Venta 15 (Gamma - Cafetera Programable)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)0f0f0f0f-0f0f-4f0f-8f0f-0f0f0f0f0f0f, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd15, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-27', '09:30:00', 'ENTREGADO', 3.0, 0.01, 90.00, 'Circuito Interior 60, Col. Del Valle, CDMX', '19.4167,-99.1727', {'Cafetera Programable': 1});
 
--- Venta 29: S001, Cliente Diego Ramirez, Teclado Gamer Mini 60%
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)9c0d1e2f-3a4b-4568-e901-2345678901ab, 'TECLADO_GAMER_MINI', 'Teclado Gamer Mini 60%', 1, 'S001', (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, '2025-05-30 09:30:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-30', (UUID)9c0d1e2f-3a4b-4568-e901-2345678901ab, 'TECLADO_GAMER_MINI', 'Teclado Gamer Mini 60%', 1, (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-27', (UUID)0f0f0f0f-0f0f-4f0f-8f0f-0f0f0f0f0f0f, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd15, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '09:30:00', 'ENTREGADO', 3.0, 0.01, 90.00, 'Circuito Interior 60, Col. Del Valle, CDMX', '19.4167,-99.1727', {'Cafetera Programable': 1});
 
--- Venta 30: S002, Cliente Isabel Vargas, Laptop Oficina Básica
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)0d1e2f3a-4b5c-4679-f012-3456789012bc, 'LAPTOP_OFICINA', 'Laptop Oficina Básica', 1, 'S002', (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, '2025-05-30 11:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-30', (UUID)0d1e2f3a-4b5c-4679-f012-3456789012bc, 'LAPTOP_OFICINA', 'Laptop Oficina Básica', 1, (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, 'EN_TRANSITO');
+-- Venta 16 (Delta - Lámpara LED de Escritorio)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)10101010-1010-4010-8010-101010101010, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd01, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-27', '13:00:00', 'PENDIENTE', 0.5, 0.002, 25.00, 'Av. Reforma 100, Col. Juárez, CDMX', '19.4326,-99.1332', {'Lámpara LED de Escritorio': 1});
 
--- Venta 31: S003, Cliente Jorge Morales, Monitor 24" 144Hz
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)1e2f3a4b-5c6d-4780-a123-4567890123cd, 'MONITOR_144HZ', 'Monitor 24" 144Hz', 1, 'S003', (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, '2025-05-30 13:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-30', (UUID)1e2f3a4b-5c6d-4780-a123-4567890123cd, 'MONITOR_144HZ', 'Monitor 24" 144Hz', 1, (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-27', (UUID)10101010-1010-4010-8010-101010101010, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd01, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '13:00:00', 'PENDIENTE', 0.5, 0.002, 25.00, 'Av. Reforma 100, Col. Juárez, CDMX', '19.4326,-99.1332', {'Lámpara LED de Escritorio': 1});
 
--- Venta 32: S004, Cliente Juan Perez, Tableta Gráfica Digital
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)2f3a4b5c-6d7e-4891-b234-5678901234de, 'TABLET_GRAFICA', 'Tableta Gráfica Digital', 1, 'S004', (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, '2025-05-30 15:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-30', (UUID)2f3a4b5c-6d7e-4891-b234-5678901234de, 'TABLET_GRAFICA', 'Tableta Gráfica Digital', 1, (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'PENDIENTE');
+-- Venta 17 (Alpha - Disco SSD 2TB NVMe)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)11111111-1111-4111-8111-111111111112, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd02, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-28', '10:00:00', 'EN_PREPARACION', 0.1, 0.0001, 150.00, 'Calle del Sol 20, Col. Centro, Guadalajara', '20.6736,-103.3406', {'Disco SSD 2TB NVMe': 1});
 
--- Venta 33: S001, Cliente Maria Gomez, Cámara de Seguridad Interior
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)3a4b5c6d-7e8f-4902-c345-6789012345ef, 'CAMARA_SEGURIDAD_CASA', 'Cámara de Seguridad Interior', 1, 'S001', (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, '2025-05-31 09:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-05-31', (UUID)3a4b5c6d-7e8f-4902-c345-6789012345ef, 'CAMARA_SEGURIDAD_CASA', 'Cámara de Seguridad Interior', 1, (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-28', (UUID)11111111-1111-4111-8111-111111111112, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd02, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '10:00:00', 'EN_PREPARACION', 0.1, 0.0001, 150.00, 'Calle del Sol 20, Col. Centro, Guadalajara', '20.6736,-103.3406', {'Disco SSD 2TB NVMe': 1});
 
--- Venta 34: S002, Cliente Carlos Ruiz, Silla de Oficina Ergonómica
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)4b5c6d7e-8f9a-4013-d456-7890123456fa, 'SILLA_OFICINA_ERG', 'Silla de Oficina Ergonómica', 1, 'S002', (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, '2025-05-31 11:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-05-31', (UUID)4b5c6d7e-8f9a-4013-d456-7890123456fa, 'SILLA_OFICINA_ERG', 'Silla de Oficina Ergonómica', 1, (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, 'EN_TRANSITO');
+-- Venta 18 (Beta - Drone con Cámara 4K)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)22222222-2222-4222-8222-222222222223, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd03, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-28', '12:00:00', 'EN_TRANSITO', 1.0, 0.005, 700.00, 'Paseo de la Luna 50, Col. San Pedro, Monterrey', '25.6866,-100.3161', {'Drone con Cámara 4K': 1});
 
--- Venta 35: S003, Cliente Ana Lopez, Escritorio Ajustable en Altura
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)5c6d7e8f-9a0b-4124-e567-8901234567ab, 'ESCRITORIO_AJUSTABLE', 'Escritorio Ajustable en Altura', 1, 'S003', (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, '2025-05-31 13:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-05-31', (UUID)5c6d7e8f-9a0b-4124-e567-8901234567ab, 'ESCRITORIO_AJUSTABLE', 'Escritorio Ajustable en Altura', 1, (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-28', (UUID)22222222-2222-4222-8222-222222222223, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd03, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '12:00:00', 'EN_TRANSITO', 1.0, 0.005, 700.00, 'Paseo de la Luna 50, Col. San Pedro, Monterrey', '25.6866,-100.3161', {'Drone con Cámara 4K': 1});
 
--- Venta 36: S004, Cliente Luis Hernandez, Teclado Bluetooth Multi-dispositivo
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)6d7e8f9a-0b1c-4235-f678-9012345678cd, 'TECLADO_BT_MULTI', 'Teclado Bluetooth Multi-dispositivo', 1, 'S004', (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, '2025-05-31 15:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-05-31', (UUID)6d7e8f9a-0b1c-4235-f678-9012345678cd, 'TECLADO_BT_MULTI', 'Teclado Bluetooth Multi-dispositivo', 1, (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, 'ENTREGADO');
+-- Venta 19 (Gamma - Aspiradora Robot Inteligente)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)33333333-3333-4333-8333-333333333334, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd04, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-29', '09:00:00', 'ENTREGADO', 4.0, 0.02, 350.00, 'Blvd. Las Palmas 75, Col. Floresta, Puebla', '19.0414,-98.2063', {'Aspiradora Robot Inteligente': 1});
 
--- Venta 37: S001, Cliente Sofia Martinez, Mouse Gamer RGB Ligero
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)7e8f9a0b-1c2d-4346-a789-0123456789de, 'MOUSE_GAMER_RGB', 'Mouse Gamer RGB Ligero', 1, 'S001', (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, '2025-06-01 10:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-06-01', (UUID)7e8f9a0b-1c2d-4346-a789-0123456789de, 'MOUSE_GAMER_RGB', 'Mouse Gamer RGB Ligero', 1, (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-29', (UUID)33333333-3333-4333-8333-333333333334, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd04, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '09:00:00', 'ENTREGADO', 4.0, 0.02, 350.00, 'Blvd. Las Palmas 75, Col. Floresta, Puebla', '19.0414,-98.2063', {'Aspiradora Robot Inteligente': 1});
 
--- Venta 38: S002, Cliente Ricardo Garcia, SSD M.2 NVMe 1TB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)8f9a0b1c-2d3e-4457-b890-1234567890ef, 'SSD_M2_NVME_1TB', 'SSD M.2 NVMe 1TB', 1, 'S002', (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, '2025-06-01 12:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-06-01', (UUID)8f9a0b1c-2d3e-4457-b890-1234567890ef, 'SSD_M2_NVME_1TB', 'SSD M.2 NVMe 1TB', 1, (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, 'EN_TRANSITO');
+-- Venta 20 (Delta - Asador de Carbón Premium)
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)44444444-4444-4444-8444-444444444445, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd05, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-29', '14:00:00', 'PENDIENTE', 20.0, 0.2, 180.00, 'Plaza Mayor 15, Col. Independencia, Querétaro', '20.5912,-100.3878', {'Asador de Carbón Premium': 1});
 
--- Venta 39: S003, Cliente Laura Rodriguez, Memoria RAM DDR4 16GB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)9a0b1c2d-3e4f-4568-c901-2345678901fa, 'MEMORIA_RAM_16GB', 'Memoria RAM DDR4 16GB', 2, 'S003', (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, '2025-06-01 14:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-06-01', (UUID)9a0b1c2d-3e4f-4568-c901-2345678901fa, 'MEMORIA_RAM_16GB', 'Memoria RAM DDR4 16GB', 2, (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-29', (UUID)44444444-4444-4444-8444-444444444445, (UUID)c1b2c3d4-e5f6-7890-1234-567890abcd05, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '14:00:00', 'PENDIENTE', 20.0, 0.2, 180.00, 'Plaza Mayor 15, Col. Independencia, Querétaro', '20.5912,-100.3878', {'Asador de Carbón Premium': 1});
 
--- Venta 40: S004, Cliente Fernando Sanchez, Fuente de Poder 750W Certificada
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)0b1c2d3e-4f5a-4679-d012-3456789012ab, 'FUENTE_PODER_750W', 'Fuente de Poder 750W Certificada', 1, 'S004', (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, '2025-06-01 16:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-06-01', (UUID)0b1c2d3e-4f5a-4679-d012-3456789012ab, 'FUENTE_PODER_750W', 'Fuente de Poder 750W Certificada', 1, (UUID)a1b2c3d4-e5f6-4123-e456-7890abcdef01, 'PENDIENTE');
 
--- Venta 41: S001, Cliente Gabriela Diaz, Gabinete PC ATX con Cristal Templado
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)1c2d3e4f-5a6b-4780-e123-4567890123bc, 'GABINETE_ATX', 'Gabinete PC ATX con Cristal Templado', 1, 'S001', (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, '2025-06-02 09:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-06-02', (UUID)1c2d3e4f-5a6b-4780-e123-4567890123bc, 'GABINETE_ATX', 'Gabinete PC ATX con Cristal Templado', 1, (UUID)1a2b3c4d-5e6f-4234-a567-890abcdef012, 'ENTREGADO');
+-- Movimientos entre Sucursales (total 10)
+-- Estos movimientos simulan una transferencia entre sucursales.
+-- Para fines de las guías de envío, se usa NULL para cliente_id y se especifica la sucursal de destino.
 
--- Venta 42: S002, Cliente Manuel Torres, Ventilador CPU RGB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)2d3e4f5a-6b7c-4891-f234-5678901234cd, 'VENTILADOR_CPU', 'Ventilador CPU RGB', 1, 'S002', (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, '2025-06-02 11:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-06-02', (UUID)2d3e4f5a-6b7c-4891-f234-5678901234cd, 'VENTILADOR_CPU', 'Ventilador CPU RGB', 1, (UUID)2a3b4c5d-6e7f-4345-b678-90abcdef0123, 'EN_TRANSITO');
+-- Movimiento 1 (Alpha -> Beta): Webcam Full HD
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)a1a1a1a1-a1a1-41a1-81a1-a1a1a1a1a1a1, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-20', '10:30:00', 'EN_TRANSITO', 1.0, 0.001, 100.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Webcam Full HD': 5});
 
--- Venta 43: S003, Cliente Valentina Flores, Pasta Térmica Alta Conductividad
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)3e4f5a6b-7c8d-4902-a345-6789012345de, 'PASTA_TERMICA', 'Pasta Térmica Alta Conductividad', 1, 'S003', (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, '2025-06-02 13:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-06-02', (UUID)3e4f5a6b-7c8d-4902-a345-6789012345de, 'PASTA_TERMICA', 'Pasta Térmica Alta Conductividad', 1, (UUID)3a4b5c6d-7e8f-4456-c789-0abcdef01234, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-20', (UUID)a1a1a1a1-a1a1-41a1-81a1-a1a1a1a1a1a1, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '10:30:00', 'EN_TRANSITO', 1.0, 0.001, 100.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Webcam Full HD': 5});
 
--- Venta 44: S004, Cliente Diego Ramirez, Cables Modulares para Fuente PC
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)4f5a6b7c-8d9e-4013-b456-7890123456ef, 'CABLES_MODULARES_PC', 'Cables Modulares para Fuente PC', 1, 'S004', (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, '2025-06-02 15:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-06-02', (UUID)4f5a6b7c-8d9e-4013-b456-7890123456ef, 'CABLES_MODULARES_PC', 'Cables Modulares para Fuente PC', 1, (UUID)4a5b6c7d-8e9f-4567-d890-1234567890ab, 'ENTREGADO');
+-- Movimiento 2 (Beta -> Gamma): Estabilizador de Smartphone
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)b2b2b2b2-b2b2-42b2-82b2-b2b2b2b2b2b2, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-21', '11:00:00', 'EN_TRANSITO', 1.5, 0.003, 90.00, 'Sucursal Gamma - Monterrey', '25.6866,-100.3161', {'Estabilizador de Smartphone': 3});
 
--- Venta 45: S001, Cliente Isabel Vargas, Adaptador Wi-Fi USB Doble Banda
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)5a6b7c8d-9e0f-4124-c567-8901234567fa, 'ADAPTADOR_WIFI_USB', 'Adaptador Wi-Fi USB Doble Banda', 1, 'S001', (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, '2025-06-03 09:30:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-06-03', (UUID)5a6b7c8d-9e0f-4124-c567-8901234567fa, 'ADAPTADOR_WIFI_USB', 'Adaptador Wi-Fi USB Doble Banda', 1, (UUID)5a6b7c8d-9e0f-4678-e901-234567890abc, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-21', (UUID)b2b2b2b2-b2b2-42b2-82b2-b2b2b2b2b2b2, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '11:00:00', 'EN_TRANSITO', 1.5, 0.003, 90.00, 'Sucursal Gamma - Monterrey', '25.6866,-100.3161', {'Estabilizador de Smartphone': 3});
 
--- Venta 46: S002, Cliente Jorge Morales, Extensor de Red Mesh Wi-Fi
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)6b7c8d9e-0f1a-4235-d678-9012345678ab, 'EXTENSOR_RED_MESH', 'Extensor de Red Mesh Wi-Fi', 1, 'S002', (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, '2025-06-03 11:30:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-06-03', (UUID)6b7c8d9e-0f1a-4235-d678-9012345678ab, 'EXTENSOR_RED_MESH', 'Extensor de Red Mesh Wi-Fi', 1, (UUID)6a7b8c9d-0e1f-4789-f012-34567890abcd, 'EN_TRANSITO');
+-- Movimiento 3 (Gamma -> Delta): Purificador de Aire Inteligente
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)c3c3c3c3-c3c3-43c3-83c3-c3c3c3c3c3c3, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-22', '09:00:00', 'EN_TRANSITO', 3.0, 0.015, 200.00, 'Sucursal Delta - Puebla', '19.0414,-98.2063', {'Purificador de Aire Inteligente': 2});
 
--- Venta 47: S003, Cliente Juan Perez, Switch Ethernet Gigabit 8 Puertos
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)7c8d9e0f-1a2b-4346-e789-0123456789bc, 'SWITCH_ETHERNET_8P', 'Switch Ethernet Gigabit 8 Puertos', 1, 'S003', (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, '2025-06-03 13:30:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-06-03', (UUID)7c8d9e0f-1a2b-4346-e789-0123456789bc, 'SWITCH_ETHERNET_8P', 'Switch Ethernet Gigabit 8 Puertos', 1, (UUID)3d70653d-24ed-4f7f-83a3-d73187a02c31, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-22', (UUID)c3c3c3c3-c3c3-43c3-83c3-c3c3c3c3c3c3, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '09:00:00', 'EN_TRANSITO', 3.0, 0.015, 200.00, 'Sucursal Delta - Puebla', '19.0414,-98.2063', {'Purificador de Aire Inteligente': 2});
 
--- Venta 48: S004, Cliente Maria Gomez, Cable Recarga USB-C a USB-C
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)8d9e0f1a-2b3c-4457-f890-1234567890cd, 'CABLE_RECARGA_USB_C', 'Cable Recarga USB-C a USB-C', 2, 'S004', (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, '2025-06-03 15:30:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-06-03', (UUID)8d9e0f1a-2b3c-4457-f890-1234567890cd, 'CABLE_RECARGA_USB_C', 'Cable Recarga USB-C a USB-C', 2, (UUID)9a0b1c2d-3e4f-5678-90ab-cdef01234567, 'PENDIENTE');
+-- Movimiento 4 (Delta -> Alpha): Kit de Jardinería Completo
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d4d4d4d4-d4d4-44d4-84d4-d4d4d4d4d4d4, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-23', '14:00:00', 'EN_TRANSITO', 10.0, 0.05, 150.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Kit de Jardinería Completo': 4});
 
--- Venta 49: S001, Cliente Carlos Ruiz, Convertidor DisplayPort a HDMI
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)9e0f1a2b-3c4d-4568-a901-2345678901de, 'CONVERTIDOR_DP_HDMI', 'Convertidor DisplayPort a HDMI', 1, 'S001', (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, '2025-06-04 10:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-06-04', (UUID)9e0f1a2b-3c4d-4568-a901-2345678901de, 'CONVERTIDOR_DP_HDMI', 'Convertidor DisplayPort a HDMI', 1, (UUID)f8e7d6c5-b4a3-2109-8765-4321fedcba98, 'ENTREGADO');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-23', (UUID)d4d4d4d4-d4d4-44d4-84d4-d4d4d4d4d4d4, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '14:00:00', 'EN_TRANSITO', 10.0, 0.05, 150.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Kit de Jardinería Completo': 4});
 
--- Venta 50: S002, Cliente Ana Lopez, Adaptador VGA a HDMI con Audio
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)0f1a2b3c-4d5e-4679-b012-3456789012ef, 'ADAPTADOR_VGA_HDMI', 'Adaptador VGA a HDMI con Audio', 1, 'S002', (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, '2025-06-04 12:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-06-04', (UUID)0f1a2b3c-4d5e-4679-b012-3456789012ef, 'ADAPTADOR_VGA_HDMI', 'Adaptador VGA a HDMI con Audio', 1, (UUID)f1a2b3c4-d5e6-4890-a234-567890abcdef, 'EN_TRANSITO');
+-- Movimiento 5 (Alpha -> Gamma): Router Wi-Fi 6
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)e5e5e5e5-e5e5-45e5-85e5-e5e5e5e5e5e5, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-24', '10:00:00', 'EN_TRANSITO', 2.1, 0.004, 60.00, 'Sucursal Gamma - Monterrey', '25.6866,-100.3161', {'Router Wi-Fi 6': 3});
 
--- Venta 51: S003, Cliente Luis Hernandez, Tarjeta de Sonido Externa USB
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)1a2b3c4d-5e6f-4780-c123-4567890123fa, 'TARJETA_SONIDO_USB', 'Tarjeta de Sonido Externa USB', 1, 'S003', (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, '2025-06-04 14:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S003', '2025-06-04', (UUID)1a2b3c4d-5e6f-4780-c123-4567890123fa, 'TARJETA_SONIDO_USB', 'Tarjeta de Sonido Externa USB', 1, (UUID)e1f2a3b4-c5d6-4e78-f901-23456789abcd, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-24', (UUID)e5e5e5e5-e5e5-45e5-85e5-e5e5e5e5e5e5, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000003, '10:00:00', 'EN_TRANSITO', 2.1, 0.004, 60.00, 'Sucursal Gamma - Monterrey', '25.6866,-100.3161', {'Router Wi-Fi 6': 3});
 
--- Venta 52: S004, Cliente Sofia Martinez, Cámara Web Full HD con Micrófono
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)2b3c4d5e-6f7a-4891-d234-5678901234ab, 'CAMARA_WEB_FULLHD', 'Cámara Web Full HD con Micrófono', 1, 'S004', (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, '2025-06-04 16:00:00', 'ENTREGADO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S004', '2025-06-04', (UUID)2b3c4d5e-6f7a-4891-d234-5678901234ab, 'CAMARA_WEB_FULLHD', 'Cámara Web Full HD con Micrófono', 1, (UUID)d1c2b3a4-e5f6-4789-b012-34567890efab, 'ENTREGADO');
+-- Movimiento 6 (Beta -> Alpha): Tarjeta Gráfica RTX 4090
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)f6f6f6f6-f6f6-46f6-86f6-f6f6f6f6f6f6, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000002, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-25', '11:00:00', 'EN_TRANSITO', 2.0, 0.008, 1000.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Tarjeta Gráfica RTX 4090': 1});
 
--- Venta 53: S001, Cliente Ricardo Garcia, Mini PC Intel NUC
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)3c4d5e6f-7a8b-4902-e345-6789012345bc, 'MINI_PC_INTEL', 'Mini PC Intel NUC', 1, 'S001', (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, '2025-06-05 09:00:00', 'PENDIENTE');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S001', '2025-06-05', (UUID)3c4d5e6f-7a8b-4902-e345-6789012345bc, 'MINI_PC_INTEL', 'Mini PC Intel NUC', 1, (UUID)c1b2a3d4-e5f6-4901-c234-567890abcdef, 'PENDIENTE');
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-25', (UUID)f6f6f6f6-f6f6-46f6-86f6-f6f6f6f6f6f6, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '11:00:00', 'EN_TRANSITO', 2.0, 0.008, 1000.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Tarjeta Gráfica RTX 4090': 1});
 
--- Venta 54: S002, Cliente Laura Rodriguez, Raspberry Pi 4 Model B
-INSERT INTO guias_envio_por_id (guia_id, articulo_id, nombre_articulo, cantidad_vendida, sucursal_origen_id, cliente_id, fecha_venta, estado_envio) VALUES ((UUID)4d5e6f7a-8b9c-4013-f456-7890123456cd, 'CEREBRO_RASPBERRY', 'Raspberry Pi 4 Model B', 1, 'S002', (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, '2025-06-05 11:00:00', 'EN_TRANSITO');
-INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, articulo_id, nombre_articulo, cantidad_vendida, cliente_id, estado_envio) VALUES ('S002', '2025-06-05', (UUID)4d5e6f7a-8b9c-4013-f456-7890123456cd, 'CEREBRO_RASPBERRY', 'Raspberry Pi 4 Model B', 1, (UUID)b1a2c3d4-e5f6-4012-d345-67890abcdef0, 'EN_TRANSITO');
+-- Movimiento 7 (Gamma -> Alpha): Estufa de Inducción
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)a7a7a7a7-a7a7-47a7-87a7-a7a7a7a7a7a7, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-26', '12:00:00', 'EN_TRANSITO', 12.0, 0.04, 450.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Estufa de Inducción': 1});
+
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-26', (UUID)a7a7a7a7-a7a7-47a7-87a7-a7a7a7a7a7a7, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, '12:00:00', 'EN_TRANSITO', 12.0, 0.04, 450.00, 'Sucursal Alpha - Ciudad de México', '19.4326,-99.1332', {'Estufa de Inducción': 1});
+
+-- Movimiento 8 (Delta -> Beta): Compresor de Aire Portátil
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)b8b8b8b8-b8b8-48b8-88b8-b8b8b8b8b8b8, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000004, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-27', '10:00:00', 'EN_TRANSITO', 10.0, 0.05, 180.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Compresor de Aire Portátil': 1});
+
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-27', (UUID)b8b8b8b8-b8b8-48b8-88b8-b8b8b8b8b8b8, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '10:00:00', 'EN_TRANSITO', 10.0, 0.05, 180.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Compresor de Aire Portátil': 1});
+
+-- Movimiento 9 (Alpha -> Delta): Impresora Multifuncional
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)c9c9c9c9-c9c9-49c9-89c9-c9c9c9c9c9c9, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000001, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '2025-05-28', '11:00:00', 'EN_TRANSITO', 8.0, 0.03, 120.00, 'Sucursal Delta - Puebla', '19.0414,-98.2063', {'Impresora Multifuncional': 2});
+
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000001, '2025-05-28', (UUID)c9c9c9c9-c9c9-49c9-89c9-c9c9c9c9c9c9, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000004, '11:00:00', 'EN_TRANSITO', 8.0, 0.03, 120.00, 'Sucursal Delta - Puebla', '19.0414,-98.2063', {'Impresora Multifuncional': 2});
+
+-- Movimiento 10 (Gamma -> Beta): Lavadora Carga Frontal
+INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d0d0d0d0-d0d0-40d0-80d0-d0d0d0d0d0d0, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000003, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '2025-05-29', '13:00:00', 'EN_TRANSITO', 60.0, 0.6, 600.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Lavadora Carga Frontal': 1});
+
+INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+VALUES ((UUID)d1a1b1c1-1001-4111-8111-000000000003, '2025-05-29', (UUID)d0d0d0d0-d0d0-40d0-80d0-d0d0d0d0d0d0, NULL, (UUID)d1a1b1c1-1001-4111-8111-000000000002, '13:00:00', 'EN_TRANSITO', 60.0, 0.6, 600.00, 'Sucursal Beta - Guadalajara', '20.6736,-103.3406', {'Lavadora Carga Frontal': 1});
