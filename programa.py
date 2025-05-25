@@ -1,9 +1,9 @@
-import os
 import socket
 import threading
+from datetime import datetime
+import os
 import sys
 import netifaces
-from datetime import datetime
 
 # --- Configuración Global ---
 CONFIG_FILE = "config.txt"
@@ -43,31 +43,34 @@ def get_node_info():
                                 return MY_ID, MY_IP, MY_PORT
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
-        raise Exception("No se encontró configuración para esta IP local")
+
     except FileNotFoundError:
         print(f"Error: Archivo '{CONFIG_FILE}' no encontrado")
         sys.exit(1)
 
-# --- Funciones de Almacenamiento ---
+    raise Exception("No se encontró configuración para esta IP local")
+
 def store_message(message):
     if MY_ID is None:
         return
+
     filename = f"mensajes_{MY_ID}.txt"
     try:
         if not os.path.exists(filename):
-            open(filename, "w").close()
-        with open(filename, "a", encoding="utf-8") as f:
+            open(filename, 'w').close()
+
+        with open(filename, "a", encoding='utf-8') as f:
             f.write(message + "\n")
-            print(f"Mensaje almacenado en {filename}")
     except Exception as e:
         print(f"Error al guardar mensaje: {e}")
 
 # --- Funciones de Red ---
 def receive_messages(my_id, my_port):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('0.0.0.0', my_port))
-    server_socket.listen()
-    print(f"Nodo {my_id} está escuchando en el puerto {my_port}...")
+    server_socket.bind(("0.0.0.0", my_port))
+    server_socket.listen(5)
+    print(f"Nodo {my_id}: Escuchando en el puerto {my_port}...")
+
     while True:
         client_socket, addr = server_socket.accept()
         threading.Thread(target=handle_connection, args=(client_socket, my_id)).start()
@@ -77,11 +80,11 @@ def handle_connection(client_socket, my_id):
         message_data = client_socket.recv(1024).decode('utf-8')
         if message_data:
             sender_id, message_with_timestamp = message_data.split(":", 1)
-            timestamp, message = message_with_timestamp.split("||", 1)
+            timestamp, message = message_with_timestamp.split("|", 1)
             full_message = f"[{get_timestamp()}] Nodo {sender_id}: {message}"
             print(full_message)
-            store_message(f"[{timestamp}] Nodo {sender_id}: {message} (Recibido)")
-            response = f"Recibido por Nodo {my_id} a las {get_timestamp()}"
+            store_message(f"[{timestamp}] Nodo {sender_id}: {message}")
+            response = f"RECIBIDO por Nodo {my_id} a las {get_timestamp()}"
             client_socket.sendall(response.encode('utf-8'))
     except Exception as e:
         print(f"Nodo {my_id}: Error al recibir mensaje: {e}")
@@ -94,91 +97,90 @@ def send_message(my_id, target_name, target_ip, target_port, message_text):
             client_socket.settimeout(5)
             client_socket.connect((target_ip, target_port))
             timestamp = get_timestamp()
-            full_message = f"{my_id}:{timestamp}||{message_text}"
+            full_message = f"{my_id}:{timestamp}|{message_text}"
             client_socket.sendall(full_message.encode('utf-8'))
-            print(f"[{timestamp}] Nodo {my_id}: {message_text} (Enviado)")
             store_message(f"[{timestamp}] Nodo {my_id}: {message_text} (Enviado)")
             response = client_socket.recv(1024).decode('utf-8')
             print(f"Respuesta de {target_name}: {response}")
+    except socket.timeout:
+        print(f"Error: Tiempo de espera agotado al conectar a {target_ip}:{target_port}")
+    except ConnectionRefusedError:
+        print(f"Error: Conexión rechazada por {target_ip}:{target_port}")
     except Exception as e:
         print(f"Nodo {my_id}: Error al enviar mensaje: {e}")
 
-# --- Funciones del Sistema Distribuido ---
-def consultar_inventario_local():
-    print("[Funcionalidad en desarrollo] Consultar inventario local")
+# --- Funciones para cada inciso (aún sin implementar) ---
+def distribuir_articulos():
+    print("[Función distribuir_articulos] Aquí implementa la lógica para distribuir artículos automáticamente entre sucursales.")
 
-def consultar_inventario_distribuido():
-    print("[Funcionalidad en desarrollo] Consultar inventario distribuido")
-
-def agregar_articulo_distribuido():
-    print("[Funcionalidad en desarrollo] Agregar artículo al inventario distribuido")
-
-def consultar_clientes():
-    print("[Funcionalidad en desarrollo] Consultar lista de clientes")
-
-def actualizar_cliente():
-    print("[Funcionalidad en desarrollo] Agregar/Actualizar cliente")
+def consultar_actualizar_clientes():
+    print("[Función consultar_actualizar_clientes] Aquí implementa la lógica para consultar y actualizar la lista de clientes distribuida.")
 
 def comprar_articulo():
-    print("[Funcionalidad en desarrollo] Comprar artículo con exclusión mutua")
+    print("[Función comprar_articulo] Aquí implementa la compra con exclusión mutua, generación y guardado de guía de envío, y actualización de inventario.")
 
-def ver_guias_envio():
-    print("[Funcionalidad en desarrollo] Ver guías de envío generadas")
+def agregar_articulos():
+    print("[Función agregar_articulos] Aquí implementa la lógica para agregar artículos al inventario distribuido y distribuir equitativamente.")
 
-def simular_falla_sucursal():
-    print("[Funcionalidad en desarrollo] Simular falla de sucursal")
+def actualizar_con_consenso():
+    print("[Función actualizar_con_consenso] Aquí implementa la actualización con consenso para datos de inventario, clientes, etc.")
 
-def forzar_eleccion_maestro():
-    print("[Funcionalidad en desarrollo] Forzar elección de nuevo nodo maestro")
+def redistribuir_falla():
+    print("[Función redistribuir_falla] Aquí implementa la redistribución de artículos si una sucursal falla y actualizar la información.")
 
-# --- Menú Interactivo del Sistema Distribuido ---
-def main_menu():
+def eleccion_nodo_maestro():
+    print("[Función eleccion_nodo_maestro] Aquí implementa la elección automática si el nodo maestro falla.")
+
+# --- Menú ---
+def menu(my_id):
     while True:
-        print("\n=== MENÚ PRINCIPAL DEL SISTEMA DISTRIBUIDO DE INVENTARIO ===")
-        print("1. Consultar inventario local")
-        print("2. Consultar inventario distribuido")
-        print("3. Agregar artículo al inventario distribuido")
-        print("4. Consultar lista de clientes")
-        print("5. Agregar/Actualizar cliente")
-        print("6. Comprar artículo (exclusión mutua)")
-        print("7. Ver guías de envío generadas")
-        print("8. Simular falla de sucursal")
-        print("9. Forzar elección de nuevo nodo maestro")
+        print("\n--- MENÚ PRINCIPAL ---")
+        print("1. Distribuir artículos entre sucursales (Nodo maestro)")
+        print("2. Consultar y actualizar lista de clientes distribuida")
+        print("3. Comprar artículo (con exclusión mutua y guía de envío)")
+        print("4. Agregar artículos al inventario distribuido")
+        print("5. Actualizar datos con consenso")
+        print("6. Redistribuir artículos en caso de falla de sucursal")
+        print("7. Elección de nodo maestro en caso de falla")
         print("0. Salir")
 
         opcion = input("Selecciona una opción: ").strip()
 
-        if opcion == "1":
-            consultar_inventario_local()
-        elif opcion == "2":
-            consultar_inventario_distribuido()
-        elif opcion == "3":
-            agregar_articulo_distribuido()
-        elif opcion == "4":
-            consultar_clientes()
-        elif opcion == "5":
-            actualizar_cliente()
-        elif opcion == "6":
+        if opcion == '1':
+            distribuir_articulos()
+        elif opcion == '2':
+            consultar_actualizar_clientes()
+        elif opcion == '3':
             comprar_articulo()
-        elif opcion == "7":
-            ver_guias_envio()
-        elif opcion == "8":
-            simular_falla_sucursal()
-        elif opcion == "9":
-            forzar_eleccion_maestro()
-        elif opcion == "0":
-            print("Saliendo del sistema...")
-            break
+        elif opcion == '4':
+            agregar_articulos()
+        elif opcion == '5':
+            actualizar_con_consenso()
+        elif opcion == '6':
+            redistribuir_falla()
+        elif opcion == '7':
+            eleccion_nodo_maestro()
+        elif opcion == '0':
+            print("Saliendo...")
+            os._exit(0)
         else:
-            print("Opción no válida. Intenta de nuevo.")
+            print("Opción inválida, intenta de nuevo.")
 
-# --- Programa Principal ---
+# --- Entrada principal ---
 if __name__ == "__main__":
     try:
         my_id, my_ip, my_port = get_node_info()
-        threading.Thread(target=receive_messages, args=(my_id, my_port), daemon=True).start()
-        main_menu()
-    except KeyboardInterrupt:
-        print("\nPrograma interrumpido por el usuario.")
+        print(f"Nodo {my_id} iniciado en {my_ip}:{my_port}")
+
+        receive_thread = threading.Thread(
+            target=receive_messages,
+            args=(my_id, my_port),
+            daemon=True
+        )
+        receive_thread.start()
+
+        menu(my_id)
+
     except Exception as e:
-        print(f"Error en ejecución principal: {e}")
+        print(f"Error al iniciar el nodo: {e}")
+
