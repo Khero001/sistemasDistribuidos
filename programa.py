@@ -1,4 +1,4 @@
-esto ya esta import os
+import os
 import socket
 import threading
 import sys
@@ -173,7 +173,7 @@ def main_menu():
             print("Opción no válida. Intenta de nuevo.")
 
 # --- Programa Principal ---
-if _name_ == "_main_":
+if __name__ == "__main__":
     try:
         my_id, my_ip, my_port = get_node_info()
         threading.Thread(target=receive_messages, args=(my_id, my_port), daemon=True).start()
