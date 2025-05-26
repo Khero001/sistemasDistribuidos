@@ -138,7 +138,6 @@ def ver_guias_envio():
     sub_opcion = input("Seleccione una opción (a/b/c): ").lower()
     if sub_opcion == 'a':
         guia_id_str = input("Ingrese el ID de la guía de envío (UUID): ")
-        print("_"+guia_id_str+"_")
         try:
             gestion.ver_guias_envio_generadas(guia_id=guia_id_str)
         except ValueError:
@@ -147,9 +146,8 @@ def ver_guias_envio():
         sucursal_id_str = input("Ingrese el ID de la sucursal de origen (UUID): ")
         fecha_str = input("Ingrese la fecha (YYYY-MM-DD): ")
         try:
-            sucursal_id = uuid.UUID(sucursal_id_str)
             fecha = datetime.datetime.strptime(fecha_str, '%Y-%m-%d').date()
-            gestion.ver_guias_envio_generadas(sucursal_origen_id=sucursal_id, fecha=fecha)
+            gestion.ver_guias_envio_generadas(sucursal_origen_id=sucursal_id_str, fecha=fecha)
         except ValueError:
             print("ID de sucursal o fecha inválidos. Asegúrese de ingresar un UUID válido y una fecha en formato YYYY-MM-DD.")
     elif sub_opcion == 'c':
