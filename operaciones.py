@@ -49,9 +49,9 @@ class CassandraOperations:
             return False
 
     def seleccionar_sucursal_por_id(self, sucursal_id):
-        query = "SELECT * FROM sucursales WHERE sucursal_id = ?"
+        query = "SELECT * FROM sucursales WHERE sucursal_id = %s" % {sucursal_id} 
         try:
-            row = self.session.execute(query, (sucursal_id,)).one()
+            row = self.session.execute(query).one()
             return row
         except Exception as e:
             print(f"Error al seleccionar sucursal por ID: {e}")
