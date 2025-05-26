@@ -259,6 +259,7 @@ if __name__ == "__main__":
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
         print("{"+gestion.obtener_sucursal_id('192.168.1.101')+"}")
+        gestion.consultar_inventario_local(gestion.obtener_sucursal_id('192.168.1.101'))
         # Listos 1,2,3,4,6
         # faltantes 5,7
 
