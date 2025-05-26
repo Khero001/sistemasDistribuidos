@@ -216,6 +216,7 @@ class GestionInventario:
             # Por simplicidad, se mostrará un mensaje para este caso.
             print("  Para ver todas las guías, necesitarías una consulta que escanee guias_envio_por_id,")
             print("  lo cual no es óptimo para Cassandra. Por favor, especifica una sucursal y fecha, o un ID de guía.")
+    def test():
 
 
 if __name__ == "__main__":
@@ -239,68 +240,68 @@ if __name__ == "__main__":
         # --- Pruebas de funcionalidades ---
 
         # 1. Consultar inventario local
-        gestion.consultar_inventario_local(SUCURSAL_ALPHA_ID)
+        # gestion.consultar_inventario_local(SUCURSAL_ALPHA_ID)
 
         # 2. Consultar inventario distribuido
-        gestion.consultar_inventario_distribuido()
+        # gestion.consultar_inventario_distribuido()
 
         # 3. Agregar artículo al inventario distribuido
-        gestion.agregar_articulo_a_inventario_distribuido(
-            SUCURSAL_BETA_ID,
-            'Termo Inteligente',
-            'Termo con pantalla LED para temperatura',
-            50,
-            'unidades',
-            0.005
-        )
-        gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
+        # gestion.agregar_articulo_a_inventario_distribuido(
+        #     SUCURSAL_BETA_ID,
+        #     'Termo Inteligente',
+        #     'Termo con pantalla LED para temperatura',
+        #     50,
+        #     'unidades',
+        #     0.005
+        # )
+        # gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
 
         # 4. Consultar sucursales
-        gestion.consultar_sucursales()
+        # gestion.consultar_sucursales()
 
         # 5. Agregar sucursales
-        gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
-        gestion.consultar_sucursales() # Verificar la adición
+        # gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
+        # gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
-        gestion.consultar_lista_clientes()
+        # gestion.consultar_lista_clientes()
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
-        nuevo_cliente_id = gestion.agregar_actualizar_cliente(
-            nombre='Nueva',
-            apellido='Cliente',
-            direccion='Calle de Prueba 1, Prueba',
-            telefono='5500000000',
-            email='nueva.cliente@example.com'
-        )
-        gestion.consultar_lista_clientes() # Verificar la adición
+        # nuevo_cliente_id = gestion.agregar_actualizar_cliente(
+        #     nombre='Nueva',
+        #     apellido='Cliente',
+        #     direccion='Calle de Prueba 1, Prueba',
+        #     telefono='5500000000',
+        #     email='nueva.cliente@example.com'
+        # )
+        # gestion.consultar_lista_clientes() # Verificar la adición
 
         # Actualizar un cliente existente (usando un ID de test_data.cql)
-        cliente_actualizar_id = uuid.UUID('c1b2c3d4-e5f6-7890-1234-567890abcd01') # Ana Torres
-        gestion.agregar_actualizar_cliente(
-            cliente_id=cliente_actualizar_id,
-            telefono='5599887766',
-            email='ana.torres.new@email.com'
-        )
+        # cliente_actualizar_id = uuid.UUID('c1b2c3d4-e5f6-7890-1234-567890abcd01') # Ana Torres
+        # gestion.agregar_actualizar_cliente(
+        #     cliente_id=cliente_actualizar_id,
+        #     telefono='5599887766',
+        #     email='ana.torres.new@email.com'
+        # )
         # Consultar el cliente actualizado para verificar
-        print("\n--- Cliente Actualizado (Ana Torres) ---")
-        ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
-        if ana_torres:
-            print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
+        # print("\n--- Cliente Actualizado (Ana Torres) ---")
+        # ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
+        # if ana_torres:
+        #     print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
 
         # 8. Ver guías de envío generadas
         # Ver una guía específica
-        gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
+        # gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
 
         # Ver guías de una sucursal y fecha
-        gestion.ver_guias_envio_generadas(
-            sucursal_origen_id=SUCURSAL_ALPHA_ID,
-            fecha=FECHA_GUIA_TEST_1
-        )
+        # gestion.ver_guias_envio_generadas(
+        #     sucursal_origen_id=SUCURSAL_ALPHA_ID,
+        #     fecha=FECHA_GUIA_TEST_1
+        # )
 
         # Intenta ver todas las guías (mostrará el mensaje de advertencia)
-        gestion.ver_guias_envio_generadas()
+        # gestion.ver_guias_envio_generadas()
 
     finally:
         print("\nCerrando conexiones...")
