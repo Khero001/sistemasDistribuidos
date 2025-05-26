@@ -111,9 +111,7 @@ def send_message(my_id, target_name, target_ip, target_port, message_text):
 
 # --- Funciones del Sistema Distribuido ---
 def consultar_inventario_local():
-    #global sucursal_id
-    print("{"+sucursal_id+"}")
-    #gestion.consultar_inventario_local(sucursal_id)
+    gestion.consultar_inventario_local(sucursal_id)
 
 def consultar_inventario_distribuido():
     gestion.consultar_inventario_distribuido()
