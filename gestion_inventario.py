@@ -106,7 +106,7 @@ class GestionInventario:
         """
         sucursal_id = self.db_ops.obtener_sucursal_id_por_ip(ip)
         if (id != None):
-            return sucursal_id
+            return str(sucursal_id)
         else:
             print("No se encontraron sucursales.")
             return None
