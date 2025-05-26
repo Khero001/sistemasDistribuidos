@@ -43,14 +43,13 @@ def get_node_info():
                                 MY_IP = node_ip
                                 MY_PORT = node_port
                                 print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
-                                return MY_ID, MY_IP, MY_PORT
+                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
+                                sucursal_id = gestion.obtener_sucursal_id(MY_IP)
+                                print (f"ID de sucursal {sucursal_id}")
+                                return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
         raise Exception("No se encontró configuración para esta IP local")
-
-        gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
-        sucursal_id = gestion.obtener_sucursal_id(MY_IP)
-        print (f"ID de sucursal {sucursal_id}")
     except FileNotFoundError:
         print(f"Error: Archivo '{CONFIG_FILE}' no encontrado")
         sys.exit(1)
@@ -184,9 +183,8 @@ def main_menu():
 # --- Programa Principal ---
 if __name__ == "__main__":
     try:
-        my_id, my_ip, my_port = get_node_info()
+        my_id, my_ip, my_port, gestion, sucursal_id = get_node_info()
         threading.Thread(target=receive_messages, args=(my_id, my_port), daemon=True).start()
-        gestion = GestionInventario(contact_points=['192.168.1.101'], keyspace='inventario_logistica')
         main_menu()
     except KeyboardInterrupt:
         print("\nPrograma interrumpido por el usuario.")
