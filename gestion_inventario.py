@@ -62,7 +62,7 @@ class GestionInventario:
 
     def agregar_articulo_a_inventario_distribuido(self, sucursal_id, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento):
         """
-        Agrega o actualiza un artículo en el inventario de una sucursal específica.
+        Agrega un artículo en el inventario de una sucursal específica.
         Genera un nuevo UUID para el artículo si no se especifica uno.
         """
         print(f"\n--- Agregando/Actualizando Artículo en Inventario Distribuido ---")
