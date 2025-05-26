@@ -378,6 +378,20 @@ class CassandraOperations:
             print(f"Error al seleccionar guía específica por sucursal y fecha: {e}")
             return None
 
+    def seleccionar_todas_guias_envio(self):
+        """
+        Selecciona todas las guías de envío de la tabla guias_envio_por_id.
+        ADVERTENCIA: Esta operación puede ser muy ineficiente y no es recomendada
+        para tablas grandes en Cassandra.
+        """
+        query = "SELECT * FROM guias_envio_por_id"
+        try:
+            rows = self.session.execute(query)
+            return rows # Retorna un ResultSet iterable
+        except Exception as e:
+            print(f"Error al seleccionar todas las guías de envío: {e}")
+            return None
+
     def actualizar_guia_envio_por_sucursal_fecha(self, sucursal_origen_id, fecha_venta, guia_id, cliente_id=None, sucursal_destino_id=None, hora_venta=None, estado_envio=None, peso_kg=None, volumen_m3=None, valor_declarado=None, direccion_destino=None, coordenadas_destino=None, articulos_enviados=None):
         updates = []
         params = []

@@ -217,7 +217,17 @@ class GestionInventario:
             # Por simplicidad, se mostrará un mensaje para este caso.
             print("  Para ver todas las guías, necesitarías una consulta que escanee guias_envio_por_id,")
             print("  lo cual no es óptimo para Cassandra. Por favor, especifica una sucursal y fecha, o un ID de guía.")
-
+            guias = self.db_ops.seleccionar_todas_guias_envio()
+            if guias and guias.current_rows:
+                for guia in guias:
+                    print(f"  - Guía ID: {guia.guia_id}")
+                    print(f"    Cliente ID: {guia.cliente_id if guia.cliente_id else 'N/A'}")
+                    print(f"    Sucursal Destino: {guia.sucursal_destino_id}")
+                    print(f"    Estado: {guia.estado_envio}")
+                    print(f"    Artículos: {guia.articulos_enviados}")
+                    print("-" * 30)
+            else:
+                print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
