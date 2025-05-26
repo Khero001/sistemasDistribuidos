@@ -49,7 +49,7 @@ class CassandraOperations:
             return False
 
     def seleccionar_sucursal_por_id(self, sucursal_id):
-        query = "SELECT * FROM sucursales WHERE sucursal_id = (UUID)%s" % {sucursal_id} 
+        query = "SELECT * FROM sucursales WHERE sucursal_id = (UUID)'%s'" % {sucursal_id} 
         try:
             row = self.session.execute(query).one()
             return row
