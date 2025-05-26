@@ -99,6 +99,17 @@ class GestionInventario:
                 print("-" * 30)
         else:
             print("No se encontraron sucursales.")
+    
+    def obtener_sucursal_id(self, ip):
+        """
+        Obtiene el id a partir una dirección ip
+        """
+        id = self.db_ops.obtener_sucursal_id_por_ip(ip)
+        if (id != None):
+            return id
+        else:
+            print("No se encontraron sucursales.")
+            return None
 
     def agregar_sucursal(self, nombre_sucursal, direccion_ip, ciudad):
         """
@@ -247,6 +258,7 @@ if __name__ == "__main__":
         GUIA_TEST_ID_1 = '11111111-1111-4111-8111-111111111111' # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
+        print(gestion.obtener_sucursal_id('192.168.1.101'))
         # Listos 1,2,3,4,6
         # faltantes 5,7
 
@@ -291,17 +303,17 @@ if __name__ == "__main__":
         # gestion.consultar_lista_clientes() # Verificar la adición
 
         # Actualizar un cliente existente (usando un ID de test_data.cql)
-        cliente_actualizar_id = 'c1b2c3d4-e5f6-7890-1234-567890abcd01' # Ana Torres
-        gestion.agregar_actualizar_cliente(
-            cliente_id=cliente_actualizar_id,
-            telefono='5599887766',
-            email='ana.torres.new@email.com'
-        )
+        # cliente_actualizar_id = 'c1b2c3d4-e5f6-7890-1234-567890abcd01' # Ana Torres
+        # gestion.agregar_actualizar_cliente(
+        #     cliente_id=cliente_actualizar_id,
+        #     telefono='5599887766',
+        #     email='ana.torres.new@email.com'
+        # )
         # Consultar el cliente actualizado para verificar
-        print("\n--- Cliente Actualizado (Ana Torres) ---")
-        ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
-        if ana_torres:
-            print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
+        # print("\n--- Cliente Actualizado (Ana Torres) ---")
+        # ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
+        # if ana_torres:
+        #     print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
 
         # 8. Ver guías de envío generadas
         # Ver una guía específica

@@ -461,6 +461,24 @@ class CassandraOperations:
             print(f"Error al ejecutar batch: {e}")
             return False
 
+    def obtener_sucursal_id_por_ip(self, direccion_ip):
+        """
+        Obtiene el sucursal_id de una sucursal dada su dirección IP.
+        Requiere un índice secundario en la columna 'direccion_ip' de la tabla 'sucursales'.
+        """
+        query = "SELECT sucursal_id FROM sucursales WHERE direccion_ip = '%ss'"%(direccion_ip)
+        try:
+            row = self.session.execute(query).one()
+            if row:
+                #print(f"Sucursal ID '{row.sucursal_id}' encontrada para la IP '{direccion_ip}'.")
+                return row.sucursal_id
+            else:
+                print(f"No se encontró sucursal para la IP: {direccion_ip}.")
+                return None
+        except Exception as e:
+            print(f"Error al obtener sucursal ID por IP: {e}")
+            return None
+
 if __name__ == "__main__":
     # Ejemplo de uso de operaciones.py
     # Asegúrate de que tu base de datos Cassandra esté corriendo

@@ -11,6 +11,8 @@ MESSAGES = []
 MY_ID = None
 MY_IP = None
 MY_PORT = None
+gestion = None
+sucursal_id = None
 ALL_NODES_INFO = {}
 
 # --- Funciones Utilitarias ---
@@ -177,6 +179,7 @@ if __name__ == "__main__":
     try:
         my_id, my_ip, my_port = get_node_info()
         threading.Thread(target=receive_messages, args=(my_id, my_port), daemon=True).start()
+        gestion = GestionInventario(contact_points=['192.168.1.101'], keyspace='inventario_logistica')
         main_menu()
     except KeyboardInterrupt:
         print("\nPrograma interrumpido por el usuario.")
