@@ -130,6 +130,32 @@ def comprar_articulo():
 
 def ver_guias_envio():
     print("[Funcionalidad en desarrollo] Ver guías de envío generadas")
+    # Solicitar inputs para las opciones de ver guías
+    print("Opciones para ver guías:")
+    print("  a. Ver una guía específica por ID")
+    print("  b. Ver guías por sucursal y fecha")
+    print("  c. Ver todas las guías (¡Advertencia: puede ser lento!)")
+    sub_opcion = input("Seleccione una opción (a/b/c): ").lower()
+    if sub_opcion == 'a':
+        guia_id_str = input("Ingrese el ID de la guía de envío (UUID): ")
+        try:
+            guia_id = uuid.UUID(guia_id_str)
+            self.ver_guias_envio_generadas(guia_id=guia_id)
+        except ValueError:
+            print("ID de guía inválido. Asegúrese de ingresar un UUID válido.")
+    elif sub_opcion == 'b':
+        sucursal_id_str = input("Ingrese el ID de la sucursal de origen (UUID): ")
+        fecha_str = input("Ingrese la fecha (YYYY-MM-DD): ")
+        try:
+            sucursal_id = uuid.UUID(sucursal_id_str)
+            fecha = datetime.datetime.strptime(fecha_str, '%Y-%m-%d').date()
+            self.ver_guias_envio_generadas(sucursal_origen_id=sucursal_id, fecha=fecha)
+        except ValueError:
+            print("ID de sucursal o fecha inválidos. Asegúrese de ingresar un UUID válido y una fecha en formato YYYY-MM-DD.")
+    elif sub_opcion == 'c':
+        self.ver_guias_envio_generadas()
+    else:
+        print("Opción no válida.")
 
 def simular_falla_sucursal():
     print("[Funcionalidad en desarrollo] Simular falla de sucursal")
