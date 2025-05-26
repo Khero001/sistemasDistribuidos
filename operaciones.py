@@ -467,6 +467,7 @@ class CassandraOperations:
         Requiere un índice secundario en la columna 'direccion_ip' de la tabla 'sucursales'.
         """
         query = "SELECT sucursal_id FROM sucursales WHERE direccion_ip = '%ss'"%(direccion_ip)
+        print ("intento query {"+query+"}")
         try:
             row = self.session.execute(query).one()
             if row:
