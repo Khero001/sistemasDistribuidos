@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS sucursales (
     ciudad TEXT
 );
 
+CREATE INDEX IF NOT EXISTS ON sucursales (direccion_ip);
+
 -- Tabla para almacenar artículos en cada sucursal
 -- La clave primaria compuesta (sucursal_id, articulo_id) permite consultar artículos específicos de una sucursal.
 -- sucursal_id es la clave de partición, distribuyendo los datos por sucursal.

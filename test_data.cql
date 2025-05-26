@@ -5,10 +5,10 @@ USE inventario_logistica;
 
 ---
 -- 1. Insertar datos en 'sucursales'
-INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000001, 'Sucursal Alpha', '192.168.1.1', 'Ciudad A');
-INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000002, 'Sucursal Beta', '192.168.1.2', 'Ciudad B');
-INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000003, 'Sucursal Gamma', '192.168.1.3', 'Ciudad C');
-INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000004, 'Sucursal Delta', '192.168.1.4', 'Ciudad D');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000001, 'Sucursal Alpha', '192.168.1.101', 'Ciudad A');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000002, 'Sucursal Beta', '192.168.1.102', 'Ciudad B');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000003, 'Sucursal Gamma', '192.168.1.96', 'Ciudad C');
+INSERT INTO sucursales (sucursal_id, nombre_sucursal, direccion_ip, ciudad) VALUES (d1a1b1c1-1001-4111-8111-000000000004, 'Sucursal Delta', '192.168.1.97', 'Ciudad D');
 
 ---
 -- 2. Insertar datos en 'articulos_por_sucursal'
