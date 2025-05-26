@@ -1,6 +1,7 @@
 import os
 import socket
 import threading
+import uuid
 import sys
 import netifaces
 from datetime import datetime
@@ -117,13 +118,34 @@ def consultar_inventario_distribuido():
     gestion.consultar_inventario_distribuido()
 
 def agregar_articulo_distribuido():
-    print("[Funcionalidad en desarrollo] Agregar artículo al inventario distribuido")
+    print("[Funcionalidad en desarrollo] agregar / artículo al inventario distribuido")
 
 def consultar_clientes():
     gestion.consultar_lista_clientes()
 
 def actualizar_cliente():
-    print("[Funcionalidad en desarrollo] Agregar/Actualizar cliente")
+    print("Ingresar los datos que se piden a continuación.")
+    print("Si se deja vacío algún campo se mantendrá igual.")
+    print("En el caso del ID, ingresarlo actualizará el usuario")
+    print("dejarlo vacío creará un nuevo cliente")
+
+    cli = input("Ingresar el ID del cliente: ")
+    name = input("Ingresar nombre del cliente: ")
+    ap = input("Ingresar apellido del cliente: ")
+    direc = input("Ingresar dirección del cliente: ")
+    tel = input("Ingresar teléfono del cliente: ")
+    mail = input("Ingresar correo electrónico del cliente: ")
+    try:
+        nuevo_cliente_id = gestion.agregar_actualizar_cliente(
+            cliente_id= None if cli == "" else cli,
+            nombre= None if name == "" else name,
+            apellido= None if ap == "" else ap,
+            direccion= None if direc == "" else direc,
+            telefono= None if tel == "" else tel,
+            email= None if mail == "" else mail
+        )
+    except ValueError:
+        print("Datos ingresados no válidos.")
 
 def comprar_articulo():
     print("[Funcionalidad en desarrollo] Comprar artículo con exclusión mutua")
