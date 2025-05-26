@@ -267,7 +267,7 @@ if __name__ == "__main__":
         # gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
-         gestion.consultar_lista_clientes()
+        gestion.consultar_lista_clientes()
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
