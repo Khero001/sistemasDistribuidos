@@ -217,7 +217,7 @@ class GestionInventario:
             print("  Para ver todas las guías, necesitarías una consulta que escanee guias_envio_por_id,")
             print("  lo cual no es óptimo para Cassandra. Por favor, especifica una sucursal y fecha, o un ID de guía.")
     def test():
-
+        self.consultar_sucursales()
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
@@ -237,6 +237,7 @@ if __name__ == "__main__":
         GUIA_TEST_ID_1 = uuid.UUID('11111111-1111-4111-8111-111111111111') # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
+        gestion.test()
         # --- Pruebas de funcionalidades ---
 
         # 1. Consultar inventario local
