@@ -4,6 +4,7 @@ import threading
 import sys
 import netifaces
 from datetime import datetime
+from gestion_inventario import GestionInventario
 
 # --- Configuración Global ---
 CONFIG_FILE = "config.txt"
