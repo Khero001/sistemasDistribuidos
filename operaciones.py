@@ -271,7 +271,7 @@ class CassandraOperations:
             return False
 
     def seleccionar_guia_envio_por_id(self, guia_id):
-        query = "SELECT * FROM guias_envio_por_id WHERE guia_id = %s"%(guia_id)
+        query = "SELECT * FROM guias_envio_por_id WHERE guia_id = (UUID)%s"%(guia_id)
         try:
             row = self.session.execute(query).one()
             return row
