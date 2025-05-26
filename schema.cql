@@ -1,135 +1,77 @@
--- Eliminar el Keyspace si existe para asegurar un despliegue limpio
--- ¡ADVERTENCIA! Esto borrará permanentemente todos los datos en este Keyspace.
+-- Elimina el keyspace si existe, para un reinicio limpio
 DROP KEYSPACE IF EXISTS inventario_logistica;
 
--- Crear el Keyspace
--- replication_factor = 3 con SimpleStrategy es una configuración común para clústeres
--- de un solo centro de datos, permitiendo tolerar la falla de hasta 1 nodo.
-CREATE KEYSPACE IF NOT EXISTS inventario_logistica
-WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
+-- Crea el keyspace
+CREATE KEYSPACE IF NOT EXISTS inventario_logistica WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
 
--- Usar el Keyspace
 USE inventario_logistica;
 
----
-
--- Tabla de Sucursales
--- Almacena información maestra de cada sucursal.
--- sucursal_id: Identificador único de la sucursal (UUID)
--- nombre_sucursal: Nombre descriptivo de la sucursal
--- direccion_ip: Dirección IP de la sucursal
--- ciudad: Ciudad donde se encuentra la sucursal
+-- Tabla para almacenar información sobre las sucursales
 CREATE TABLE IF NOT EXISTS sucursales (
-    sucursal_id uuid PRIMARY KEY, -- CAMBIADO A UUID
-    nombre_sucursal text,
-    direccion_ip text,
-    ciudad text
+    sucursal_id UUID PRIMARY KEY,
+    nombre_sucursal TEXT,
+    direccion_ip TEXT,
+    ciudad TEXT
 );
 
----
-
--- Tabla de Artículos por Sucursal
--- Almacena el inventario de artículos en cada sucursal.
--- sucursal_id: ID de la sucursal (UUID)
--- articulo_id: ID único del artículo (UUID)
--- nombre: Nombre del artículo
--- descripcion: Descripción detallada del artículo
--- cantidad: Cantidad actual del artículo en stock
--- unidad_medida: Unidad de medida del artículo (ej. "unidades", "kg", "litros")
--- capacidad_almacenamiento: Capacidad de almacenamiento requerida por unidad del artículo (ej. m3, litros)
+-- Tabla para almacenar artículos en cada sucursal
+-- La clave primaria compuesta (sucursal_id, articulo_id) permite consultar artículos específicos de una sucursal.
+-- sucursal_id es la clave de partición, distribuyendo los datos por sucursal.
 CREATE TABLE IF NOT EXISTS articulos_por_sucursal (
-    sucursal_id uuid, -- CONSISTENTE CON UUID
-    articulo_id uuid, -- CONSISTENTE CON UUID
-    nombre text,
-    descripcion text,
-    cantidad int,
-    unidad_medida text,
-    capacidad_almacenamiento float,
+    sucursal_id UUID,
+    articulo_id UUID,
+    nombre TEXT,
+    descripcion TEXT,
+    cantidad INT,
+    unidad_medida TEXT,
+    capacidad_almacenamiento FLOAT, -- Espacio que ocupa una unidad de este artículo (ej. m3)
     PRIMARY KEY ((sucursal_id), articulo_id)
 );
 
----
-
--- Tabla de Clientes
--- Almacena la información de los clientes.
--- cliente_id: ID único del cliente (UUID)
--- nombre: Nombre del cliente
--- apellido: Apellido del cliente
--- direccion: Dirección del cliente
--- telefono: Número de teléfono del cliente
--- email: Correo electrónico del cliente
+-- Tabla para almacenar información sobre los clientes
 CREATE TABLE IF NOT EXISTS clientes (
-    cliente_id uuid PRIMARY KEY, -- CONSISTENTE CON UUID
-    nombre text,
-    apellido text,
-    direccion text,
-    telefono text,
-    email text
+    cliente_id UUID PRIMARY KEY,
+    nombre TEXT,
+    apellido TEXT,
+    direccion TEXT,
+    telefono TEXT,
+    email TEXT
 );
 
----
-
--- Tabla de Guías de Envío por ID
--- Consulta principal por ID de guía de envío.
--- guia_id: ID único de la guía de envío (UUID)
--- cliente_id: ID del cliente asociado al envío (UUID)
--- sucursal_origen_id: ID de la sucursal de origen del envío (UUID)
--- sucursal_destino_id: ID de la sucursal de destino del envío (UUID)
--- fecha_venta: Fecha de creación de la guía (ej. fecha del pedido)
--- hora_venta: Hora de creación de la guía
--- estado_envio: Estado actual del envío (ej. 'PENDIENTE', 'EN_TRANSITO', 'ENTREGADO')
--- peso_kg: Peso total del envío en kilogramos
--- volumen_m3: Volumen total del envío en metros cúbicos
--- valor_declarado: Valor monetario declarado del envío
--- direccion_destino: Dirección completa de destino
--- coordenadas_destino: Coordenadas geográficas del destino
--- articulos_enviados: Mapa de nombres de artículos y sus cantidades
+-- Tabla para almacenar guías de envío, consultables por el ID de la guía
+-- Contiene todos los detalles de la guía, incluyendo un mapa de artículos enviados.
 CREATE TABLE IF NOT EXISTS guias_envio_por_id (
-    guia_id uuid PRIMARY KEY, -- CONSISTENTE CON UUID
-    cliente_id uuid,          -- CONSISTENTE CON UUID
-    sucursal_origen_id uuid,  -- CONSISTENTE CON UUID
-    sucursal_destino_id uuid, -- CONSISTENTE CON UUID
-    fecha_venta date,
-    hora_venta time,
-    estado_envio text,
-    peso_kg float,
-    volumen_m3 float,
-    valor_declarado float,
-    direccion_destino text,
-    coordenadas_destino text,
-    articulos_enviados map<text, int>
+    guia_id UUID PRIMARY KEY,
+    cliente_id UUID,
+    sucursal_origen_id UUID,
+    sucursal_destino_id UUID,
+    fecha_venta DATE,
+    hora_venta TIME,
+    estado_envio TEXT,
+    peso_kg FLOAT,
+    volumen_m3 FLOAT,
+    valor_declarado DECIMAL,
+    direccion_destino TEXT,
+    coordenadas_destino TEXT,
+    articulos_enviados MAP<TEXT, INT> -- Mapa de nombre_articulo -> cantidad
 );
 
----
-
--- Tabla de Guías de Envío por Sucursal y Fecha
--- Consulta optimizada para buscar guías desde una sucursal en una fecha específica.
--- sucursal_origen_id: ID de la sucursal de origen (UUID)
--- fecha_venta: Fecha de creación de la guía (parte de la clave de agrupación)
--- guia_id: ID de la guía (parte de la clave de agrupación, permite unicidad y orden)
--- cliente_id: ID del cliente asociado al envío (UUID)
--- sucursal_destino_id: ID de la sucursal de destino del envío (UUID)
--- hora_venta: Hora de creación de la guía
--- estado_envio: Estado actual del envío
--- peso_kg: Peso total del envío
--- volumen_m3: Volumen total del envío
--- valor_declarado: Valor monetario declarado
--- direccion_destino: Dirección completa de destino
--- coordenadas_destino: Coordenadas geográficas del destino
--- articulos_enviados: Mapa de nombres de artículos y sus cantidades
+-- Materialized view o tabla duplicada para consultar guías de envío por sucursal y fecha
+-- La clave de partición es (sucursal_origen_id, fecha_venta) para búsquedas eficientes.
+-- guia_id es la clave de agrupación para ordenar las guías dentro de una partición.
 CREATE TABLE IF NOT EXISTS guias_envio_por_sucursal_fecha (
-    sucursal_origen_id uuid, -- CONSISTENTE CON UUID
-    fecha_venta date,
-    guia_id uuid,             -- CONSISTENTE CON UUID
-    cliente_id uuid,          -- CONSISTENTE CON UUID
-    sucursal_destino_id uuid, -- CONSISTENTE CON UUID
-    hora_venta time,
-    estado_envio text,
-    peso_kg float,
-    volumen_m3 float,
-    valor_declarado float,
-    direccion_destino text,
-    coordenadas_destino text,
-    articulos_enviados map<text, int>,
+    sucursal_origen_id UUID,
+    fecha_venta DATE,
+    guia_id UUID,
+    cliente_id UUID,
+    sucursal_destino_id UUID,
+    hora_venta TIME,
+    estado_envio TEXT,
+    peso_kg FLOAT,
+    volumen_m3 FLOAT,
+    valor_declarado DECIMAL,
+    direccion_destino TEXT,
+    coordenadas_destino TEXT,
+    articulos_enviados MAP<TEXT, INT>, -- Mapa de nombre_articulo -> cantidad
     PRIMARY KEY ((sucursal_origen_id, fecha_venta), guia_id)
-);
+) WITH CLUSTERING ORDER BY (guia_id ASC); -- ¡CORRECCIÓN AQUÍ! Solo guia_id puede estar en CLUSTERING ORDER BY
