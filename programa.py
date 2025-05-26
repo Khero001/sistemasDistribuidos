@@ -20,7 +20,7 @@ def get_timestamp():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
 def get_node_info():
-    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO
+    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO, sucursal_id, gestion
     try:
         with open(CONFIG_FILE, "r") as f:
             for line in f:
@@ -46,6 +46,9 @@ def get_node_info():
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
         raise Exception("No se encontró configuración para esta IP local")
+
+        gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
+        sucursal_id = obtener_sucursal_id(MY_IP)
     except FileNotFoundError:
         print(f"Error: Archivo '{CONFIG_FILE}' no encontrado")
         sys.exit(1)
@@ -110,6 +113,7 @@ def consultar_inventario_local():
     print("[Funcionalidad en desarrollo] Consultar inventario local")
 
 def consultar_inventario_distribuido():
+    gestion.consultar_inventario_distribuido()
     print("[Funcionalidad en desarrollo] Consultar inventario distribuido")
 
 def agregar_articulo_distribuido():
