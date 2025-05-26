@@ -120,7 +120,7 @@ def agregar_articulo_distribuido():
     print("[Funcionalidad en desarrollo] Agregar artículo al inventario distribuido")
 
 def consultar_clientes():
-    print("[Funcionalidad en desarrollo] Consultar lista de clientes")
+    gestion.consultar_lista_clientes()
 
 def actualizar_cliente():
     print("[Funcionalidad en desarrollo] Agregar/Actualizar cliente")
