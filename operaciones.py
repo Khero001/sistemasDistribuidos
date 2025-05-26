@@ -470,7 +470,7 @@ class CassandraOperations:
         try:
             row = self.session.execute(query).one()
             if row:
-                #print(f"Sucursal ID '{row.sucursal_id}' encontrada para la IP '{direccion_ip}'.")
+                print(f"Sucursal ID '{row.sucursal_id}' encontrada para la IP '{direccion_ip}'.")
                 return row.sucursal_id
             else:
                 print(f"No se encontró sucursal para la IP: {direccion_ip}.")
