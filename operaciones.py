@@ -119,9 +119,9 @@ class CassandraOperations:
             return False
 
     def seleccionar_articulos_por_sucursal(self, sucursal_id):
-        query = "SELECT * FROM articulos_por_sucursal WHERE sucursal_id = ?"
+        query = "SELECT * FROM articulos_por_sucursal WHERE sucursal_id = %s" % (sucursal_id)
         try:
-            rows = self.session.execute(query, (sucursal_id,))
+            rows = self.session.execute(query)
             return rows
         except Exception as e:
             print(f"Error al seleccionar artículos por sucursal: {e}")
