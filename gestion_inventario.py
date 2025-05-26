@@ -281,27 +281,27 @@ if __name__ == "__main__":
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
-        nuevo_cliente_id = gestion.agregar_actualizar_cliente(
-            nombre='Nueva',
-            apellido='Cliente',
-            direccion='Calle de Prueba 1, Prueba',
-            telefono='5500000000',
-            email='nueva.cliente@example.com'
-        )
-        gestion.consultar_lista_clientes() # Verificar la adición
+        # nuevo_cliente_id = gestion.agregar_actualizar_cliente(
+        #     nombre='Nueva',
+        #     apellido='Cliente',
+        #     direccion='Calle de Prueba 1, Prueba',
+        #     telefono='5500000000',
+        #     email='nueva.cliente@example.com'
+        # )
+        # gestion.consultar_lista_clientes() # Verificar la adición
 
         # Actualizar un cliente existente (usando un ID de test_data.cql)
-        # cliente_actualizar_id = uuid.UUID('c1b2c3d4-e5f6-7890-1234-567890abcd01') # Ana Torres
-        # gestion.agregar_actualizar_cliente(
-        #     cliente_id=cliente_actualizar_id,
-        #     telefono='5599887766',
-        #     email='ana.torres.new@email.com'
-        # )
+        cliente_actualizar_id = 'c1b2c3d4-e5f6-7890-1234-567890abcd01' # Ana Torres
+        gestion.agregar_actualizar_cliente(
+            cliente_id=cliente_actualizar_id,
+            telefono='5599887766',
+            email='ana.torres.new@email.com'
+        )
         # Consultar el cliente actualizado para verificar
-        # print("\n--- Cliente Actualizado (Ana Torres) ---")
-        # ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
-        # if ana_torres:
-        #     print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
+        print("\n--- Cliente Actualizado (Ana Torres) ---")
+        ana_torres = gestion.db_ops.seleccionar_cliente_por_id(cliente_actualizar_id)
+        if ana_torres:
+            print(f"ID: {ana_torres.cliente_id}, Nombre: {ana_torres.nombre} {ana_torres.apellido}, Teléfono: {ana_torres.telefono}, Email: {ana_torres.email}")
 
         # 8. Ver guías de envío generadas
         # Ver una guía específica
