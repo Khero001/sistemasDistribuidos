@@ -247,8 +247,8 @@ if __name__ == "__main__":
         GUIA_TEST_ID_1 = '11111111-1111-4111-8111-111111111111' # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
-        # Listos 1,2,4,6
-        # faltantes 3,5,7
+        # Listos 1,2,3,4,6
+        # faltantes 5,7
 
         # --- Pruebas de funcionalidades ---
 
@@ -259,22 +259,22 @@ if __name__ == "__main__":
         # gestion.consultar_inventario_distribuido()
 
         # 3. Agregar artículo al inventario distribuido
-        gestion.agregar_articulo_a_inventario_distribuido(
-            SUCURSAL_BETA_ID,
-            'Termo Inteligente',
-            'Termo con pantalla LED para temperatura',
-            50,
-            'unidades',
-            0.005
-        )
-        gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
+        # gestion.agregar_articulo_a_inventario_distribuido(
+        #     SUCURSAL_BETA_ID,
+        #     'Termo Inteligente',
+        #     'Termo con pantalla LED para temperatura',
+        #     50,
+        #     'unidades',
+        #     0.005
+        # )
+        # gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
 
         # 4. Consultar sucursales
         # gestion.consultar_sucursales()
 
         # 5. Agregar sucursales
-        # gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
-        # gestion.consultar_sucursales() # Verificar la adición
+        gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
+        gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
         # gestion.consultar_lista_clientes()
