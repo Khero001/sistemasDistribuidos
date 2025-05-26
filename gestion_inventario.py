@@ -238,7 +238,7 @@ if __name__ == "__main__":
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
         # Listos 1,2,4,6
-        # faltantes 3,5
+        # faltantes 3,5,7
 
         # --- Pruebas de funcionalidades ---
 
@@ -298,13 +298,13 @@ if __name__ == "__main__":
         gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
 
         # Ver guías de una sucursal y fecha
-        # gestion.ver_guias_envio_generadas(
-        #     sucursal_origen_id=SUCURSAL_ALPHA_ID,
-        #     fecha=FECHA_GUIA_TEST_1
-        # )
+        gestion.ver_guias_envio_generadas(
+            sucursal_origen_id=SUCURSAL_ALPHA_ID,
+            fecha=FECHA_GUIA_TEST_1
+        )
 
         # Intenta ver todas las guías (mostrará el mensaje de advertencia)
-        # gestion.ver_guias_envio_generadas()
+        gestion.ver_guias_envio_generadas()
 
     finally:
         print("\nCerrando conexiones...")
