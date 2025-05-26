@@ -216,7 +216,7 @@ class GestionInventario:
             # Por simplicidad, se mostrará un mensaje para este caso.
             print("  Para ver todas las guías, necesitarías una consulta que escanee guias_envio_por_id,")
             print("  lo cual no es óptimo para Cassandra. Por favor, especifica una sucursal y fecha, o un ID de guía.")
-    def test():
+    def test(self):
         self.consultar_sucursales()
 
 if __name__ == "__main__":
