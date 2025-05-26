@@ -146,8 +146,7 @@ def ver_guias_envio():
         sucursal_id_str = input("Ingrese el ID de la sucursal de origen (UUID): ")
         fecha_str = input("Ingrese la fecha (YYYY-MM-DD): ")
         try:
-            fecha = datetime.datetime.strptime(fecha_str, '%Y-%m-%d').date()
-            gestion.ver_guias_envio_generadas(sucursal_origen_id=sucursal_id_str, fecha=fecha)
+            gestion.ver_guias_envio_generadas(sucursal_origen_id=sucursal_id_str, fecha=fecha_str)
         except ValueError:
             print("ID de sucursal o fecha inválidos. Asegúrese de ingresar un UUID válido y una fecha en formato YYYY-MM-DD.")
     elif sub_opcion == 'c':
