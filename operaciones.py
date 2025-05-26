@@ -51,7 +51,7 @@ class CassandraOperations:
     def seleccionar_sucursal_por_id(self, sucursal_id):
         query = "SELECT * FROM sucursales WHERE sucursal_id = (UUID)%s" % (sucursal_id)
         try:
-            row = self.session.execute(query)
+            row = self.session.execute(query).one()
             return row
         except Exception as e:
             print(f"Error al seleccionar sucursal por ID: {e}")
