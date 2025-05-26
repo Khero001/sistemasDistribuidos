@@ -108,7 +108,7 @@ class CassandraOperations:
     def insertar_articulo_por_sucursal(self, sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento):
         query = """
         INSERT INTO articulos_por_sucursal (sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
-        VALUES ((UUID)%s, (UUID)%s, '%s', '%s', %s, '%s', '%s')
+        VALUES ((UUID)%s, (UUID)%s, '%s', '%s', %s, '%s', %s)
         """%(sucursal_id, articulo_id, nombre, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
         try:
             self.session.execute(query)
