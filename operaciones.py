@@ -361,7 +361,7 @@ class CassandraOperations:
             return False
 
     def seleccionar_guias_envio_por_sucursal_fecha(self, sucursal_origen_id, fecha_venta):
-        query = "SELECT * FROM guias_envio_por_sucursal_fecha WHERE sucursal_origen_id = ((UUID)%s) AND (fecha_venta = toDate(%s))"%(sucursal_origen_id, fecha_venta)
+        query = "SELECT * FROM guias_envio_por_sucursal_fecha WHERE sucursal_origen_id = ((UUID)%s) AND (fecha_venta = toDate('%s'))"%(sucursal_origen_id, fecha_venta)
         try:
             rows = self.session.execute(query)
             return rows
