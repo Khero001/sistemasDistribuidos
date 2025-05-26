@@ -50,6 +50,7 @@ def get_node_info():
 
         gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
         sucursal_id = gestion.obtener_sucursal_id(MY_IP)
+        print (f"ID de sucursal {sucursal_id}")
     except FileNotFoundError:
         print(f"Error: Archivo '{CONFIG_FILE}' no encontrado")
         sys.exit(1)
@@ -113,7 +114,7 @@ def send_message(my_id, target_name, target_ip, target_port, message_text):
 def consultar_inventario_local():
     global sucursal_id
     print("{"+sucursal_id+"}")
-    gestion.consultar_inventario_local(sucursal_id)
+    #gestion.consultar_inventario_local(sucursal_id)
 
 def consultar_inventario_distribuido():
     gestion.consultar_inventario_distribuido()
