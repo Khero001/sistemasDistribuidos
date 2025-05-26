@@ -259,15 +259,15 @@ if __name__ == "__main__":
         # gestion.consultar_inventario_distribuido()
 
         # 3. Agregar artículo al inventario distribuido
-        # gestion.agregar_articulo_a_inventario_distribuido(
-        #     SUCURSAL_BETA_ID,
-        #     'Termo Inteligente',
-        #     'Termo con pantalla LED para temperatura',
-        #     50,
-        #     'unidades',
-        #     0.005
-        # )
-        # gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
+        gestion.agregar_articulo_a_inventario_distribuido(
+            SUCURSAL_BETA_ID,
+            'Termo Inteligente',
+            'Termo con pantalla LED para temperatura',
+            50,
+            'unidades',
+            0.005
+        )
+        gestion.consultar_inventario_local(SUCURSAL_BETA_ID) # Verificar la adición
 
         # 4. Consultar sucursales
         # gestion.consultar_sucursales()
@@ -305,16 +305,16 @@ if __name__ == "__main__":
 
         # 8. Ver guías de envío generadas
         # Ver una guía específica
-        gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
+        # gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
 
         # Ver guías de una sucursal y fecha
-        gestion.ver_guias_envio_generadas(
-            sucursal_origen_id=SUCURSAL_ALPHA_ID,
-            fecha=FECHA_GUIA_TEST_1
-        )
+        # gestion.ver_guias_envio_generadas(
+        #     sucursal_origen_id=SUCURSAL_ALPHA_ID,
+        #     fecha=FECHA_GUIA_TEST_1
+        # )
 
         # Intenta ver todas las guías (mostrará el mensaje de advertencia)
-        gestion.ver_guias_envio_generadas()
+        # gestion.ver_guias_envio_generadas()
 
     finally:
         print("\nCerrando conexiones...")
