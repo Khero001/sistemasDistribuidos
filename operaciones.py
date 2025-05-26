@@ -466,7 +466,7 @@ class CassandraOperations:
         Obtiene el sucursal_id de una sucursal dada su dirección IP.
         Requiere un índice secundario en la columna 'direccion_ip' de la tabla 'sucursales'.
         """
-        query = "SELECT sucursal_id FROM sucursales WHERE direccion_ip = '%ss'"%(direccion_ip)
+        query = "SELECT sucursal_id FROM sucursales WHERE direccion_ip = '%s'"%(direccion_ip)
         print ("intento query {"+query+"}")
         try:
             row = self.session.execute(query).one()
