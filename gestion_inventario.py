@@ -216,8 +216,7 @@ class GestionInventario:
             # Por simplicidad, se mostrará un mensaje para este caso.
             print("  Para ver todas las guías, necesitarías una consulta que escanee guias_envio_por_id,")
             print("  lo cual no es óptimo para Cassandra. Por favor, especifica una sucursal y fecha, o un ID de guía.")
-    def test(self):
-        self.consultar_sucursales()
+
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
@@ -230,7 +229,7 @@ if __name__ == "__main__":
     try:
         # Ejemplo de UUIDs de test_data.cql para facilitar las pruebas
         SUCURSAL_ALPHA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000001')
-        SUCURSAL_BETA_ID = ('d1a1b1c1-1001-4111-8111-000000000002')
+        SUCURSAL_BETA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000002')
         SUCURSAL_GAMMA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000003')
         SUCURSAL_DELTA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000004')
 
