@@ -139,7 +139,6 @@ def ver_guias_envio():
     if sub_opcion == 'a':
         guia_id_str = input("Ingrese el ID de la guía de envío (UUID): ")
         try:
-            guia_id = uuid.UUID(guia_id_str)
             gestion.ver_guias_envio_generadas(guia_id=guia_id)
         except ValueError:
             print("ID de guía inválido. Asegúrese de ingresar un UUID válido.")
