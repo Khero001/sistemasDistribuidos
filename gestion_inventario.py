@@ -229,15 +229,17 @@ if __name__ == "__main__":
 
     try:
         # Ejemplo de UUIDs de test_data.cql para facilitar las pruebas
-        SUCURSAL_ALPHA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000001')
+        SUCURSAL_ALPHA_ID = 'd1a1b1c1-1001-4111-8111-000000000001'
         SUCURSAL_BETA_ID = 'd1a1b1c1-1001-4111-8111-000000000002'
-        SUCURSAL_GAMMA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000003')
-        SUCURSAL_DELTA_ID = uuid.UUID('d1a1b1c1-1001-4111-8111-000000000004')
+        SUCURSAL_GAMMA_ID = 'd1a1b1c1-1001-4111-8111-000000000003'
+        SUCURSAL_DELTA_ID = 'd1a1b1c1-1001-4111-8111-000000000004'
 
-        GUIA_TEST_ID_1 = uuid.UUID('11111111-1111-4111-8111-111111111111') # Venta 1
+        GUIA_TEST_ID_1 = '11111111-1111-4111-8111-111111111111' # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
-        gestion.consultar_sucursales()
+        # Listos 1,2,4
+        # faltantes 3
+
         # --- Pruebas de funcionalidades ---
 
         # 1. Consultar inventario local
@@ -265,7 +267,7 @@ if __name__ == "__main__":
         # gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
-        # gestion.consultar_lista_clientes()
+         gestion.consultar_lista_clientes()
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
