@@ -184,10 +184,10 @@ class CassandraOperations:
     def insertar_cliente(self, cliente_id, nombre, apellido, direccion, telefono, email):
         query = """
         INSERT INTO clientes (cliente_id, nombre, apellido, direccion, telefono, email)
-        VALUES ((UUID)?, ?, ?, ?, ?, ?)
-        """
+        VALUES ((UUID)%s, '%s', '%s', '%s', '%s', '%s')
+        """%(cliente_id, nombre, apellido, direccion, telefono, email)
         try:
-            self.session.execute(query, (cliente_id, nombre, apellido, direccion, telefono, email))
+            self.session.execute(query)
             print(f"Cliente '{nombre} {apellido}' insertado/actualizado correctamente.")
             return True
         except Exception as e:
@@ -195,9 +195,9 @@ class CassandraOperations:
             return False
 
     def seleccionar_cliente_por_id(self, cliente_id):
-        query = "SELECT * FROM clientes WHERE cliente_id = ?"
+        query = "SELECT * FROM clientes WHERE cliente_id = (UUID)%s"%(cliente_id)
         try:
-            row = self.session.execute(query, (cliente_id,)).one()
+            row = self.session.execute(query).one()
             return row
         except Exception as e:
             print(f"Error al seleccionar cliente por ID: {e}")
@@ -216,30 +216,24 @@ class CassandraOperations:
         updates = []
         params = []
         if nombre is not None:
-            updates.append("nombre = ?")
-            params.append(nombre)
+            updates.append("nombre = '%s'"%nombre)
         if apellido is not None:
-            updates.append("apellido = ?")
-            params.append(apellido)
+            updates.append("apellido = '%s'"%apellido)
         if direccion is not None:
-            updates.append("direccion = ?")
-            params.append(direccion)
+            updates.append("direccion = '%s'"%direccion)
         if telefono is not None:
-            updates.append("telefono = ?")
-            params.append(telefono)
+            updates.append("telefono = '%s'"%telefono)
         if email is not None:
-            updates.append("email = ?")
-            params.append(email)
+            updates.append("email = '%s'"%email)
 
         if not updates:
             print("No hay datos para actualizar en el cliente.")
             return False
 
-        query = f"UPDATE clientes SET {', '.join(updates)} WHERE cliente_id = ?"
-        params.append(cliente_id)
+        query = f"UPDATE clientes SET {', '.join(updates)} WHERE cliente_id = ((UUID)%s)"%cliente_id
 
         try:
-            self.session.execute(query, params)
+            self.session.execute(query)
             print(f"Cliente '{cliente_id}' actualizado correctamente.")
             return True
         except Exception as e:

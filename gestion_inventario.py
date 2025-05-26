@@ -119,6 +119,7 @@ class GestionInventario:
         Consulta y muestra la lista de todos los clientes.
         """
         print("\n--- Consultando Lista de Clientes ---")
+        print("-" * 30)
         clientes = self.db_ops.seleccionar_todos_clientes()
         if clientes and clientes.current_rows:
             print("Lista de Clientes:")
@@ -140,7 +141,6 @@ class GestionInventario:
         if cliente_id is None:
             cliente_id = uuid.uuid4()
             print(f"\n--- Agregando Nuevo Cliente (ID generado: {cliente_id}) ---")
-            print(f"DEBUG: Intentando insertar cliente con: ID={cliente_id}, Nombre={nombre}, Apellido={apellido}, Direccion={direccion}, Telefono={telefono}, Email={email}")
             if self.db_ops.insertar_cliente(cliente_id, nombre, apellido, direccion, telefono, email):
                 print(f"Cliente '{nombre} {apellido}' agregado correctamente.")
                 return cliente_id
@@ -273,22 +273,22 @@ if __name__ == "__main__":
         # gestion.consultar_sucursales()
 
         # 5. Agregar sucursales
-        gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
-        gestion.consultar_sucursales() # Verificar la adición
+        # gestion.agregar_sucursal('Sucursal Centro', '192.168.1.205', 'León')
+        # gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
         # gestion.consultar_lista_clientes()
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
-        # nuevo_cliente_id = gestion.agregar_actualizar_cliente(
-        #     nombre='Nueva',
-        #     apellido='Cliente',
-        #     direccion='Calle de Prueba 1, Prueba',
-        #     telefono='5500000000',
-        #     email='nueva.cliente@example.com'
-        # )
-        # gestion.consultar_lista_clientes() # Verificar la adición
+        nuevo_cliente_id = gestion.agregar_actualizar_cliente(
+            nombre='Nueva',
+            apellido='Cliente',
+            direccion='Calle de Prueba 1, Prueba',
+            telefono='5500000000',
+            email='nueva.cliente@example.com'
+        )
+        gestion.consultar_lista_clientes() # Verificar la adición
 
         # Actualizar un cliente existente (usando un ID de test_data.cql)
         # cliente_actualizar_id = uuid.UUID('c1b2c3d4-e5f6-7890-1234-567890abcd01') # Ana Torres
