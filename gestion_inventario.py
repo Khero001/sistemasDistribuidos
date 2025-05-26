@@ -237,7 +237,7 @@ if __name__ == "__main__":
         GUIA_TEST_ID_1 = uuid.UUID('11111111-1111-4111-8111-111111111111') # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
-        gestion.consultar_inventario_distribuido()
+        gestion.consultar_sucursales()
         # --- Pruebas de funcionalidades ---
 
         # 1. Consultar inventario local
