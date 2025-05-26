@@ -361,9 +361,9 @@ class CassandraOperations:
             return False
 
     def seleccionar_guias_envio_por_sucursal_fecha(self, sucursal_origen_id, fecha_venta):
-        query = "SELECT * FROM guias_envio_por_sucursal_fecha WHERE sucursal_origen_id = ? AND fecha_venta = ?"
+        query = "SELECT * FROM guias_envio_por_sucursal_fecha WHERE sucursal_origen_id = %s AND fecha_venta = %s"%(sucursal_origen_id, fecha_venta)
         try:
-            rows = self.session.execute(query, (sucursal_origen_id, fecha_venta))
+            rows = self.session.execute(query)
             return rows
         except Exception as e:
             print(f"Error al seleccionar guías de envío por sucursal y fecha: {e}")
