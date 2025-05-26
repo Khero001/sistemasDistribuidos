@@ -50,6 +50,7 @@ class GestionInventario:
 
         for sucursal in sucursales:
             print(f"\nInventario para la Sucursal: {sucursal.nombre_sucursal} (ID: {sucursal.sucursal_id}, Ciudad: {sucursal.ciudad})")
+            print("-" * 20)
             articulos = self.db_ops.seleccionar_articulos_por_sucursal(sucursal.sucursal_id)
             if articulos and articulos.current_rows:
                 for articulo in articulos:
