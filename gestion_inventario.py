@@ -237,8 +237,8 @@ if __name__ == "__main__":
         GUIA_TEST_ID_1 = '11111111-1111-4111-8111-111111111111' # Venta 1
         FECHA_GUIA_TEST_1 = datetime.date(2025, 5, 20)
 
-        # Listos 1,2,4
-        # faltantes 3
+        # Listos 1,2,4,6
+        # faltantes 3,5
 
         # --- Pruebas de funcionalidades ---
 
@@ -267,7 +267,7 @@ if __name__ == "__main__":
         # gestion.consultar_sucursales() # Verificar la adición
 
         # 6. Consultar lista de clientes
-        gestion.consultar_lista_clientes()
+        # gestion.consultar_lista_clientes()
 
         # 7. Agregar/Actualizar cliente
         # Agregar un nuevo cliente
@@ -295,7 +295,7 @@ if __name__ == "__main__":
 
         # 8. Ver guías de envío generadas
         # Ver una guía específica
-        # gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
+        gestion.ver_guias_envio_generadas(guia_id=GUIA_TEST_ID_1)
 
         # Ver guías de una sucursal y fecha
         # gestion.ver_guias_envio_generadas(
