@@ -63,15 +63,15 @@ def get_node_info():
                                 print(f"ID de sucursal {sucursal_id}")
                                 # --- Lógica para definir si soy nodo maestro ---
                                 # Nodo maestro = el primero en config.txt (ejemplo simple)
-                                sorted_nodes = sorted(ALL_NODES_INFO.keys())
-                                if MY_ID == sorted_nodes[0]:
-                                    IS_MASTER = True
-                                    print(f"Soy el nodo maestro (ID={MY_ID})")
-                                    # Llenamos nodos conectados excepto yo
-                                    for nid in sorted_nodes[1:]:
-                                        CONNECTED_NODES[nid] = ALL_NODES_INFO[nid]
-                                else:
-                                    print(f"Soy un nodo esclavo (ID={MY_ID})")
+                                # sorted_nodes = sorted(ALL_NODES_INFO.keys())
+                                # if MY_ID == sorted_nodes[0]:
+                                #     IS_MASTER = True
+                                #     print(f"Soy el nodo maestro (ID={MY_ID})")
+                                #     # Llenamos nodos conectados excepto yo
+                                #     for nid in sorted_nodes[1:]:
+                                #         CONNECTED_NODES[nid] = ALL_NODES_INFO[nid]
+                                # else:
+                                #     print(f"Soy un nodo esclavo (ID={MY_ID})")
                                 return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
