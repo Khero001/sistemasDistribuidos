@@ -378,7 +378,7 @@ def generar_guia_envio():
 def iniciar_eleccion_maestro():
     global IS_MASTER
     
-    zk = KazooClient(hosts='127.0.0.1:2181')
+    zk = KazooClient(hosts='192.168.1.101:2181')
     zk.start()
     
     def lider_elegido():
@@ -444,8 +444,8 @@ def main_menu():
 if __name__ == "__main__":
     MY_ID, MY_IP, MY_PORT, gestion, sucursal_id = get_node_info()
     #iniciar elección 
-    eleccion_maestro_thread = threading.Thread(target=iniciar_eleccion_maestro, daemon=True)
-    eleccion_maestro_thread.start()
+    #eleccion_maestro_thread = threading.Thread(target=iniciar_eleccion_maestro, daemon=True)
+    #eleccion_maestro_thread.start()
     # Iniciar thread para recibir mensajes
     receive_thread = threading.Thread(target=receive_messages, args=(MY_ID, MY_PORT), daemon=True)
     receive_thread.start()
