@@ -373,7 +373,7 @@ def forzar_eleccion_maestro():
 def generar_guia_envio():
     now = datetime.now()
     print(now.strftime("%Y-%m-%d"))
-    print(now.strftime("%H:%M::S"))
+    print(now.strftime("%H:%M:%S"))
     #sucursal_id = input("sucursal orig: ")
     #articulo_id = input("articulo id: ")
     #cantidad = int(input("cantidad: "))
