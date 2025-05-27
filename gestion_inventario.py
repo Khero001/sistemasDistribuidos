@@ -239,6 +239,34 @@ class GestionInventario:
                     print("-" * 30)
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
+#AQUI
+def verificar_stock_local(self, sucursal_id, articulo_id):
+    query = """
+    SELECT cantidad FROM articulos_por_sucursal 
+    WHERE sucursal_id = %s AND articulo_id = %s"""
+    try:
+        rows = self.db_ops.session.execute(query, [uuid.UUID(sucursal_id), uuid.UUID(articulo_id)])
+        return rows[0].cantidad if rows else None
+    except Exception as e:
+        print(f"Error al verificar stock: {str(e)}")
+        return None
+
+def actualizar_stock(self, sucursal_id, articulo_id, cantidad, tipo_operacion):
+    query = """
+    UPDATE articulos_por_sucursal 
+    SET cantidad = cantidad - %s 
+    WHERE sucursal_id = %s AND articulo_id = %s IF cantidad >= %s"""
+    try:
+        result = self.db_ops.session.execute(query, [
+            cantidad,
+            uuid.UUID(sucursal_id),
+            uuid.UUID(articulo_id),
+            cantidad
+        ])
+        return result.one().applied
+    except Exception as e:
+        print(f"Error al actualizar stock: {str(e)}")
+        return False
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
