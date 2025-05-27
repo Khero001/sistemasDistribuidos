@@ -276,7 +276,8 @@ class GestionInventario:
 
     def enviar_entre_sucursales(cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
         guia_id = uuid.uuid4()
-        self.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+        self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
+        self.db_ops.insertar_guia_envio_por_sucursal_fecha(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
 #AQUI
     def verificar_stock_local(self, sucursal_id, articulo_id):
         try:

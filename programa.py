@@ -371,11 +371,12 @@ def forzar_eleccion_maestro():
     print("Error: La elección ahora es automática")
 
 def generar_guia_envio():
-    sucursal_id = input("sucursal id: ")
-    articulo_id = input("articulo id: ")
-    cantidad = int(input("cantidad: "))
+    print(datetime.now())
+    #sucursal_id = input("sucursal orig: ")
+    #articulo_id = input("articulo id: ")
+    #cantidad = int(input("cantidad: "))
     #print(gestion.verificar_stock_local(sucursal_id, articulo_id))
-    gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
+    #gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
 # --- Menú Interactivo del Sistema Distribuido ---
 #Funcion de nodo maestro antes de main menu
 def iniciar_eleccion_maestro():
