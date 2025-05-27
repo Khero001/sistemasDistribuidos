@@ -250,19 +250,11 @@ class GestionInventario:
             print(f"Error al verificar stock: {str(e)}")
             return None
 
-    def actualizar_stock(self, sucursal_id, articulo_id, cantidad, tipo_operacion):
-        query = """
-        UPDATE articulos_por_sucursal 
-        SET cantidad = cantidad - %s 
-        WHERE sucursal_id = %s AND articulo_id = %s IF cantidad >= %s"""
+    def actualizar_stock(self, sucursal_id, articulo_id, cantidad):
+        new_cantidad = self.verificar_stock_local(sucursal_id, articulo_id) + cantidad
         try:
-            result = self.db_ops.session.execute(query, [
-                cantidad,
-                uuid.UUID(sucursal_id),
-                uuid.UUID(articulo_id),
-                cantidad
-            ])
-            return result.one().applied
+            self.db_ops.actualizar_articulo_por_sucursal(sucursal_id, articulo_id, cantidad=new_cantidad)
+            return True
         except Exception as e:
             print(f"Error al actualizar stock: {str(e)}")
             return False

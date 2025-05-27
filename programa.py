@@ -268,7 +268,7 @@ def comprar_articulo():
             return
         
         # Intentar comprar
-        if gestion.actualizar_stock(sucursal_id, articulo_id, cantidad, "VENTA"):
+        if gestion.actualizar_stock(sucursal_id, articulo_id, -1 * cantidad,):
             print("Compra exitosa. Stock actualizado.")
         else:
             print("No hay suficiente stock o el articulo no existe.")
@@ -353,7 +353,9 @@ def forzar_eleccion_maestro():
 def generar_guia_envio():
     sucursal_id = input("sucursal id: ")
     articulo_id = input("articulo id: ")
-    print(gestion.verificar_stock_local(sucursal_id, articulo_id))
+    articulo_id = int(input("cantidad: "))
+    #print(gestion.verificar_stock_local(sucursal_id, articulo_id))
+    gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
 # --- Menú Interactivo del Sistema Distribuido ---
 def main_menu():
     while True:

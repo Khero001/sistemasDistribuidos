@@ -138,32 +138,25 @@ class CassandraOperations:
 
     def actualizar_articulo_por_sucursal(self, sucursal_id, articulo_id, nombre=None, descripcion=None, cantidad=None, unidad_medida=None, capacidad_almacenamiento=None):
         updates = []
-        params = []
         if nombre is not None:
-            updates.append("nombre = ?")
-            params.append(nombre)
+            updates.append("nombre = '%s'"%nombre)
         if descripcion is not None:
-            updates.append("descripcion = ?")
-            params.append(descripcion)
+            updates.append("descripcion = '%s'"%descripcion)
         if cantidad is not None:
-            updates.append("cantidad = ?")
-            params.append(cantidad)
+            updates.append("cantidad = %s"%cantidad)
         if unidad_medida is not None:
-            updates.append("unidad_medida = ?")
-            params.append(unidad_medida)
+            updates.append("unidad_medida = '%s'"%unidad_medida)
         if capacidad_almacenamiento is not None:
-            updates.append("capacidad_almacenamiento = ?")
-            params.append(capacidad_almacenamiento)
+            updates.append("capacidad_almacenamiento = '%s'"%capacidad_almacenamiento)
 
         if not updates:
             print("No hay datos para actualizar en el artículo por sucursal.")
             return False
 
-        query = f"UPDATE articulos_por_sucursal SET {', '.join(updates)} WHERE sucursal_id = ? AND articulo_id = ?"
-        params.extend([sucursal_id, articulo_id])
+        query = f"UPDATE articulos_por_sucursal SET {', '.join(updates)} WHERE sucursal_id = %s AND articulo_id = %s"%(sucursal_id,articulo_id)
 
         try:
-            self.session.execute(query, params)
+            self.session.execute(query)
             print(f"Artículo '{articulo_id}' en sucursal '{sucursal_id}' actualizado correctamente.")
             return True
         except Exception as e:
