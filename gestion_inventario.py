@@ -294,6 +294,22 @@ class GestionInventario:
         except Exception as e:
             print(f"Error al actualizar stock: {str(e)}")
             return False
+#Aqui DEM
+def obtener_ips_nodos_efimeros(self):
+    zk = KazooClient(hosts='127.0.0.1:2181')  # Usa el teléfono
+    zk.start()  # Marca el número
+    
+    try:
+        # Pregunta a Zookeeper: "¿Quién está jugando?"
+        nodos = zk.get_children("/nodos_efimeros_cassandra")
+        ips = []
+        for nodo in nodos:
+            ip = zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode()
+            ips.append(ip)  # Apunta las IPs en una lista
+        return ips
+        
+    finally:
+        zk.stop()  # Cuelga el teléfono
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
