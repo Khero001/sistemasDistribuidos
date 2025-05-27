@@ -39,88 +39,48 @@ def get_timestamp():
 def get_node_info():
     global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO, sucursal_id, gestion, IS_MASTER, CONNECTED_NODES
     try:
-        print(f"Leyendo configuración de {CONFIG_FILE}...")
+        print(f"\nBuscando configuración en {CONFIG_FILE}...")
         with open(CONFIG_FILE, "r") as f:
             for line in f:
-                parts = line.strip().split(",")
-                if len(parts) == 3:
-                    node_id, ip, port_str = parts
-                    ALL_NODES_INFO[node_id] = (ip, int(port_str))
-                    print(f"Nodo configurado: {node_id} -> {ip}:{port_str}")
+                line = line.strip()
+                if line and not line.startswith("#"):  # Ignora líneas vacías y comentarios
+                    parts = line.split(",")
+                    if len(parts) == 3:
+                        node_id, ip, port_str = parts
+                        ALL_NODES_INFO[node_id] = (ip, int(port_str))
+                        print(f"Registrado nodo: {node_id} - {ip}:{port_str}")
 
-        print(f"\nBuscando IP local entre: {ALL_NODES_INFO}")
+        print("\nBuscando IP local...")
         interfaces = netifaces.interfaces()
         for interface in interfaces:
             try:
-                addresses = netifaces.ifaddresses(interface)
-                if socket.AF_INET in addresses:
-                    for ip_info in addresses[socket.AF_INET]:
+                addrs = netifaces.ifaddresses(interface)
+                if netifaces.AF_INET in addrs:
+                    for ip_info in addrs[netifaces.AF_INET]:
                         current_ip = ip_info['addr']
-                        print(f"Verificando interfaz {interface} -> IP: {current_ip}")
+                        print(f"Verificando IP: {current_ip} en interfaz {interface}")
                         for node_id, (node_ip, node_port) in ALL_NODES_INFO.items():
                             if node_ip == current_ip:
-                                print(f"¡Coincidencia encontrada! Nodo: {node_id}")
+                                print(f"¡COINCIDENCIA! Soy el nodo {node_id}")
                                 MY_ID = node_id
                                 MY_IP = node_ip
                                 MY_PORT = node_port
-                                print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
-                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
+                                gestion = GestionInventario(contact_points=[MY_IP])
                                 sucursal_id = gestion.obtener_sucursal_id(MY_IP)
-                                print(f"ID de sucursal {sucursal_id}")
-                                IS_MASTER = False
-                                print(f"Soy un nodo esclavo (ID={MY_ID})")
+                                IS_MASTER = False  # ZooKeeper decidirá
                                 return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
             except Exception as e:
-                print(f"Error en interfaz {interface}: {e}")
+                print(f"Error revisando interfaz {interface}: {str(e)}")
                 continue
 
-        raise Exception(f"No se encontró configuración para esta IP local en {CONFIG_FILE}")
-        
+        raise Exception(f"\n Ninguna IP local coincide con {CONFIG_FILE}. IPs encontradas: {[ip_info['addr'] for interface in netifaces.interfaces() for ip_info in netifaces.ifaddresses(interface).get(netifaces.AF_INET, [])]}")
+    
     except FileNotFoundError:
-        print(f"Error: Archivo '{CONFIG_FILE}' no encontrado en {os.getcwd()}")
+        print(f"\n Archivo {CONFIG_FILE} no encontrado")
         sys.exit(1)
     except Exception as e:
-        print(f"Error inesperado: {str(e)}")
+        print(f"\n Error inesperado: {str(e)}")
         sys.exit(1)
-
-        interfaces = netifaces.interfaces()
-        for interface in interfaces:
-            try:
-                addresses = netifaces.ifaddresses(interface)
-                if socket.AF_INET in addresses:
-                    for ip_info in addresses[socket.AF_INET]:
-                        current_ip = ip_info['addr']
-                        for node_id, (node_ip, node_port) in ALL_NODES_INFO.items():
-                            if node_ip == current_ip:
-                                MY_ID = node_id
-                                MY_IP = node_ip
-                                MY_PORT = node_port
-                                print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
-                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica', zookeeper_hosts=ZOOKEEPER_HOSTS)
-                                sucursal_id = gestion.obtener_sucursal_id(MY_IP)
-                                print(f"ID de sucursal {sucursal_id}")
-                                # --- Lógica para definir si soy nodo maestro ---
-                                # Nodo maestro = el primero en config.txt (ejemplo simple)
-                                # sorted_nodes = sorted(ALL_NODES_INFO.keys())
-                                # if MY_ID == sorted_nodes[0]:
-                                #     IS_MASTER = True
-                                #     print(f"Soy el nodo maestro (ID={MY_ID})")
-                                #     # Llenamos nodos conectados excepto yo
-                                #     for nid in sorted_nodes[1:]:
-                                #         CONNECTED_NODES[nid] = ALL_NODES_INFO[nid]
-                                # else:
-                                #     print(f"Soy un nodo esclavo (ID={MY_ID})")
-                                IS_MASTER = False  # Por defecto no es maestro, ZooKeeper decidirá
-                                print(f"Soy un nodo esclavo (ID={MY_ID})")
-
-                                return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
-            except Exception as e:
-                print(f"Error en interfaz {interface}: {e}")
-        raise Exception("No se encontró configuración para esta IP local")
-    except FileNotFoundError:
-        print(f"Error: Archivo '{CONFIG_FILE}' no encontrado")
-        sys.exit(1)
-
 # --- Funciones de Almacenamiento ---
 def store_message(message):
     if MY_ID is None:
