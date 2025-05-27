@@ -22,7 +22,7 @@ gestion = None
 sucursal_id = None
 ALL_NODES_INFO = {}
 #Nuevas variables zookeper
-ZOOKEEPER_HOSTS = '127.0.0.1:2181'
+ZOOKEEPER_HOSTS = '192.168.1.101:2181'
 ELECTION_PATH = "/eleccion_maestro_cassandra"
 
 # --- NUEVO: Variables para nodo maestro ---
