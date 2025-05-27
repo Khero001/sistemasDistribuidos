@@ -189,17 +189,16 @@ def handle_connection(client_socket, my_id):
 def send_message(my_id, target_name, target_ip, target_port, message_text):
     try:
         if target_ip != MY_IP:
-            print("_"+target_ip+"_"+MY_IP+"_")
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
                 client_socket.settimeout(5)
                 client_socket.connect((target_ip, target_port))
                 timestamp = get_timestamp()
                 full_message = f"{my_id}:{timestamp}||{message_text}"
                 client_socket.sendall(full_message.encode('utf-8'))
-                print(f"[{timestamp}] Nodo {my_id}: {message_text} (Enviado)")
+                #print(f"[{timestamp}] Nodo {my_id}: {message_text} (Enviado)")
                 store_message(f"[{timestamp}] Nodo {my_id}: {message_text} (Enviado)")
                 response = client_socket.recv(1024).decode('utf-8')
-                print(f"Respuesta de {target_name}: {response}")
+                #print(f"Respuesta de {target_name}: {response}")
     except Exception as e:
         print(f"Nodo {my_id}: Error al enviar mensaje: {e}")
 

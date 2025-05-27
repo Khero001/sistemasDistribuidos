@@ -73,8 +73,7 @@ class GestionInventario:
 
         # Generar un nuevo UUID para el artículo
         articulo_id = uuid.uuid4()
-        for s in self.db_ops.seleccionar_todas_sucursales():
-            lista_sucursales.append(s.sucursal_id)
+
         cantidades = self.dividir_en_n_montones_equitativos(cantidad, len(lista_sucursales))
 
         for i_sucursal in range(len(lista_sucursales)):
@@ -92,6 +91,28 @@ class GestionInventario:
                 print(f"Fallo al agregar/actualizar el artículo '{nombre_articulo}'.")
                 return False
     
+    def distribuir_articulo_existente(self, lista_sucursales, articulo_id):
+        articulos = self.db_ops.seleccionar_articulos_por_sucursal(sucursal_id)
+        total = 0
+        cantidades_real = []
+        for sucursal in lista_sucursales:
+            aux = verificar_stock_local(sucursal_id, articulo_id)
+            cantidades_real.append(aux)
+            total += aux
+
+        cantidades_obj = self.dividir_en_n_montones_equitativos(total, len(lista_sucursales))
+        
+        sumandos = [b - a for a, b in zip(cantidades_real, cantidades_obj)]
+
+        for i_sum in range(len(sumandos)):
+            self.actualizar_stock(lista_sucursales[i_sum], articulo_id, sumandos[i_sum])
+
+    def distribuir_articulos_master(self, lista_sucursales, sucursal_id):
+        articulos = self.db_ops.seleccionar_articulos_por_sucursal(sucursal_id)
+
+        for articulo in articulos:
+            self.distribuir_articulo_existente(lista_sucursales, articulo.articulo_id)
+
     def dividir_en_n_montones_equitativos(self, numero, n_montones):
         if not isinstance(numero, int) or numero < 0:
             raise ValueError("El número a dividir debe ser un entero no negativo.")
