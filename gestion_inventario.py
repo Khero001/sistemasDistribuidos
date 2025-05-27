@@ -2,6 +2,8 @@
 from operaciones import CassandraOperations
 import uuid
 import datetime
+from kazoo.client import KazooClient
+from kazoo.recipe.election import Election  # Cambió LeaderElection -> Election
 
 class GestionInventario:
     def __init__(self, contact_points=['192.168.1.101'], port=9042, keyspace='inventario_logistica', username=None, password=None):
