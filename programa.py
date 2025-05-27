@@ -507,6 +507,7 @@ if __name__ == "__main__":
     if IS_MASTER:
         maestro_thread = threading.Thread(target=maestro_periodico, daemon=True)
         maestro_thread.start()
-
+    servicios_thread = threading.Thread(target=iniciar_servicios_maestro, daemon=True)
+    servicios_thread.start()
     main_menu()
 
