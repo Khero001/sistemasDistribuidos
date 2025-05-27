@@ -35,15 +35,39 @@ MASTER_CHECK_INTERVAL = 10  # segs, para hacer tareas periódicas si es maestro
 def get_timestamp():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
+#nuevo getnode
 def get_node_info():
     global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO, sucursal_id, gestion, IS_MASTER, CONNECTED_NODES
     try:
+        print(f"Leyendo configuración de {CONFIG_FILE}...")  # Debug
         with open(CONFIG_FILE, "r") as f:
             for line in f:
                 parts = line.strip().split(",")
                 if len(parts) == 3:
                     node_id, ip, port_str = parts
                     ALL_NODES_INFO[node_id] = (ip, int(port_str))
+                    print(f"Nodo configurado: {node_id} -> {ip}:{port_str}")  # Debug
+
+        print(f"\nBuscando IP local entre: {ALL_NODES_INFO}")  # Debug
+        interfaces = netifaces.interfaces()
+        for interface in interfaces:
+            try:
+                addresses = netifaces.ifaddresses(interface)
+                if socket.AF_INET in addresses:
+                    for ip_info in addresses[socket.AF_INET]:
+                        current_ip = ip_info['addr']
+                        print(f"Verificando interfaz {interface} -> IP: {current_ip}")  # Debug
+                        for node_id, (node_ip, node_port) in ALL_NODES_INFO.items():
+                            if node_ip == current_ip:
+                                print(f"¡Coincidencia encontrada! Nodo: {node_id}")  # Debug
+                                MY_ID = node_id
+                                MY_IP = node_ip
+                                MY_PORT = node_port
+                                # ... (resto del código igual)
+        raise Exception(f"No se encontró {current_ip} en {CONFIG_FILE}")  # Mensaje más claro
+    except FileNotFoundError:
+        print(f"Error: Archivo '{CONFIG_FILE}' no encontrado en {os.getcwd()}")
+        sys.exit(1)
 
         interfaces = netifaces.interfaces()
         for interface in interfaces:
