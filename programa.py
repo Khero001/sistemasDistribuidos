@@ -396,7 +396,22 @@ def iniciar_eleccion_maestro():
     election = Election(zk, "/eleccion_maestro", identifier=MY_ID.encode())
     election.run(lider_elegido)
     
+    #aqui
+def registrar_nodo_efimero():
+    zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión inicial local
+    zk.start()
     
+    # Registra tu IP en la lista de nodos
+    zk.create(f"/nodos_efimeros_cassandra/nodo_{MY_ID}", 
+              value=MY_IP.encode(), 
+              ephemeral=True)
+    
+    # Si eres maestro, regístralo también
+    if IS_MASTER:
+        zk.create("/eleccion_maestro_cassandra/leader", 
+                 value=MY_IP.encode(), 
+                 ephemeral=True)
+        
 def main_menu():
     while True:
         print("\n=== MENÚ PRINCIPAL DEL SISTEMA DISTRIBUIDO DE INVENTARIO ===")
