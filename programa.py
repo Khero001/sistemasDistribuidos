@@ -118,7 +118,7 @@ def marcar_sucursal_inactiva(self, sucursal_id):
             print(f"Error al marcar sucursal como inactiva: {str(e)}")
             return False
 #nueva
-    def obtener_sucursales_activas(self):
+def obtener_sucursales_activas(self):
         """Devuelve una lista de IDs de sucursales activas"""
         query = "SELECT sucursal_id FROM estado_sucursales WHERE estado = %s"
         try:
