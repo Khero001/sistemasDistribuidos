@@ -368,18 +368,18 @@ def simular_falla_sucursal():
     else:
         print("Opción no válida")
 
-def forzar_eleccion_maestro():
-    print(gestion.obtener_ips_nodos_efimeros())
-    print("Error: La elección ahora es automática")
-
 def generar_guia_envio():
-    
-    sucursal_id = input("sucursal orig: ")
-    #articulo_id = input("articulo id: ")
-    #cantidad = int(input("cantidad: "))
-    generar_guia(self, cliente_id, sucursal_origen_id, sucursal_destino_id, articulos_enviados, valor_declarado)
-    #print(gestion.verificar_stock_local(sucursal_id, articulo_id))
-    #gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
+    sucursal_origen_id = input("Sucursal origen ID: ")
+    sucursal_destino_id = input("Sucursal destino ID: ")
+    articulo_id = input("Artculo ID: ")
+    cantidad = int(input("cantidad: "))
+    if gestion.verificar_stock_local >= cantidad:
+        gestion.generar_guia(cliente_id, sucursal_origen_id, sucursal_destino_id, articulo_id, cantidad)
+        gestion.actualizar_stock(sucursal_origen_id, articulo_id, -1*cantidad)
+        gestion.actualizar_stock(sucursal_destino_id, articulo_id, cantidad)
+        print("Guía generada")
+    else:
+        print("Stock insuficiente")
 # --- Menú Interactivo del Sistema Distribuido ---
 #Funcion de nodo maestro antes de main menu
 def iniciar_eleccion_maestro():
@@ -430,8 +430,7 @@ def main_menu():
         print("6. Comprar artículo (exclusión mutua)")
         print("7. Ver guías de envío generadas")
         print("8. Simular falla de sucursal")
-        print("9. Forzar elección de nuevo nodo maestro")
-        print("10. Generar guía de envío")
+        print("9. Generar guía de envío")
         print("0. Salir")
 
         opcion = input("Selecciona una opción: ").strip()
@@ -453,7 +452,7 @@ def main_menu():
         elif opcion == "8":
             simular_falla_sucursal()
         elif opcion == "9":
-            forzar_eleccion_maestro()
+            generar_guia_envio()
         elif opcion == "10":
             generar_guia_envio()
         elif opcion == "0":

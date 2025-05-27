@@ -2,7 +2,7 @@
 DROP KEYSPACE IF EXISTS inventario_logistica;
 
 -- Crea el keyspace
-CREATE KEYSPACE IF NOT EXISTS inventario_logistica WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+CREATE KEYSPACE IF NOT EXISTS inventario_logistica WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
 
 USE inventario_logistica;
 
