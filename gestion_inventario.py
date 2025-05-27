@@ -370,23 +370,26 @@ class GestionInventario:
 #NUEVAS
     def obtener_ip_maestro(self):
         """Obtiene la IP del nodo maestro desde ZooKeeper"""
-        zk = KazooClient(hosts=self.zookeeper_hosts)  # Conexión local
+        zk = KazooClient(hosts=self.zookeeper_hosts)
         zk.start()
         try:
-            leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
-            return leader
-        except:
+            data, stat = zk.get("/eleccion_maestro_cassandra/leader")
+            return data.decode() if data else None
+        except Exception as e:
+            print(f"Error al obtener maestro: {e}")
             return None
         finally:
             zk.stop()
 
     def verificar_maestro_activo(self):
         """Verifica si el nodo maestro está respondiendo"""
-        maestro_ip = self.obtener_ip_maestro()  # <-- ¡ESPACIO NORMAL aquí!
+        maestro_ip = self.obtener_ip_maestro()
         if not maestro_ip:
             return False
+        
         try:
-            with socket.create_connection((maestro_ip.split(':')[0], 2181), timeout=2):
+            # Verificar conexión al puerto de ZooKeeper del maestro
+            with socket.create_connection((maestro_ip, 2181), timeout=2):
                 return True
         except:
             return False

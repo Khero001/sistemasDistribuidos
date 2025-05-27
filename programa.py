@@ -401,7 +401,7 @@ def generar_guia_envio():
 def iniciar_eleccion_maestro():
     global IS_MASTER
     
-    zk = KazooClient(hosts=MY_IP+':2181')
+    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)  # Usar los hosts configurados
     zk.start()
     
     def lider_elegido():
@@ -409,19 +409,37 @@ def iniciar_eleccion_maestro():
         IS_MASTER = True
         print(f"\n[NODO MAESTRO] ID={MY_ID}")
         
+        # Registrar como maestro en ZooKeeper
+        try:
+            zk.create(f"{ELECTION_PATH}/leader", 
+                     value=MY_IP.encode(), 
+                     ephemeral=True)
+        except Exception as e:
+            print(f"Error al registrarse como líder: {e}")
+        
         # Tareas del maestro
         while IS_MASTER:
             time.sleep(10)
             if IS_MASTER:  # Verificar que aún sea maestro
                 print("[MAESTRO] Monitoreando nodos...")
     
-    # Configuración para Zookeeper 3.8+
-    election = Election(zk, "/eleccion_maestro", identifier=MY_ID.encode())
+    def vigilar_maestro(data, stat):
+        global IS_MASTER
+        if not data:  # Si no hay maestro
+            print("\n¡No hay maestro! Iniciando nueva elección...")
+            IS_MASTER = False
+            election.run(lider_elegido)
+    
+    # Configurar watch para detectar caídas del maestro
+    zk.DataWatch(f"{ELECTION_PATH}/leader", vigilar_maestro)
+    
+    # Iniciar la elección
+    election = Election(zk, ELECTION_PATH, identifier=MY_ID.encode())
     election.run(lider_elegido)
     
     #aqui
 def registrar_nodo_efimero():
-    zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión inicial local
+    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)  # Conexión inicial local
     zk.start()
     
     # Registra tu IP en la lista de nodos
@@ -434,6 +452,26 @@ def registrar_nodo_efimero():
         zk.create("/eleccion_maestro_cassandra/leader", 
                  value=MY_IP.encode(), 
                  ephemeral=True)
+def monitorear_maestro():
+    global IS_MASTER
+    
+    while True:
+        if IS_MASTER:
+            # Verificar si sigue siendo maestro
+            zk = KazooClient(hosts=ZOOKEEPER_HOSTS)
+            zk.start()
+            try:
+                data, stat = zk.get(f"{ELECTION_PATH}/leader")
+                if data.decode() != MY_IP:
+                    IS_MASTER = False
+                    print("\n¡Ya no soy el maestro!")
+            except:
+                IS_MASTER = False
+                print("\n¡Perdí el liderazgo!")
+            finally:
+                zk.stop()
+        
+        time.sleep(5)
         
 def main_menu():
     while True:
@@ -503,7 +541,7 @@ if __name__ == "__main__":
     if IS_MASTER:
         maestro_thread = threading.Thread(target=maestro_periodico, daemon=True)
         maestro_thread.start()
-    servicios_thread = threading.Thread(target=iniciar_servicios_maestro, daemon=True)
-    servicios_thread.start()
+    #servicios_thread = threading.Thread(target=iniciar_servicios_maestro, daemon=True)
+    #servicios_thread.start()
     main_menu()
 
