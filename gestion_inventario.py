@@ -370,7 +370,40 @@ def monitorear_nodos(self):
         while True:
 
             time.sleep(5)
+#NUEVAS
+    def obtener_ip_maestro(self):
+        """Obtiene la IP del nodo maestro desde ZooKeeper"""
+        zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión local
+        zk.start()
+        try:
+            leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
+            return leader
+        except:
+            return None
+        finally:
+            zk.stop()
 
+    def verificar_maestro_activo(self):
+        """Verifica si el nodo maestro está respondiendo"""
+        maestro_ip = self.obtener_ip_maestro()  # <-- ¡ESPACIO NORMAL aquí!
+        if not maestro_ip:
+            return False
+        try:
+            with socket.create_connection((maestro_ip.split(':')[0], 2181), timeout=2):
+                return True
+        except:
+            return False
+
+    def monitorear_nodos(self):
+        """Escucha cambios en los nodos"""
+        zk = KazooClient(hosts='127.0.0.1:2181')
+        zk.start()
+        def vigilar_maestro(data, stat):
+            if not data:
+                print("\n¡No hay maestro! Iniciando nueva elección...")
+        zk.DataWatch("/eleccion_maestro_cassandra/leader", vigilar_maestro)
+        while True:
+            time.sleep(5)
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
