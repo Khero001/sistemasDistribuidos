@@ -23,7 +23,7 @@ sucursal_id = None
 ALL_NODES_INFO = {}
 
 # Configuración de ZooKeeper
-ZOOKEEPER_HOSTS = '192.168.1.101:2181,192.168.1.102:2181,192.168.1.97:2181'
+ZOOKEEPER_HOSTS = '192.168.1.101:2181,192.168.1.102:2181,192.168.1.96:2181,192.168.1.97:2181'
 ELECTION_PATH = "/eleccion_maestro_cassandra"
 leader_election = None
 
