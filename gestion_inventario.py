@@ -324,8 +324,6 @@ def obtener_ip_maestro(self):
 
 def verificar_maestro_activo(self):
 
-        """Revisa si el maestro sigue respondiendo"""
-
         maestro_ip = self.obtener_ip_maestro()
 
         if not maestro_ip:
