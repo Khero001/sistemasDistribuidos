@@ -450,6 +450,7 @@ def main_menu():
         print("8. Simular falla de sucursal")
         print("9. Generar guía de envío")
         print("10. Mostrar N últimos mensajes")
+        print("11. ¿Es maestro?")
         print("0. Salir")
 
         opcion = input("Selecciona una opción: ").strip()
@@ -474,6 +475,8 @@ def main_menu():
             generar_guia_envio()
         elif opcion == "10":
             show_messages()
+        elif opcion == "11":
+            print("Sí" if IS_MASTER else "No")
         elif opcion == "0":
             print("Saliendo del sistema distribuido...")
             break
