@@ -371,8 +371,9 @@ def forzar_eleccion_maestro():
     print("Error: La elección ahora es automática")
 
 def generar_guia_envio():
-    print(datetime.now())
-    print(datetime.date(2025, 5, 20))
+    now = datetime.now()
+    print(now.strftime("%Y-%m-%d"))
+    print(now.strftime("%H:%M::S"))
     #sucursal_id = input("sucursal orig: ")
     #articulo_id = input("articulo id: ")
     #cantidad = int(input("cantidad: "))
