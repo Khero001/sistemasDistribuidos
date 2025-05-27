@@ -272,6 +272,4 @@ if __name__ == "__main__":
         maestro_thread.start()
 
     main_menu()
-    except Exception as e:
-        print(f"Error en el sistema: {e}")
 
