@@ -76,13 +76,13 @@ class GestionInventario:
         cantidades = self.dividir_en_n_montones_equitativos(cantidad, len(lista_sucursales))
 
         for i_sucursal in range(len(lista_sucursales)):
-            sucursal = self.db_ops.seleccionar_sucursal_por_id(sucursal_id)
+            sucursal = self.db_ops.seleccionar_sucursal_por_id(lista_sucursales[i_sucursal])
             if not sucursal:
                 print(f"Error: La sucursal con ID {sucursal_id} no existe. No se puede agregar el artículo.")
                 return False
 
             if self.db_ops.insertar_articulo_por_sucursal(
-                sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento
+                lista_sucursales[i_sucursal], articulo_id, nombre_articulo, descripcion, cantidades[i_sucursal], unidad_medida, capacidad_almacenamiento
             ):
                 print(f"Artículo '{nombre_articulo}' (ID: {articulo_id}) agregado/actualizado en la sucursal '{sucursal.nombre_sucursal}'.")
                 #return True
