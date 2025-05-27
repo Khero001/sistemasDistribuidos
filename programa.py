@@ -350,7 +350,9 @@ def forzar_eleccion_maestro():
     print("[Funcionalidad en desarrollo] Forzar elección de nuevo nodo maestro")
 
 def generar_guia_envio():
-    gestion.consultar_inventario_local(sucursal_id)
+    sucursal_id = input("sucursal id: ")
+    articulo_id = input("articulo id: ")
+    gestion.verificar_stock_local(sucursal_id, articulo_id)
 # --- Menú Interactivo del Sistema Distribuido ---
 def main_menu():
     while True:
