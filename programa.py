@@ -403,7 +403,7 @@ def generar_guia_envio():
 def iniciar_eleccion_maestro():
     global IS_MASTER
     
-    zk = KazooClient(hosts=MI_IP+':2181')
+    zk = KazooClient(hosts=MY_IP+':2181')
     zk.start()
     
     def lider_elegido():
