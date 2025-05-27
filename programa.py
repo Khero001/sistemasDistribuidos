@@ -370,6 +370,7 @@ def simular_falla_sucursal():
         print("Opción no válida")
 
 def forzar_eleccion_maestro():
+    print(gestion.obtener_ips_nodos_efimeros())
     print("Error: La elección ahora es automática")
 
 def generar_guia_envio():
