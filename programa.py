@@ -58,7 +58,7 @@ def get_node_info():
                                 MY_IP = node_ip
                                 MY_PORT = node_port
                                 print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
-                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica', zookeeper_hosts)
+                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica', zookeeper_hosts=ZOOKEEPER_HOSTS)
                                 sucursal_id = gestion.obtener_sucursal_id(MY_IP)
                                 print(f"ID de sucursal {sucursal_id}")
                                 # --- Lógica para definir si soy nodo maestro ---
