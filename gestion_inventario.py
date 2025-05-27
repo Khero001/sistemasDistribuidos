@@ -6,8 +6,9 @@ from kazoo.client import KazooClient
 from kazoo.recipe.election import Election  # Cambió LeaderElection -> Election
 
 class GestionInventario:
-    def __init__(self, contact_points=['192.168.1.101'], port=9042, keyspace='inventario_logistica', username=None, password=None):
+    def __init__(self, contact_points=['192.168.1.101'], port=9042, keyspace='inventario_logistica', zookeeper_hosts = '192.168.1.101', username=None, password=None):
         self.db_ops = CassandraOperations(contact_points, port, keyspace, username, password)
+        self.zookeeper_hosts = self.zookeeper_hosts
 
     def __del__(self):
         self.db_ops.close()
@@ -369,7 +370,7 @@ class GestionInventario:
 #NUEVAS
     def obtener_ip_maestro(self):
         """Obtiene la IP del nodo maestro desde ZooKeeper"""
-        zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión local
+        zk = KazooClient(hosts=self.zookeeper_hosts)  # Conexión local
         zk.start()
         try:
             leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
@@ -392,7 +393,7 @@ class GestionInventario:
 
     def monitorear_nodos(self):
         """Escucha cambios en los nodos"""
-        zk = KazooClient(hosts='127.0.0.1:2181')
+        zk = KazooClient(hosts=self.zookeeper_hosts)
         zk.start()
         def vigilar_maestro(data, stat):
             if not data:

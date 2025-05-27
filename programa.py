@@ -23,7 +23,7 @@ sucursal_id = None
 ALL_NODES_INFO = {}
 #Nuevas variables zookeper
 #ZOOKEEPER_HOSTS = '192.168.1.101:2181'
-ZOOKEEPER_HOSTS = '192.168.1.101:2181'  # ESTO SOLO ES DE PRUEBA, SE VA A CAMBIAR, REVISAR LINEAS 373 EN ADELANTE DE GESTION_INVENTARIO.py
+ZOOKEEPER_HOSTS = '192.168.1.101:2181,192.168.1.102:2181,192.168.1.97:2181,192.168.1.97:2181'  # ESTO SOLO ES DE PRUEBA, SE VA A CAMBIAR, REVISAR LINEAS 373 EN ADELANTE DE GESTION_INVENTARIO.py
 ELECTION_PATH = "/eleccion_maestro_cassandra"
 
 # --- NUEVO: Variables para nodo maestro ---
@@ -58,7 +58,7 @@ def get_node_info():
                                 MY_IP = node_ip
                                 MY_PORT = node_port
                                 print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
-                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
+                                gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica', zookeeper_hosts)
                                 sucursal_id = gestion.obtener_sucursal_id(MY_IP)
                                 print(f"ID de sucursal {sucursal_id}")
                                 # --- Lógica para definir si soy nodo maestro ---
