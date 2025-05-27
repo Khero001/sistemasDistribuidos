@@ -234,7 +234,7 @@ class GestionInventario:
                 print(f"  Peso: {guia.peso_kg} kg, Volumen: {guia.volumen_m3} m3")
                 print(f"  Valor Declarado: ${guia.valor_declarado:.2f}")
                 print(f"  Dirección Destino: {guia.direccion_destino}")
-                print(f"  Artículos Enviados: {guia.articulos_enviados}")
+                print(f"  Artículo ID: {guia.articulos_enviados}")
                 print("-" * 40)
             else:
                 print(f"No se encontró la guía de envío con ID: {guia_id}.")
@@ -247,7 +247,7 @@ class GestionInventario:
                     print(f"    Cliente ID: {guia.cliente_id if guia.cliente_id else 'N/A'}")
                     print(f"    Sucursal Destino: {guia.sucursal_destino_id}")
                     print(f"    Estado: {guia.estado_envio}")
-                    print(f"    Artículos: {guia.articulos_enviados}")
+                    print(f"    Artículo ID: {guia.articulos_enviados}")
                     print("-" * 30)
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
@@ -269,13 +269,27 @@ class GestionInventario:
                     print(f"    Cliente ID: {guia.cliente_id if guia.cliente_id else 'N/A'}")
                     print(f"    Sucursal Destino: {guia.sucursal_destino_id}")
                     print(f"    Estado: {guia.estado_envio}")
-                    print(f"    Artículos: {guia.articulos_enviados}")
+                    print(f"    Artículo ID: {guia.articulos_enviados}")
                     print("-" * 30)
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
 
     def enviar_entre_sucursales(cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
+        now = datetime.now()
         guia_id = uuid.uuid4()
+        cliente_id
+        sucursal_origen_id
+        sucursal_destino_id
+        fecha_venta = now.strftime("%Y-%m-%d")
+        hora_venta =now.strftime("%H:%M:%S")
+        estado_envio = "Pendiente"
+        peso_kg
+        volumen_m3
+        valor_declarado
+        direccion_destino
+        coordenadas_destino
+        articulos_enviados
+
         self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         self.db_ops.insertar_guia_envio_por_sucursal_fecha(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
 #AQUI

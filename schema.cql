@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS guias_envio_por_id (
     valor_declarado DECIMAL,
     direccion_destino TEXT,
     coordenadas_destino TEXT,
-    articulos_enviados MAP<TEXT, INT> -- Mapa de nombre_articulo -> cantidad
+    articulos_enviados UUID -- Mapa de nombre_articulo -> cantidad
 );
 
 -- Materialized view o tabla duplicada para consultar guías de envío por sucursal y fecha
@@ -74,6 +74,6 @@ CREATE TABLE IF NOT EXISTS guias_envio_por_sucursal_fecha (
     valor_declarado DECIMAL,
     direccion_destino TEXT,
     coordenadas_destino TEXT,
-    articulos_enviados MAP<TEXT, INT>, -- Mapa de nombre_articulo -> cantidad
+    articulos_enviados UUID, -- Mapa de nombre_articulo -> cantidad
     PRIMARY KEY ((sucursal_origen_id, fecha_venta), guia_id)
 ) WITH CLUSTERING ORDER BY (guia_id ASC); -- ¡CORRECCIÓN AQUÍ! Solo guia_id puede estar en CLUSTERING ORDER BY

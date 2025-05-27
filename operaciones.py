@@ -247,7 +247,7 @@ class CassandraOperations:
     def insertar_guia_envio_por_id(self, guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
         query = """
         INSERT INTO guias_envio_por_id (guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
-        VALUES ((UUID)%s, (UUID)%s, (UUID)%s, (UUID)%s, toDate('%s'), '%s', '%s', %s, %s, %s, '%s', '%s, '%s')
+        VALUES ((UUID)%s, (UUID)%s, (UUID)%s, (UUID)%s, toDate('%s'), '%s', '%s', %s, %s, %s, '%s', '%s, (UUID)%s)
         """%(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         try:
             self.session.execute(query)
@@ -337,7 +337,7 @@ class CassandraOperations:
     def insertar_guia_envio_por_sucursal_fecha(self, sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
         query = """
         INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
-        VALUES ((UUID)%s, toDate('%s'), (UUID)%s, (UUID)%s, (UUID)%s, '%s', '%s', %s, %s, %s, '%s', '%s', '%s')
+        VALUES ((UUID)%s, toDate('%s'), (UUID)%s, (UUID)%s, (UUID)%s, '%s', '%s', %s, %s, %s, '%s', '%s', (UUID)%s)
         """%(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         try:
             self.session.execute(query)
