@@ -96,7 +96,7 @@ def store_message(message):
 # --- Funciones de Red ---
 def receive_messages(my_id, my_port):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('0.0.0.0', my_port))
+    server_socket.bind((MY_IP, my_port))
     server_socket.listen()
     print(f"Nodo {my_id} está escuchando en el puerto {my_port}...")
     while True:
