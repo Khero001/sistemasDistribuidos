@@ -292,7 +292,7 @@ class GestionInventario:
         volumen_m3 = capacidad_almacenamiento
         direccion_destino = cliente.direccion if cliente !=None else sucursal.ciudad
         coordenadas_destino = "long, lat"
-
+        print("recabo datos")
         self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         self.db_ops.insertar_guia_envio_por_sucursal_fecha(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
 #AQUI
