@@ -1,35 +1,3 @@
-#CodigoF
-import os
-import socket
-import threading
-import uuid
-import sys
-import netifaces
-from datetime import datetime
-from gestion_inventario import GestionInventario
-
-# --- Configuración Global ---
-CONFIG_FILE = "config.txt"
-MESSAGES = []
-MY_ID = None
-MY_IP = None
-MY_PORT = None
-gestion = None
-sucursal_id = None
-ALL_NODES_INFO = {}
-
-# --- NUEVO: Variables para nodo maestro ---
-IS_MASTER = False
-CONNECTED_NODES = {}  # {node_id: (ip, port)}
-MASTER_CHECK_INTERVAL = 10  # segs, para hacer tareas periódicas si es maestro
-
-# --- Funciones Utilitarias ---
-def get_timestamp():
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-
-def get_node_info():
-    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO…
-[10:21 pm, 26/5/2025] +52 1 55 2248 3156: este es el bueno ya súbelo compa 
 import os
 import socket
 import threading
@@ -285,26 +253,25 @@ def main_menu():
         elif opcion == "9":
             forzar_eleccion_maestro()
         elif opcion == "0":
-            print("Saliendo...")
-            os._exit(0)
+            print("Saliendo del sistema distribuido...")
+            break
         else:
-            print("Opción no válida, inténtalo de nuevo.")
+            print("Opción no válida. Intenta de nuevo.")
 
-# --- Lanzamiento ---
-if _name_ == "_main_":
-    try:
-        get_node_info()
-        # Lanzar hilo receptor de mensajes
-        hilo_receptor = threading.Thread(target=receive_messages, args=(MY_ID, MY_PORT), daemon=True)
-        hilo_receptor.start()
+# --- Programa Principal ---
+if __name__ == "__main__":
+    MY_ID, MY_IP, MY_PORT, gestion, sucursal_id = get_node_info()
 
-        # --- NUEVO: Lanzar hilo maestro si es maestro ---
-        if IS_MASTER:
-            hilo_maestro = threading.Thread(target=maestro_periodico, daemon=True)
-            hilo_maestro.start()
+    # Iniciar thread para recibir mensajes
+    receive_thread = threading.Thread(target=receive_messages, args=(MY_ID, MY_PORT), daemon=True)
+    receive_thread.start()
 
-        # Ejecutar menú principal
-        main_menu()
+    # Si soy maestro, iniciar thread para tareas periódicas
+    if IS_MASTER:
+        maestro_thread = threading.Thread(target=maestro_periodico, daemon=True)
+        maestro_thread.start()
 
+    main_menu()
     except Exception as e:
         print(f"Error en el sistema: {e}")
+
