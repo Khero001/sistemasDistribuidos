@@ -290,7 +290,7 @@ def comprar_articulo():
         
         # Intentar comprar
         if gestion.actualizar_stock(sucursal_id, articulo_id, -1 * cantidad,):
-            gestion.generar_guia(sucursal_origen_id, articulo_id, cantidad, cliente_id = cliente_id)
+            gestion.generar_guia(sucursal_id, articulo_id, cantidad, cliente_id = cliente_id)
             print("Compra exitosa. Stock actualizado.")
         else:
             print("No hay suficiente stock o el articulo no existe.")
