@@ -245,7 +245,7 @@ class GestionInventario:
     def verificar_stock_local(self, sucursal_id, articulo_id):
         try:
             rows = self.db_ops.seleccionar_articulo_especifico_por_sucursal(sucursal_id, articulo_id)
-            return rows[0].cantidad if rows else None
+            return rows.cantidad if rows else None
         except Exception as e:
             print(f"Error al verificar stock: {str(e)}")
             return None

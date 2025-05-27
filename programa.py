@@ -352,7 +352,7 @@ def forzar_eleccion_maestro():
 def generar_guia_envio():
     sucursal_id = input("sucursal id: ")
     articulo_id = input("articulo id: ")
-    gestion.verificar_stock_local(sucursal_id, articulo_id)
+    print(gestion.verificar_stock_local(sucursal_id, articulo_id))
 # --- Menú Interactivo del Sistema Distribuido ---
 def main_menu():
     while True:
