@@ -8,7 +8,7 @@ from kazoo.recipe.election import Election  # Cambió LeaderElection -> Election
 class GestionInventario:
     def __init__(self, contact_points=['192.168.1.101'], port=9042, keyspace='inventario_logistica', username=None, password=None):
         self.db_ops = CassandraOperations(contact_points, port, keyspace, username, password)
-        self.zookeeper_hosts = '192.168.1.101:2181,192.168.1.102:2181,192.168.1.97:2181,192.168.1.97:2181' #NUEVA LINEA, SE BORRÓ DE LO ANTERIOR
+        self.zookeeper_hosts = '192.168.1.101:2181,192.168.1.102:2181,192.168.1.96:2181,192.168.1.97:2181' #NUEVA LINEA, SE BORRÓ DE LO ANTERIOR
 
     def __del__(self):
         self.db_ops.close()
