@@ -72,6 +72,9 @@ def get_node_info():
                                 #         CONNECTED_NODES[nid] = ALL_NODES_INFO[nid]
                                 # else:
                                 #     print(f"Soy un nodo esclavo (ID={MY_ID})")
+                                IS_MASTER = False  # Por defecto no es maestro, ZooKeeper decidirá
+                                print(f"Soy un nodo esclavo (ID={MY_ID})")
+
                                 return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
