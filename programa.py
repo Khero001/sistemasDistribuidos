@@ -346,10 +346,11 @@ def simular_falla_sucursal():
     else:
         print("Opción no válida")
 
-
 def forzar_eleccion_maestro():
     print("[Funcionalidad en desarrollo] Forzar elección de nuevo nodo maestro")
 
+def generar_guia_envio():
+    gestion.consultar_inventario_local(sucursal_id)
 # --- Menú Interactivo del Sistema Distribuido ---
 def main_menu():
     while True:
@@ -363,6 +364,7 @@ def main_menu():
         print("7. Ver guías de envío generadas")
         print("8. Simular falla de sucursal")
         print("9. Forzar elección de nuevo nodo maestro")
+        print("10. Generar guía de envío")
         print("0. Salir")
 
         opcion = input("Selecciona una opción: ").strip()
@@ -385,6 +387,8 @@ def main_menu():
             simular_falla_sucursal()
         elif opcion == "9":
             forzar_eleccion_maestro()
+        elif opcion == "10":
+            generar_guia_envio()
         elif opcion == "0":
             print("Saliendo del sistema distribuido...")
             break

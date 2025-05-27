@@ -30,7 +30,8 @@ class GestionInventario:
                 return
 
             for articulo in articulos:
-                print(f"  - Nombre: {articulo.nombre}")
+                print(f"  - ID: {articulo.articulo_id}")
+                print(f"    Nombre: {articulo.nombre}")
                 print(f"    Descripción: {articulo.descripcion}")
                 print(f"    Cantidad: {articulo.cantidad} {articulo.unidad_medida}")
                 print(f"    Capacidad por unidad: {articulo.capacidad_almacenamiento} m3")

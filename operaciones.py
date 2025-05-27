@@ -128,9 +128,9 @@ class CassandraOperations:
             return None
 
     def seleccionar_articulo_especifico_por_sucursal(self, sucursal_id, articulo_id):
-        query = "SELECT * FROM articulos_por_sucursal WHERE sucursal_id = ? AND articulo_id = ?"
+        query = "SELECT * FROM articulos_por_sucursal WHERE sucursal_id = %s AND articulo_id = %s"%(sucursal_id, articulo_id)
         try:
-            row = self.session.execute(query, (sucursal_id, articulo_id)).one()
+            row = self.session.execute(query).one()
             return row
         except Exception as e:
             print(f"Error al seleccionar artículo específico por sucursal: {e}")
