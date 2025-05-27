@@ -268,6 +268,7 @@ def comprar_articulo():
         
         articulo_id = input("ID del articulo a comprar: ").strip()
         cantidad = int(input("Cantidad a comprar: "))
+        cliente_id = input("ID del cliente: ")
         
         print("\nVerificando con otras sucursales...")
         
@@ -289,6 +290,7 @@ def comprar_articulo():
         
         # Intentar comprar
         if gestion.actualizar_stock(sucursal_id, articulo_id, -1 * cantidad,):
+            gestion.generar_guia(self, cliente_id, sucursal_origen_id, None, articulo_id, cantidad)
             print("Compra exitosa. Stock actualizado.")
         else:
             print("No hay suficiente stock o el articulo no existe.")
@@ -375,6 +377,7 @@ def generar_guia_envio():
     sucursal_id = input("sucursal orig: ")
     #articulo_id = input("articulo id: ")
     #cantidad = int(input("cantidad: "))
+    generar_guia(self, cliente_id, sucursal_origen_id, sucursal_destino_id, articulos_enviados, valor_declarado)
     #print(gestion.verificar_stock_local(sucursal_id, articulo_id))
     #gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
 # --- Menú Interactivo del Sistema Distribuido ---

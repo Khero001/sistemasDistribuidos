@@ -274,21 +274,24 @@ class GestionInventario:
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
 
-    def enviar_entre_sucursales(cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
+    def generar_guia(self, cliente_id, sucursal_origen_id, sucursal_destino_id, articulos_enviados, valor_declarado):
+        #recibe id de cliente, id sucursal de origen, id sucursal destino, id articulo enviado, cantidad de articulos
         now = datetime.now()
         guia_id = uuid.uuid4()
-        cliente_id
-        sucursal_origen_id
-        sucursal_destino_id
+
+        cliente_id = "" if cliente_id == None else cliente_id
+        sucursal_destino_id = "" if sucursal_destino_id == None else sucursal_destino_id
+        articulo = self.db_ops.seleccionar_articulo_especifico_por_sucursal(sucursal_id, articulo_id)
+        sucursal = None if sucursal_destino_id == "" else self.db_ops.seleccionar_sucursal_por_id(sucursal_id) 
+        cliente = None if cliente_id == "" else self.db_ops.    def seleccionar_cliente_por_id(cliente_id) 
+
         fecha_venta = now.strftime("%Y-%m-%d")
         hora_venta =now.strftime("%H:%M:%S")
         estado_envio = "Pendiente"
-        peso_kg
-        volumen_m3
-        valor_declarado
-        direccion_destino
-        coordenadas_destino
-        articulos_enviados
+        peso_kg = capacidad_almacenamiento
+        volumen_m3 = capacidad_almacenamiento
+        direccion_destino = cliente.direccion if cliente !=None else sucursal.ciudad
+        coordenadas_destino = "long, lat"
 
         self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         self.db_ops.insertar_guia_envio_por_sucursal_fecha(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
