@@ -1,3 +1,7 @@
+#Nuevos imports
+from kazoo.client import KazooClient
+from kazoo.recipe.leader import LeaderElection
+import socket
 import time
 import os
 import socket
@@ -17,6 +21,9 @@ MY_PORT = None
 gestion = None
 sucursal_id = None
 ALL_NODES_INFO = {}
+#Nuevas variables zookeper
+ZOOKEEPER_HOSTS = '127.0.0.1:2181'
+ELECTION_PATH = "/eleccion_maestro_cassandra"
 
 # --- NUEVO: Variables para nodo maestro ---
 IS_MASTER = False
@@ -209,6 +216,9 @@ def consultar_inventario_local():
     gestion.consultar_inventario_local(sucursal_id)
 
 def consultar_inventario_distribuido():
+    if not IS_MASTER:
+        print("Error: Operación solo para nodo maestro")
+        return
     gestion.consultar_inventario_distribuido()
 
 def agregar_articulo_distribuido():
@@ -355,7 +365,7 @@ def simular_falla_sucursal():
         print("Opción no válida")
 
 def forzar_eleccion_maestro():
-    print("[Funcionalidad en desarrollo] Forzar elección de nuevo nodo maestro")
+    print("Error: La elección ahora es automática")
 
 def generar_guia_envio():
     sucursal_id = input("sucursal id: ")
@@ -364,6 +374,23 @@ def generar_guia_envio():
     #print(gestion.verificar_stock_local(sucursal_id, articulo_id))
     gestion.actualizar_stock(sucursal_id, articulo_id, cantidad)
 # --- Menú Interactivo del Sistema Distribuido ---
+#Funcion de nodo maestro antes de main menu
+def iniciar_eleccion_maestro():
+    global IS_MASTER
+    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)
+    zk.start()
+    
+    def cuando_soy_lider():
+        global IS_MASTER
+        IS_MASTER = True
+        print(f"\n[NODO MAESTRO] ID={MY_ID}")
+        while IS_MASTER:
+            time.sleep(10)
+            print("[MAESTRO] Monitoreando nodos...")
+    
+    election = LeaderElection(zk, ELECTION_PATH, cuando_soy_lider)
+    election.run()
+    
 def main_menu():
     while True:
         print("\n=== MENÚ PRINCIPAL DEL SISTEMA DISTRIBUIDO DE INVENTARIO ===")
@@ -410,7 +437,8 @@ def main_menu():
 # --- Programa Principal ---
 if __name__ == "__main__":
     MY_ID, MY_IP, MY_PORT, gestion, sucursal_id = get_node_info()
-
+    #iniciar elección 
+    iniciar_eleccion_maestro()  
     # Iniciar thread para recibir mensajes
     receive_thread = threading.Thread(target=receive_messages, args=(MY_ID, MY_PORT), daemon=True)
     receive_thread.start()
