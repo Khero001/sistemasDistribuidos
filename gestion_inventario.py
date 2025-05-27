@@ -322,6 +322,28 @@ def obtener_ip_maestro(self):
     finally:
         zk.stop()
 
+def verificar_maestro_activo(self):
+
+        """Revisa si el maestro sigue respondiendo"""
+
+        maestro_ip = self.obtener_ip_maestro()
+
+        if not maestro_ip:
+
+            return False
+
+        
+
+        try:
+
+            with socket.create_connection((maestro_ip.split(':')[0], 2181), timeout=2):
+
+                return True
+
+        except:
+
+            return False
+
 
 def monitorear_nodos(self):
 
