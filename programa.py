@@ -95,6 +95,18 @@ def store_message(message):
     except Exception as e:
         print(f"Error al guardar mensaje: {e}")
 
+def show_messages():
+    if MY_ID is None:
+        return
+    lineas = int(input("Ingrese el número de mensajes: "))
+    filename = f"mensajes_{MY_ID}.txt"
+    try:
+        if not os.path.exists(filename):
+            open(filename, "w").close()
+        os.system("tail -%d %s"%(lineas, filename))
+    except Exception as e:
+        print(f"Error al guardar mensaje: {e}")
+
 # --- Funciones de Red ---
 def receive_messages(my_id, my_port):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -432,6 +444,7 @@ def main_menu():
         print("7. Ver guías de envío generadas")
         print("8. Simular falla de sucursal")
         print("9. Generar guía de envío")
+        print("10. Mostrar N últimos mensajes")
         print("0. Salir")
 
         opcion = input("Selecciona una opción: ").strip()
@@ -455,7 +468,7 @@ def main_menu():
         elif opcion == "9":
             generar_guia_envio()
         elif opcion == "10":
-            generar_guia_envio()
+            show_messages()
         elif opcion == "0":
             print("Saliendo del sistema distribuido...")
             break
