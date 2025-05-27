@@ -22,7 +22,8 @@ gestion = None
 sucursal_id = None
 ALL_NODES_INFO = {}
 #Nuevas variables zookeper
-ZOOKEEPER_HOSTS = '192.168.1.101:2181'
+#ZOOKEEPER_HOSTS = '192.168.1.101:2181'
+ZOOKEEPER_HOSTS = '192.168.1.101:2181'  # ESTO SOLO ES DE PRUEBA, SE VA A CAMBIAR, REVISAR LINEAS 373 EN ADELANTE DE GESTION_INVENTARIO.py
 ELECTION_PATH = "/eleccion_maestro_cassandra"
 
 # --- NUEVO: Variables para nodo maestro ---
