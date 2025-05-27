@@ -281,8 +281,8 @@ class GestionInventario:
 
         cliente_id = "00000000-0000-0000-0000-000000000000" if cliente_id == None else cliente_id
         sucursal_destino_id = "00000000-0000-0000-0000-000000000000" if sucursal_destino_id == None else sucursal_destino_id
-        articulo = self.db_ops.seleccionar_articulo_especifico_por_sucursal(sucursal_id, articulo_id)
-        sucursal = None if sucursal_destino_id == "" else self.db_ops.seleccionar_sucursal_por_id(sucursal_id) 
+        articulo = self.db_ops.seleccionar_articulo_especifico_por_sucursal(sucursal_origen_id, articulo_id)
+        sucursal = None if sucursal_destino_id == "" else self.db_ops.seleccionar_sucursal_por_id(sucursal_destino_id) 
         cliente = None if cliente_id == "" else self.db_ops.seleccionar_cliente_por_id(cliente_id) 
 
         fecha_venta = now.strftime("%Y-%m-%d")
