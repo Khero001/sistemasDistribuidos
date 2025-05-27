@@ -322,6 +322,36 @@ def obtener_ip_maestro(self):
     finally:
         zk.stop()
 
+
+def monitorear_nodos(self):
+
+        """Escucha cambios en los nodos y reelegir maestro si es necesario"""
+
+        zk = KazooClient(hosts='127.0.0.1:2181')
+
+        zk.start()
+
+
+
+        zk.DataWatch("/eleccion_maestro_cassandra/leader")
+
+        def vigilar_maestro(data, stat):
+
+            if not data:  # Si no hay maestro
+
+                print("\n¡No hay maestro! Iniciando nueva elección...")
+
+                self.iniciar_eleccion_maestro()  # Función que ya tienes
+
+
+
+        # Mantener el listener activo
+
+        while True:
+
+            time.sleep(5)
+
+
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
     # antes de ejecutar este script.
