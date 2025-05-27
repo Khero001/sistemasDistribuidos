@@ -276,7 +276,7 @@ class GestionInventario:
 
     def generar_guia(self, sucursal_origen_id, articulos_enviados, valor_declarado, cliente_id = None, sucursal_destino_id = None):
         #recibe id sucursal de origen, id articulo enviado, cantidad de articulos, id de cliente (opcional), id sucursal destino (opcional)
-        now = datetime.now()
+        now = datetime.datetime.now()
         guia_id = uuid.uuid4()
 
         cliente_id = "00000000-0000-0000-0000-000000000000" if cliente_id == None else cliente_id
@@ -292,7 +292,6 @@ class GestionInventario:
         volumen_m3 = capacidad_almacenamiento
         direccion_destino = cliente.direccion if cliente !=None else sucursal.ciudad
         coordenadas_destino = "long, lat"
-        print("recabo datos")
         self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         self.db_ops.insertar_guia_envio_por_sucursal_fecha(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
 #AQUI
