@@ -94,27 +94,84 @@ def receive_messages(my_id, my_port):
     while True:
         client_socket, addr = server_socket.accept()
         threading.Thread(target=handle_connection, args=(client_socket, my_id), daemon=True).start()
-
+#NUEVAS DEF
+#def nueva
+def marcar_sucursal_inactiva(self, sucursal_id):
+        """Marca una sucursal como caída en Cassandra"""
+        query = """
+        INSERT INTO estado_sucursales (
+            sucursal_id,
+            estado,
+            ultima_actualizacion,
+            es_master
+        ) VALUES (%s, %s, %s, %s)
+        """
+        try:
+            self.db_ops.session.execute(query, [
+                uuid.UUID(sucursal_id),
+                "INACTIVA",
+                datetime.datetime.now(),
+                False
+            ])
+            return True
+        except Exception as e:
+            print(f"Error al marcar sucursal como inactiva: {str(e)}")
+            return False
+#nueva
+    def obtener_sucursales_activas(self):
+        """Devuelve una lista de IDs de sucursales activas"""
+        query = "SELECT sucursal_id FROM estado_sucursales WHERE estado = %s"
+        try:
+            rows = self.db_ops.session.execute(query, ["ACTIVA"])
+            return [str(row.sucursal_id) for row in rows]
+        except Exception as e:
+            print(f"Error al obtener sucursales activas: {str(e)}")
+            return []
 def handle_connection(client_socket, my_id):
     try:
         message_data = client_socket.recv(1024).decode('utf-8')
         if message_data:
-            sender_id, message_with_timestamp = message_data.split(":", 1)
-            timestamp, message = message_with_timestamp.split("||", 1)
-            full_message = f"[{get_timestamp()}] Nodo {sender_id}: {message}"
-            print(full_message)
-            store_message(f"[{timestamp}] Nodo {sender_id}: {message} (Recibido)")
-
-            # --- Lógica maestro: procesar mensaje especial ---
-            if IS_MASTER:
-                # Aquí puedes poner lógica extra para maestro, por ejemplo:
-                if message.startswith("SOLICITUD_"):
-                    print(f"Nodo maestro recibió solicitud: {message}")
-                    # Ejemplo: responder o reenviar mensaje a nodos
-                    # (implementa según tu protocolo)
-
-            response = f"Recibido por Nodo {my_id} a las {get_timestamp()}"
+            # --- PARTE 1: Mensajes normales de chat ---
+            if "||" in message_data:
+                sender_id, message_with_timestamp = message_data.split(":", 1)
+                timestamp, message = message_with_timestamp.split("||", 1)
+                full_message = f"[{get_timestamp()}] Nodo {sender_id}: {message}"
+                print(full_message)
+                store_message(f"[{timestamp}] Nodo {sender_id}: {message} (Recibido)")
+                response = f"Recibido por Nodo {my_id} a las {get_timestamp()}"
+            
+            # --- PARTE 2: Mensajes para comprar artículos ---
+            elif message_data.startswith("BLOQUEO_COMPRA:"):
+                _, nodo_solicitante, articulo_id, cantidad = message_data.split(":")
+                stock = gestion.verificar_stock_local(sucursal_id, articulo_id)
+                
+                if stock is not None and stock >= int(cantidad):
+                    response = "APROBADO"
+                else:
+                    response = "DENEGADO"
+            
+            # --- PARTE NUEVA: Mensajes de nodos caídos (PARA SIMULAR FALLA) ---
+            elif message_data.startswith("NODO_CAIDO:"):
+                _, sucursal_fallida = message_data.split(":")
+                print(f"\n¡ALERTA! La sucursal {sucursal_fallida} ha fallado")
+                
+                # Marcar como inactiva en Cassandra
+                if gestion.marcar_sucursal_inactiva(sucursal_fallida):
+                    response = "CAIDA_REGISTRADA"
+                else:
+                    response = "ERROR_AL_MARCAR_CAIDA"
+            
+            # --- PARTE 3: Lógica para el nodo maestro ---
+            elif IS_MASTER and message_data.startswith("SOLICITUD_"):
+                print(f"Nodo maestro recibió solicitud: {message_data}")
+                response = "SOLICITUD_PROCESADA"
+            
+            # --- PARTE 4: Otros mensajes no reconocidos ---
+            else:
+                response = "MENSAJE_DESCONOCIDO"
+            
             client_socket.sendall(response.encode('utf-8'))
+    
     except Exception as e:
         print(f"Nodo {my_id}: Error al recibir mensaje: {e}")
     finally:
@@ -184,7 +241,42 @@ def actualizar_cliente():
         print("Datos ingresados no válidos.")
 
 def comprar_articulo():
-    print("[Funcionalidad en desarrollo] Comprar artículo con exclusión mutua")
+    try:
+        print("\n=== COMPRAR ARTICULO ===")
+        gestion.consultar_inventario_local(sucursal_id)
+        
+        articulo_id = input("ID del articulo a comprar: ").strip()
+        cantidad = int(input("Cantidad a comprar: "))
+        
+        print("\nVerificando con otras sucursales...")
+        
+        # Preguntar a otros nodos
+        mensaje = f"BLOQUEO_COMPRA:{MY_ID}:{articulo_id}:{cantidad}"
+        respuestas = {}
+        
+        for node_id, (ip, port) in ALL_NODES_INFO.items():
+            if node_id != MY_ID:
+                try:
+                    send_message(MY_ID, node_id, ip, port, mensaje)
+                    respuestas[node_id] = True
+                except:
+                    respuestas[node_id] = False
+        
+        if not all(respuestas.values()):
+            print("Algunas sucursales no respondieron. Abortando compra.")
+            return
+        
+        # Intentar comprar
+        if gestion.actualizar_stock(sucursal_id, articulo_id, cantidad, "VENTA"):
+            print("Compra exitosa. Stock actualizado.")
+        else:
+            print("No hay suficiente stock o el articulo no existe.")
+            
+    except ValueError:
+        print("Error: Ingresa un numero valido para la cantidad.")
+    except Exception as e:
+        print(f"Error inesperado: {str(e)}")
+
 
 def ver_guias_envio():
     print("[Funcionalidad en desarrollo] Ver guías de envío generadas")
@@ -212,7 +304,48 @@ def ver_guias_envio():
         print("Opción no válida.")
 
 def simular_falla_sucursal():
-    print("[Funcionalidad en desarrollo] Simular falla de sucursal")
+    print("\n=== SIMULAR FALLA DE SUCURSAL ===")
+    print("1. Fallar ESTA sucursal (se apagará)")
+    print("2. Fallar OTRA sucursal")
+    opcion = input("Elige (1 o 2): ")
+
+    if opcion == "1":
+        print("\nEsta sucursal se marcará como INACTIVA...")
+        if gestion.marcar_sucursal_inactiva(MY_ID):
+            print("¡Adiós! Cerrando programa en 3 segundos.")
+            time.sleep(3)
+            sys.exit(0)
+        else:
+            print("Error: No se pudo marcar como inactiva")
+
+    elif opcion == "2":
+        print("\nSucursales activas disponibles:")
+        sucursales = gestion.obtener_sucursales_activas()
+        
+        for suc_id in sucursales:
+            if suc_id != MY_ID:
+                print(f"- ID: {suc_id}")
+
+        suc_fallida = input("\nIngresa el ID a fallar: ").strip()
+        
+        if suc_fallida in sucursales:
+            print(f"\nSimulando falla en sucursal {suc_fallida}...")
+            if gestion.marcar_sucursal_inactiva(suc_fallida):
+                # Notificar a otros nodos
+                for node_id, (ip, port) in ALL_NODES_INFO.items():
+                    if node_id != MY_ID and node_id != suc_fallida:
+                        try:
+                            send_message(MY_ID, node_id, ip, port, f"NODO_CAIDO:{suc_fallida}")
+                        except:
+                            print(f"Error al notificar a {node_id}")
+                print("¡Sucursal marcada como caída!")
+            else:
+                print("Error al actualizar Cassandra")
+        else:
+            print("¡ID inválido o sucursal ya caída!")
+    else:
+        print("Opción no válida")
+
 
 def forzar_eleccion_maestro():
     print("[Funcionalidad en desarrollo] Forzar elección de nuevo nodo maestro")
