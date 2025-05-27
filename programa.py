@@ -103,7 +103,9 @@ def show_messages():
     try:
         if not os.path.exists(filename):
             open(filename, "w").close()
+        print("+"+("-"*20)+"+")
         os.system("tail -%d %s"%(lineas, filename))
+        print("+"+("-"*20)+"+")
     except Exception as e:
         print(f"Error al guardar mensaje: {e}")
 
