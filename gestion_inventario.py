@@ -90,7 +90,7 @@ class GestionInventario:
                 print(f"Fallo al agregar/actualizar el artículo '{nombre_articulo}'.")
                 return False
     
-    def dividir_en_n_montones_equitativos(numero, n_montones):
+    def dividir_en_n_montones_equitativos(self, numero, n_montones):
         if not isinstance(numero, int) or numero < 0:
             raise ValueError("El número a dividir debe ser un entero no negativo.")
         
