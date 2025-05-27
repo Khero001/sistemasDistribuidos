@@ -62,28 +62,73 @@ class GestionInventario:
             else:
                 print("  No hay artículos en el inventario de esta sucursal.")
 
-    def agregar_articulo_a_inventario_distribuido(self, sucursal_id, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento):
+    def agregar_articulo_a_inventario_distribuido(self, lista_sucursales, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento):
         """
         Agrega un artículo en el inventario de una sucursal específica.
         Genera un nuevo UUID para el artículo si no se especifica uno.
         """
         print(f"\n--- Agregando/Actualizando Artículo en Inventario Distribuido ---")
-        sucursal = self.db_ops.seleccionar_sucursal_por_id(sucursal_id)
-        if not sucursal:
-            print(f"Error: La sucursal con ID {sucursal_id} no existe. No se puede agregar el artículo.")
-            return False
 
         # Generar un nuevo UUID para el artículo
         articulo_id = uuid.uuid4()
 
-        if self.db_ops.insertar_articulo_por_sucursal(
-            sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento
-        ):
-            print(f"Artículo '{nombre_articulo}' (ID: {articulo_id}) agregado/actualizado en la sucursal '{sucursal.nombre_sucursal}'.")
-            return True
-        else:
-            print(f"Fallo al agregar/actualizar el artículo '{nombre_articulo}'.")
-            return False
+        cantidades = self.dividir_en_n_montones_equitativos(cantidad, len(lista_sucursales))
+
+        for i_sucursal in range(len(lista_sucursales)):
+            sucursal = self.db_ops.seleccionar_sucursal_por_id(sucursal_id)
+            if not sucursal:
+                print(f"Error: La sucursal con ID {sucursal_id} no existe. No se puede agregar el artículo.")
+                return False
+
+            if self.db_ops.insertar_articulo_por_sucursal(
+                sucursal_id, articulo_id, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento
+            ):
+                print(f"Artículo '{nombre_articulo}' (ID: {articulo_id}) agregado/actualizado en la sucursal '{sucursal.nombre_sucursal}'.")
+                #return True
+            else:
+                print(f"Fallo al agregar/actualizar el artículo '{nombre_articulo}'.")
+                return False
+    
+    def dividir_en_n_montones_equitativos(numero, n_montones):
+    """
+    Divide un número entero en n montones, distribuyendo el residuo
+    para que los montones sean lo más equitativos posible.
+
+    Args:
+        numero (int): El número entero a dividir.
+        n_montones (int): El número de montones en los que dividir.
+
+    Returns:
+        list: Una lista de enteros representando los n montones.
+
+    Raises:
+        ValueError: Si el número o el número de montones no son válidos.
+    """
+    if not isinstance(numero, int) or numero < 0:
+        raise ValueError("El número a dividir debe ser un entero no negativo.")
+    
+    if not isinstance(n_montones, int) or n_montones <= 0:
+        raise ValueError("El número de montones debe ser un entero positivo.")
+
+    # Caso especial: si el número es 0, todos los montones son 0
+    if numero == 0:
+        return [0] * n_montones
+    
+    # Caso especial: si solo hay 1 montón, es el número completo
+    if n_montones == 1:
+        return [numero]
+
+    cociente = numero // n_montones  # División entera
+    residuo = numero % n_montones    # El resto de la división
+
+    montones = [cociente] * n_montones  # Inicializa todos los montones con el cociente
+
+    # Distribuir el residuo
+    # Los primeros 'residuo' montones recibirán un +1
+    for i in range(residuo):
+        montones[i] += 1
+    
+    return montones
 
     def consultar_sucursales(self):
         """
@@ -241,6 +286,10 @@ class GestionInventario:
                     print("-" * 30)
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
+
+    def enviar_entre_sucursales(cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
+        guia_id = uuid.uuid4()
+        self.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
 #AQUI
     def verificar_stock_local(self, sucursal_id, articulo_id):
         try:
