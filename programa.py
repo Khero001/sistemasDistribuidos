@@ -482,7 +482,17 @@ def main_menu():
             break
         else:
             print("Opción no válida. Intenta de nuevo.")
+# ---- nuevo ----
+def iniciar_servicios_maestro():
+    global IS_MASTER
+    while True:
+        if IS_MASTER:
+            print("🔷 [MAESTRO] Ejecutando tareas...")
+            # Aquí puedes añadir más tareas del maestro
+            time.sleep(10)
 
+if __name__ == "__main__":  # <- Esto ya está en tu código
+    # ...
 # --- Programa Principal ---
 if __name__ == "__main__":
     MY_ID, MY_IP, MY_PORT, gestion, sucursal_id = get_node_info()
