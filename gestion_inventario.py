@@ -90,45 +90,31 @@ class GestionInventario:
                 return False
     
     def dividir_en_n_montones_equitativos(numero, n_montones):
-    """
-    Divide un número entero en n montones, distribuyendo el residuo
-    para que los montones sean lo más equitativos posible.
+        if not isinstance(numero, int) or numero < 0:
+            raise ValueError("El número a dividir debe ser un entero no negativo.")
+        
+        if not isinstance(n_montones, int) or n_montones <= 0:
+            raise ValueError("El número de montones debe ser un entero positivo.")
 
-    Args:
-        numero (int): El número entero a dividir.
-        n_montones (int): El número de montones en los que dividir.
+        # Caso especial: si el número es 0, todos los montones son 0
+        if numero == 0:
+            return [0] * n_montones
+        
+        # Caso especial: si solo hay 1 montón, es el número completo
+        if n_montones == 1:
+            return [numero]
 
-    Returns:
-        list: Una lista de enteros representando los n montones.
+        cociente = numero // n_montones  # División entera
+        residuo = numero % n_montones    # El resto de la división
 
-    Raises:
-        ValueError: Si el número o el número de montones no son válidos.
-    """
-    if not isinstance(numero, int) or numero < 0:
-        raise ValueError("El número a dividir debe ser un entero no negativo.")
-    
-    if not isinstance(n_montones, int) or n_montones <= 0:
-        raise ValueError("El número de montones debe ser un entero positivo.")
+        montones = [cociente] * n_montones  # Inicializa todos los montones con el cociente
 
-    # Caso especial: si el número es 0, todos los montones son 0
-    if numero == 0:
-        return [0] * n_montones
-    
-    # Caso especial: si solo hay 1 montón, es el número completo
-    if n_montones == 1:
-        return [numero]
-
-    cociente = numero // n_montones  # División entera
-    residuo = numero % n_montones    # El resto de la división
-
-    montones = [cociente] * n_montones  # Inicializa todos los montones con el cociente
-
-    # Distribuir el residuo
-    # Los primeros 'residuo' montones recibirán un +1
-    for i in range(residuo):
-        montones[i] += 1
-    
-    return montones
+        # Distribuir el residuo
+        # Los primeros 'residuo' montones recibirán un +1
+        for i in range(residuo):
+            montones[i] += 1
+        
+        return montones
 
     def consultar_sucursales(self):
         """
