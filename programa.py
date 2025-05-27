@@ -372,6 +372,7 @@ def forzar_eleccion_maestro():
 
 def generar_guia_envio():
     print(datetime.now())
+    print(datetime.date(2025, 5, 20))
     #sucursal_id = input("sucursal orig: ")
     #articulo_id = input("articulo id: ")
     #cantidad = int(input("cantidad: "))
