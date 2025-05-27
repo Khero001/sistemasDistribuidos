@@ -90,7 +90,7 @@ def store_message(message):
             open(filename, "w").close()
         with open(filename, "a", encoding="utf-8") as f:
             f.write(message + "\n")
-            #print(f"Mensaje almacenado en {filename}")
+            print(f"Mensaje almacenado en {filename}")
             f.close()
     except Exception as e:
         print(f"Error al guardar mensaje: {e}")
