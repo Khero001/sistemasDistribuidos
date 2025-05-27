@@ -1,3 +1,35 @@
+#CodigoF
+import os
+import socket
+import threading
+import uuid
+import sys
+import netifaces
+from datetime import datetime
+from gestion_inventario import GestionInventario
+
+# --- Configuración Global ---
+CONFIG_FILE = "config.txt"
+MESSAGES = []
+MY_ID = None
+MY_IP = None
+MY_PORT = None
+gestion = None
+sucursal_id = None
+ALL_NODES_INFO = {}
+
+# --- NUEVO: Variables para nodo maestro ---
+IS_MASTER = False
+CONNECTED_NODES = {}  # {node_id: (ip, port)}
+MASTER_CHECK_INTERVAL = 10  # segs, para hacer tareas periódicas si es maestro
+
+# --- Funciones Utilitarias ---
+def get_timestamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+
+def get_node_info():
+    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO…
+[10:21 pm, 26/5/2025] +52 1 55 2248 3156: este es el bueno ya súbelo compa 
 import os
 import socket
 import threading
