@@ -274,8 +274,8 @@ class GestionInventario:
             else:
                 print(f"No se encontraron guías para la sucursal {sucursal_origen_id} en la fecha {fecha}.")
 
-    def generar_guia(self, cliente_id, sucursal_origen_id, sucursal_destino_id, articulos_enviados, valor_declarado):
-        #recibe id de cliente, id sucursal de origen, id sucursal destino, id articulo enviado, cantidad de articulos
+    def generar_guia(self, sucursal_origen_id, articulos_enviados, valor_declarado, cliente_id = None, sucursal_destino_id = None):
+        #recibe id sucursal de origen, id articulo enviado, cantidad de articulos, id de cliente (opcional), id sucursal destino (opcional)
         now = datetime.now()
         guia_id = uuid.uuid4()
 
