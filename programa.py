@@ -491,8 +491,6 @@ def iniciar_servicios_maestro():
             # Aquí puedes añadir más tareas del maestro
             time.sleep(10)
 
-if __name__ == "__main__":  # <- Esto ya está en tu código
-    # ...
 # --- Programa Principal ---
 if __name__ == "__main__":
     MY_ID, MY_IP, MY_PORT, gestion, sucursal_id = get_node_info()
