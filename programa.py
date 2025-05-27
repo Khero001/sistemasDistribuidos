@@ -401,16 +401,19 @@ def generar_guia_envio():
 def iniciar_eleccion_maestro():
     global IS_MASTER
     
-    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)  # Usar los hosts configurados
+    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)
     zk.start()
+    
+    # Mover election a una variable que pueda ser accedida por vigilar_maestro
+    election = Election(zk, ELECTION_PATH, identifier=MY_ID.encode())
     
     def lider_elegido():
         global IS_MASTER
         IS_MASTER = True
         print(f"\n[NODO MAESTRO] ID={MY_ID}")
         
-        # Registrar como maestro en ZooKeeper
         try:
+            # Registrar como maestro en ZooKeeper
             zk.create(f"{ELECTION_PATH}/leader", 
                      value=MY_IP.encode(), 
                      ephemeral=True)
@@ -420,22 +423,26 @@ def iniciar_eleccion_maestro():
         # Tareas del maestro
         while IS_MASTER:
             time.sleep(10)
-            if IS_MASTER:  # Verificar que aún sea maestro
+            if IS_MASTER:
                 print("[MAESTRO] Monitoreando nodos...")
     
-    def vigilar_maestro(data, stat):
+    def vigilar_maestro(data, stat, event=None):  # Añadir event como parámetro opcional
         global IS_MASTER
         if not data:  # Si no hay maestro
             print("\n¡No hay maestro! Iniciando nueva elección...")
             IS_MASTER = False
+            # Usar la variable election del ámbito superior
             election.run(lider_elegido)
+    
+    # Iniciar la elección inicial
+    election.run(lider_elegido)
     
     # Configurar watch para detectar caídas del maestro
     zk.DataWatch(f"{ELECTION_PATH}/leader", vigilar_maestro)
     
-    # Iniciar la elección
-    election = Election(zk, ELECTION_PATH, identifier=MY_ID.encode())
-    election.run(lider_elegido)
+    # Mantener la conexión abierta
+    while True:
+        time.sleep(1)
     
     #aqui
 def registrar_nodo_efimero():
