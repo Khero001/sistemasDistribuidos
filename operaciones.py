@@ -337,10 +337,10 @@ class CassandraOperations:
     def insertar_guia_envio_por_sucursal_fecha(self, sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados):
         query = """
         INSERT INTO guias_envio_por_sucursal_fecha (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
-        VALUES ((UUID)?, ?, (UUID)?, (UUID)?, (UUID)?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """
+        VALUES ((UUID)%s, toDate('%s'), (UUID)%s, (UUID)%s, (UUID)%s, '%s', '%s', %s, %s, %s, '%s', '%s', '%s')
+        """%(sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
         try:
-            self.session.execute(query, (sucursal_origen_id, fecha_venta, guia_id, cliente_id, sucursal_destino_id, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados))
+            self.session.execute(query)
             print(f"Guía de envío '{guia_id}' insertada/actualizada correctamente en guias_envio_por_sucursal_fecha.")
             return True
         except Exception as e:
