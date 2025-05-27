@@ -288,8 +288,8 @@ class GestionInventario:
         fecha_venta = now.strftime("%Y-%m-%d")
         hora_venta =now.strftime("%H:%M:%S")
         estado_envio = "Pendiente"
-        peso_kg = capacidad_almacenamiento
-        volumen_m3 = capacidad_almacenamiento
+        peso_kg = articulo.capacidad_almacenamiento
+        volumen_m3 = articulo.capacidad_almacenamiento
         direccion_destino = cliente.direccion if cliente !=None else sucursal.ciudad
         coordenadas_destino = "long, lat"
         self.db_ops.insertar_guia_envio_por_id(guia_id, cliente_id, sucursal_origen_id, sucursal_destino_id, fecha_venta, hora_venta, estado_envio, peso_kg, volumen_m3, valor_declarado, direccion_destino, coordenadas_destino, articulos_enviados)
