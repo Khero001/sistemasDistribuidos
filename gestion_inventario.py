@@ -296,20 +296,31 @@ class GestionInventario:
             return False
 #Aqui DEM
 def obtener_ips_nodos_efimeros(self):
-    zk = KazooClient(hosts='127.0.0.1:2181')  # Usa el teléfono
-    zk.start()  # Marca el número
+    ip_maestro = self.obtener_ip_maestro()  # Obtener IP del maestro
+    if not ip_maestro:
+        print("Maestro no encontrado")
+        return []
+
+    zk = KazooClient(hosts=ip_maestro + ':2181')  # Usar IP del maestro 👈
+    zk.start()
     
     try:
-        # Pregunta a Zookeeper: "¿Quién está jugando?"
         nodos = zk.get_children("/nodos_efimeros_cassandra")
-        ips = []
-        for nodo in nodos:
-            ip = zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode()
-            ips.append(ip)  # Apunta las IPs en una lista
-        return ips
-        
+        return [zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode() for nodo in nodos]
     finally:
-        zk.stop()  # Cuelga el teléfono
+        zk.stop()
+def obtener_ip_maestro(self):
+    zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión local inicial, aca puede ir la de 192.168....
+    zk.start()
+    
+    try:
+        # Ver quién es el líder actual
+        leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
+        return leader  # Devuelve la IP del maestro
+    except:
+        return None
+    finally:
+        zk.stop()
 
 if __name__ == "__main__":
     # Asegúrate de que Cassandra esté corriendo y que hayas ejecutado schema.cql y test_data.cql
