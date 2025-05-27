@@ -295,71 +295,71 @@ class GestionInventario:
             print(f"Error al actualizar stock: {str(e)}")
             return False
 #Aqui DEM
-def obtener_ips_nodos_efimeros(self):
-    ip_maestro = self.obtener_ip_maestro()  # Obtener IP del maestro
-    if not ip_maestro:
-        print("Maestro no encontrado")
-        return []
+    def obtener_ips_nodos_efimeros(self):
+        ip_maestro = self.obtener_ip_maestro()  # Obtener IP del maestro
+        if not ip_maestro:
+            print("Maestro no encontrado")
+            return []
 
-    zk = KazooClient(hosts=ip_maestro + ':2181')  # Usar IP del maestro 👈
-    zk.start()
-    
-    try:
-        nodos = zk.get_children("/nodos_efimeros_cassandra")
-        return [zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode() for nodo in nodos]
-    finally:
-        zk.stop()
-def obtener_ip_maestro(self):
-    zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión local inicial, aca puede ir la de 192.168....
-    zk.start()
-    
-    try:
-        # Ver quién es el líder actual
-        leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
-        return leader  # Devuelve la IP del maestro
-    except:
-        return None
-    finally:
-        zk.stop()
-
-def verificar_maestro_activo(self):
-    maestro_ip = self.obtener_ip_maestro()
-    if not maestro_ip:
-        return False
+        zk = KazooClient(hosts=ip_maestro + ':2181')  # Usar IP del maestro 👈
+        zk.start()
+        
         try:
-            with socket.create_connection((maestro_ip.split(':')[0], 2181), timeout=2):
-                return True
-        except:
-            return False
+            nodos = zk.get_children("/nodos_efimeros_cassandra")
+            return [zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode() for nodo in nodos]
+        finally:
+            zk.stop()
+    def obtener_ip_maestro(self):
+        zk = KazooClient(hosts='127.0.0.1:2181')  # Conexión local inicial, aca puede ir la de 192.168....
+        zk.start()
+        
+        try:
+            # Ver quién es el líder actual
+            leader = zk.get("/eleccion_maestro_cassandra/leader")[0].decode()
+            return leader  # Devuelve la IP del maestro
+        except:
+            return None
+        finally:
+            zk.stop()
+
+    def verificar_maestro_activo(self):
+        maestro_ip = self.obtener_ip_maestro()
+        if not maestro_ip:
+            return False
+            try:
+                with socket.create_connection((maestro_ip.split(':')[0], 2181), timeout=2):
+                    return True
+            except:
+                return False
 
 
-def monitorear_nodos(self):
+    def monitorear_nodos(self):
 
-        """Escucha cambios en los nodos y reelegir maestro si es necesario"""
+            """Escucha cambios en los nodos y reelegir maestro si es necesario"""
 
-        zk = KazooClient(hosts='127.0.0.1:2181')
+            zk = KazooClient(hosts='127.0.0.1:2181')
 
-        zk.start()
-
-
-
-        zk.DataWatch("/eleccion_maestro_cassandra/leader")
-
-        def vigilar_maestro(data, stat):
-
-            if not data:  # Si no hay maestro
-
-                print("\n¡No hay maestro! Iniciando nueva elección...")
-
-                self.iniciar_eleccion_maestro()  # Función que ya tienes
+            zk.start()
 
 
 
-        # Mantener el listener activo
+            zk.DataWatch("/eleccion_maestro_cassandra/leader")
 
-        while True:
+            def vigilar_maestro(data, stat):
 
-            time.sleep(5)
+                if not data:  # Si no hay maestro
+
+                    print("\n¡No hay maestro! Iniciando nueva elección...")
+
+                    self.iniciar_eleccion_maestro()  # Función que ya tienes
+
+
+
+            # Mantener el listener activo
+
+            while True:
+
+                time.sleep(5)
 #NUEVAS
     def obtener_ip_maestro(self):
         """Obtiene la IP del nodo maestro desde ZooKeeper"""
