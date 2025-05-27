@@ -17,12 +17,17 @@ gestion = None
 sucursal_id = None
 ALL_NODES_INFO = {}
 
+# --- NUEVO: Variables para nodo maestro ---
+IS_MASTER = False
+CONNECTED_NODES = {}  # {node_id: (ip, port)}
+MASTER_CHECK_INTERVAL = 10  # segs, para hacer tareas periódicas si es maestro
+
 # --- Funciones Utilitarias ---
 def get_timestamp():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
 def get_node_info():
-    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO, sucursal_id, gestion
+    global MY_ID, MY_IP, MY_PORT, ALL_NODES_INFO, sucursal_id, gestion, IS_MASTER, CONNECTED_NODES
     try:
         with open(CONFIG_FILE, "r") as f:
             for line in f:
@@ -46,7 +51,18 @@ def get_node_info():
                                 print(f"Configuración local encontrada: {MY_ID} {MY_IP}:{MY_PORT}")
                                 gestion = GestionInventario(contact_points=[MY_IP], keyspace='inventario_logistica')
                                 sucursal_id = gestion.obtener_sucursal_id(MY_IP)
-                                print (f"ID de sucursal {sucursal_id}")
+                                print(f"ID de sucursal {sucursal_id}")
+                                # --- Lógica para definir si soy nodo maestro ---
+                                # Nodo maestro = el primero en config.txt (ejemplo simple)
+                                sorted_nodes = sorted(ALL_NODES_INFO.keys())
+                                if MY_ID == sorted_nodes[0]:
+                                    IS_MASTER = True
+                                    print(f"Soy el nodo maestro (ID={MY_ID})")
+                                    # Llenamos nodos conectados excepto yo
+                                    for nid in sorted_nodes[1:]:
+                                        CONNECTED_NODES[nid] = ALL_NODES_INFO[nid]
+                                else:
+                                    print(f"Soy un nodo esclavo (ID={MY_ID})")
                                 return MY_ID, MY_IP, MY_PORT, gestion, sucursal_id
             except Exception as e:
                 print(f"Error en interfaz {interface}: {e}")
@@ -77,7 +93,7 @@ def receive_messages(my_id, my_port):
     print(f"Nodo {my_id} está escuchando en el puerto {my_port}...")
     while True:
         client_socket, addr = server_socket.accept()
-        threading.Thread(target=handle_connection, args=(client_socket, my_id)).start()
+        threading.Thread(target=handle_connection, args=(client_socket, my_id), daemon=True).start()
 
 def handle_connection(client_socket, my_id):
     try:
@@ -88,6 +104,15 @@ def handle_connection(client_socket, my_id):
             full_message = f"[{get_timestamp()}] Nodo {sender_id}: {message}"
             print(full_message)
             store_message(f"[{timestamp}] Nodo {sender_id}: {message} (Recibido)")
+
+            # --- Lógica maestro: procesar mensaje especial ---
+            if IS_MASTER:
+                # Aquí puedes poner lógica extra para maestro, por ejemplo:
+                if message.startswith("SOLICITUD_"):
+                    print(f"Nodo maestro recibió solicitud: {message}")
+                    # Ejemplo: responder o reenviar mensaje a nodos
+                    # (implementa según tu protocolo)
+
             response = f"Recibido por Nodo {my_id} a las {get_timestamp()}"
             client_socket.sendall(response.encode('utf-8'))
     except Exception as e:
@@ -109,6 +134,17 @@ def send_message(my_id, target_name, target_ip, target_port, message_text):
             print(f"Respuesta de {target_name}: {response}")
     except Exception as e:
         print(f"Nodo {my_id}: Error al enviar mensaje: {e}")
+
+# --- NUEVO: Función que el nodo maestro ejecuta periódicamente ---
+def maestro_periodico():
+    while True:
+        # Ejemplo simple: enviar "PING" a todos los nodos conectados para chequear salud
+        for node_id, (ip, port) in CONNECTED_NODES.items():
+            try:
+                send_message(MY_ID, node_id, ip, port, "PING desde maestro")
+            except Exception as e:
+                print(f"Error enviando ping a {node_id}: {e}")
+        threading.Event().wait(MASTER_CHECK_INTERVAL)
 
 # --- Funciones del Sistema Distribuido ---
 def consultar_inventario_local():
@@ -152,7 +188,6 @@ def comprar_articulo():
 
 def ver_guias_envio():
     print("[Funcionalidad en desarrollo] Ver guías de envío generadas")
-    # Solicitar inputs para las opciones de ver guías
     print("Opciones para ver guías:")
     print("  a. Ver una guía específica por ID")
     print("  b. Ver guías por sucursal y fecha")
@@ -218,18 +253,26 @@ def main_menu():
         elif opcion == "9":
             forzar_eleccion_maestro()
         elif opcion == "0":
-            print("Saliendo del sistema...")
-            break
+            print("Saliendo...")
+            os._exit(0)
         else:
-            print("Opción no válida. Intenta de nuevo.")
+            print("Opción no válida, inténtalo de nuevo.")
 
-# --- Programa Principal ---
-if __name__ == "__main__":
+# --- Lanzamiento ---
+if _name_ == "_main_":
     try:
-        my_id, my_ip, my_port, gestion, sucursal_id = get_node_info()
-        threading.Thread(target=receive_messages, args=(my_id, my_port), daemon=True).start()
+        get_node_info()
+        # Lanzar hilo receptor de mensajes
+        hilo_receptor = threading.Thread(target=receive_messages, args=(MY_ID, MY_PORT), daemon=True)
+        hilo_receptor.start()
+
+        # --- NUEVO: Lanzar hilo maestro si es maestro ---
+        if IS_MASTER:
+            hilo_maestro = threading.Thread(target=maestro_periodico, daemon=True)
+            hilo_maestro.start()
+
+        # Ejecutar menú principal
         main_menu()
-    except KeyboardInterrupt:
-        print("\nPrograma interrumpido por el usuario.")
+
     except Exception as e:
-        print(f"Error en ejecución principal: {e}")
+        print(f"Error en el sistema: {e}")
