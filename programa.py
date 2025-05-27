@@ -213,11 +213,11 @@ def consultar_inventario_distribuido():
 
 def agregar_articulo_distribuido():
     lista_sucursales = []
-    nombre_articulo = input("Ingrese el nombre del artículo")
-    descripcion = input("Ingrese la descripción del artículo")
-    cantidad = int(input("Ingrese la cantidad de artículos"))
-    unidad_medida = input("Ingrese la unidad media de los artículos del artículo")
-    capacidad_almacenamiento = input("Ingrese la capacidad de almacenamiento del artículo")
+    nombre_articulo = input("Ingrese el nombre del artículo: ")
+    descripcion = input("Ingrese la descripción del artículo: ")
+    cantidad = int(input("Ingrese la cantidad de artículos: "))
+    unidad_medida = input("Ingrese la unidad media de los artículos del artículo: ")
+    capacidad_almacenamiento = input("Ingrese la capacidad de almacenamiento del artículo: ")
 
     gestion.agregar_articulo_a_inventario_distribuido(lista_sucursales, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
 

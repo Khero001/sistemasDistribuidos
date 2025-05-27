@@ -71,7 +71,8 @@ class GestionInventario:
 
         # Generar un nuevo UUID para el artículo
         articulo_id = uuid.uuid4()
-        lista_sucursales = self.db_ops.seleccionar_todas_sucursales()
+        for s in self.db_ops.seleccionar_todas_sucursales():
+            lista_sucursales.append(s.sucursal_id)
         cantidades = self.dividir_en_n_montones_equitativos(cantidad, len(lista_sucursales))
 
         for i_sucursal in range(len(lista_sucursales)):
