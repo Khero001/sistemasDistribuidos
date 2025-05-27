@@ -1,6 +1,6 @@
 #Nuevos imports
 from kazoo.client import KazooClient
-from kazoo.recipe.leader import LeaderElection
+from kazoo.recipe.election import Election  # Cambió LeaderElection -> Election
 import socket
 import time
 import os
@@ -377,19 +377,25 @@ def generar_guia_envio():
 #Funcion de nodo maestro antes de main menu
 def iniciar_eleccion_maestro():
     global IS_MASTER
-    zk = KazooClient(hosts=ZOOKEEPER_HOSTS)
+    
+    zk = KazooClient(hosts='127.0.0.1:2181')
     zk.start()
     
-    def cuando_soy_lider():
+    def lider_elegido():
         global IS_MASTER
         IS_MASTER = True
         print(f"\n[NODO MAESTRO] ID={MY_ID}")
+        
+        # Tareas del maestro
         while IS_MASTER:
             time.sleep(10)
-            print("[MAESTRO] Monitoreando nodos...")
+            if IS_MASTER:  # Verificar que aún sea maestro
+                print("[MAESTRO] Monitoreando nodos...")
     
-    election = LeaderElection(zk, ELECTION_PATH, cuando_soy_lider)
-    election.run()
+    # Configuración para Zookeeper 3.8+
+    election = Election(zk, "/eleccion_maestro", identifier=MY_ID.encode())
+    election.run(lider_elegido)
+    
     
 def main_menu():
     while True:
