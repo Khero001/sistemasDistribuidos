@@ -253,7 +253,11 @@ def consultar_clientes():
     gestion.consultar_lista_clientes()
 
 def distribuir_prods():
-    distribuir_articulos_master(gestion.sucursales_id(), gestion.obtener_sucursal_id(MY_IP))
+    sucursales_lista = []
+    nodos = gestion.obtener_ips_nodos_efimeros()
+    for n in nodos:
+        sucursales_lista.append(gestion.obtener_sucursal_id(n))
+    distribuir_articulos_master(sucursales_lista, gestion.obtener_sucursal_id(MY_IP))
 
 
 def actualizar_cliente():
