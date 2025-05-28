@@ -140,6 +140,11 @@ class GestionInventario:
             montones[i] += 1
         
         return montones
+    def sucursales_id(self):
+        sucursales = self.db_ops.seleccionar_todas_sucursales()
+        s = []
+        for sucursal in sucursales:
+            s.append(sucursal.sucursal_id)
 
     def consultar_sucursales(self):
         """
