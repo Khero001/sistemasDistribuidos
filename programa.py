@@ -91,7 +91,7 @@ def store_message(message):
             open(filename, "w").close()
         with open(filename, "a", encoding="utf-8") as f:
             f.write(message + "\n")
-            print(f"Mensaje almacenado en {filename}")
+            #print(f"Mensaje almacenado en {filename}")
             f.close()
     except Exception as e:
         print(f"Error al guardar mensaje: {e}")
@@ -104,6 +104,7 @@ def show_messages():
     try:
         if not os.path.exists(filename):
             open(filename, "w").close()
+        print("mensajes ubicados en %s"%filename)
         print("+"+("-"*20)+"+")
         os.system("tail -%d %s"%(lineas, filename))
         print("+"+("-"*20)+"+")
@@ -188,7 +189,7 @@ def handle_connection(client_socket, my_id):
             
             # --- PARTE 3: Lógica para el nodo maestro ---
             elif IS_MASTER and message_data.startswith("SOLICITUD_"):
-                print(f"Nodo maestro recibió solicitud: {message_data}")
+                store_message(f"Nodo maestro recibió solicitud: {message_data}")
                 response = "SOLICITUD_PROCESADA"
             
             # --- PARTE 4: Otros mensajes no reconocidos ---
@@ -198,7 +199,7 @@ def handle_connection(client_socket, my_id):
             client_socket.sendall(response.encode('utf-8'))
     
     except Exception as e:
-        print(f"Nodo {my_id}: Error al recibir mensaje: {e}")
+        store_message(f"Nodo {my_id}: Error al recibir mensaje: {e}")
     finally:
         client_socket.close()
 
@@ -226,7 +227,7 @@ def maestro_periodico():
             try:
                 send_message(MY_ID, node_id, ip, port, "PING desde maestro")
             except Exception as e:
-                print(f"Error enviando ping a {node_id}: {e}")
+                store_message(f"Error enviando ping a {node_id}: {e}")
         threading.Event().wait(MASTER_CHECK_INTERVAL)
 
 # --- Funciones del Sistema Distribuido ---
@@ -234,9 +235,6 @@ def consultar_inventario_local():
     gestion.consultar_inventario_local(sucursal_id)
 
 def consultar_inventario_distribuido():
-    if not IS_MASTER:
-        print("Error: Operación solo para nodo maestro")
-        return
     gestion.consultar_inventario_distribuido()
 
 def agregar_articulo_distribuido():
@@ -247,7 +245,7 @@ def agregar_articulo_distribuido():
     unidad_medida = input("Ingrese la unidad media de los artículos del artículo: ")
     capacidad_almacenamiento = input("Ingrese la capacidad de almacenamiento del artículo: ")
 
-    gestion.agregar_articulo_a_inventario_distribuido(lista_sucursales, nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
+    gestion.agregar_articulo_a_inventario_distribuido(gestion.obtener_ips_nodos_efimeros(), nombre_articulo, descripcion, cantidad, unidad_medida, capacidad_almacenamiento)
 
 def consultar_clientes():
     gestion.consultar_lista_clientes()
@@ -418,7 +416,7 @@ def iniciar_eleccion_maestro():
     def lider_elegido():
         global IS_MASTER
         IS_MASTER = True
-        print(f"\n[NODO MAESTRO] ID={MY_ID}")
+        store_message(f"\n[NODO MAESTRO] ID={MY_ID}")
         
         try:
             # Registrar como maestro en ZooKeeper
@@ -426,15 +424,14 @@ def iniciar_eleccion_maestro():
                      value=MY_IP.encode(), 
                      ephemeral=True)
         except Exception as e:
-            print(f"Error al registrarse como líder: {e}")
+            store_message(f"Error al registrarse como líder: {e}")
         
         # Tareas del maestro
         while IS_MASTER:
             time.sleep(10)
             if IS_MASTER:
-                continue
-                #self.distribuir_prods()
-                #print("[MAESTRO] Monitoreando nodos...")
+                gestion.distribuir_prods(gestion.obtener_ips_nodos_efimeros())
+                store_message("[MAESTRO] distribuye prods...")
     
     def vigilar_maestro(data, stat, event=None):  # Añadir event como parámetro opcional
         global IS_MASTER
@@ -498,10 +495,10 @@ def monitorear_maestro():
                 data, stat = zk.get(f"{ELECTION_PATH}/leader")
                 if data.decode() != MY_IP:
                     IS_MASTER = False
-                    print("\n¡Ya no soy el maestro!")
+                    store_message("\n¡Ya no soy el maestro!")
             except:
                 IS_MASTER = False
-                print("\n¡Perdí el liderazgo!")
+                store_message("\n¡Perdí el liderazgo!")
             finally:
                 zk.stop()
         
@@ -557,7 +554,7 @@ def iniciar_servicios_maestro():
     global IS_MASTER
     while True:
         if IS_MASTER:
-            print("🔷 [MAESTRO] Ejecutando tareas...")
+            store_message("🔷 [MAESTRO] Ejecutando tareas...")
             # Aquí puedes añadir más tareas del maestro
             time.sleep(10)
 
@@ -574,11 +571,11 @@ if __name__ == "__main__":
         while True:
             leader = verificar_estado_maestro()
             if IS_MASTER:
-                print(f"✅ Yo soy el maestro ({MY_ID})")
+                store_message(f"✅ Yo soy el maestro ({MY_ID})")
             elif leader:
-                print(f"🔵 Maestro actual: {leader}")
+                store_message(f"🔵 Maestro actual: {leader}")
             else:
-                print("🔴 No hay maestro actualmente")
+                store_message("🔴 No hay maestro actualmente")
             time.sleep(10)
 
     threading.Thread(target=verificar_periodicamente, daemon=True).start()
