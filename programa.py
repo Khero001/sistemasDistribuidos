@@ -428,7 +428,8 @@ def iniciar_eleccion_maestro():
         while IS_MASTER:
             time.sleep(10)
             if IS_MASTER:
-                self.distribuir_prods()
+                continue
+                #self.distribuir_prods()
                 #print("[MAESTRO] Monitoreando nodos...")
     
     def vigilar_maestro(data, stat, event=None):  # Añadir event como parámetro opcional
