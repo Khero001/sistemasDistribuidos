@@ -252,6 +252,14 @@ def agregar_articulo_distribuido():
 def consultar_clientes():
     gestion.consultar_lista_clientes()
 
+def distribuir_prods():
+    sucursales_lista = []
+    nodos = gestion.obtener_ips_nodos_efimeros()
+    for n in nodos:
+        sucursales_lista.append(gestion.obtener_sucursal_id(n))
+    distribuir_articulos_master(sucursales_lista, gestion.obtener_sucursal_id(MY_IP))
+
+
 def actualizar_cliente():
     print("Ingresar los datos que se piden a continuación.")
     print("Si se deja vacío algún campo se mantendrá igual.")
@@ -424,7 +432,8 @@ def iniciar_eleccion_maestro():
         while IS_MASTER:
             time.sleep(10)
             if IS_MASTER:
-                print("[MAESTRO] Monitoreando nodos...")
+                self.distribuir_prods()
+                #print("[MAESTRO] Monitoreando nodos...")
     
     def vigilar_maestro(data, stat, event=None):  # Añadir event como parámetro opcional
         global IS_MASTER
