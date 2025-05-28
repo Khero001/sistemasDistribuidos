@@ -346,8 +346,12 @@ class GestionInventario:
         zk.start()
         
         try:
+            nodes = []
             nodos = zk.get_children("/nodos_efimeros_cassandra")
-            return [zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode() for nodo in nodos]
+            for nodo in nodos:
+                if zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode() !="127.0.0.1":
+                    nodes.append(zk.get(f"/nodos_efimeros_cassandra/{nodo}")[0].decode())
+            return nodes
         finally:
             zk.stop()
    
